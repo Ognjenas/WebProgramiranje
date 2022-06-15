@@ -16,7 +16,9 @@ public class SparkMainApp {
         UserStorage.getInstance().getAll();
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
+        UserController.registerCustomer();
         UserController.test();
+        UserController.login();
         SportFacilityController.test();
     }
 }

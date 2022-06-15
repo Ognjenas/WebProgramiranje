@@ -16,6 +16,8 @@ public class UserStorage {
 
     private static UserStorage instance = null;
 
+    private static List<User> cache = new ArrayList<>();
+
     public static UserStorage getInstance() {
         if (instance == null) {
             instance = new UserStorage();
@@ -46,6 +48,39 @@ public class UserStorage {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        cache = users;
         return users;
+    }
+
+    private int getId() {
+        List<User> users = getAll();
+        int highestId = -1;
+        for(var user : users) {
+            if(user.getId() > highestId) {
+                highestId = user.getId();
+            }
+        }
+        return highestId+1;
+    }
+
+    public void addUser(User user) {
+        List<User> users = getAll();
+        user.setId(getId());
+        users.add(user);
+
+        FileWriter myWriter = null;
+        try {
+            myWriter = new FileWriter("./storage/users.txt");
+            myWriter.write("");
+            myWriter.close();
+            myWriter = new FileWriter("./storage/users.txt", true);
+            for(var usr : users) {
+                myWriter.write(usr.toString());
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -15,6 +15,16 @@ public class User {
     public User() {
     }
 
+    public User(String username, String password, String name, String surname, boolean sex, LocalDate birthDate, Role role) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.role = role;
+    }
+
     public User(int id, String username, String password, String name, String surname, boolean sex, LocalDate birthDate, Role role) {
         this.id = id;
         this.username = username;
@@ -93,6 +103,6 @@ public class User {
     @Override
     public String toString() {
         return this.id + "|" + this.username + "|" + this.password + "|" + this.name + "|" + this.surname + "|" +
-                this.sex + "|" + this.birthDate.toString() + "|" + role.toString();
+                this.sex + "|" + this.birthDate.toString() + "|" + role.toString() + "\n";
     }
 }
