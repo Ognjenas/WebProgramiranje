@@ -1,7 +1,7 @@
 package rest;
 
 import controllers.UserController;
-
+import controllers.SportFacilityController;
 import java.io.File;
 
 import static spark.Spark.port;
@@ -15,5 +15,6 @@ public class SparkMainApp {
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
         UserController.test();
+        SportFacilityController.test();
     }
 }

@@ -9,8 +9,8 @@ public class UserController {
 
     public static void test() {
         get(
-            "rest/users/", (req,res) -> {
-                return "hello world";
+                "rest/users/", (req, res) -> {
+                    return "hello world";
                 }
         );
     }
