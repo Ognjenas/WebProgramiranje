@@ -1,0 +1,1 @@
+1|user|password|ime|prezime|true|2022-06-15|CUSTOMER
