@@ -1,5 +1,0 @@
-1|user|password|ime|prezime|true|2022-06-15|CUSTOMER
-1|user2|kornison|ogi|svraka|true|2022-06-15|CUSTOMER
-2|user1|kornison|ogi|svraka|true|2022-06-15|CUSTOMER
-3|user5|kornison|ogi|svraka|true|2022-06-15|CUSTOMER
-4|user7|kornison|ogi|svraka|true|2022-06-15|CUSTOMER

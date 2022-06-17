@@ -32,7 +32,11 @@ public class UserController {
                 "users/login", (req, res) -> {
                     String payload = req.body();
                     LoginDto loginDto = gson.fromJson(payload, LoginDto.class);
-                    return gson.toJson(UserService.getInstance().checkLogin(loginDto));
+                    boolean isLogged = UserService.getInstance().checkLogin(loginDto);
+                    if (isLogged) {
+                        res.cookie("isLogged", "true", 100000);
+                    }
+                    return gson.toJson(isLogged);
                 }
         );
     }

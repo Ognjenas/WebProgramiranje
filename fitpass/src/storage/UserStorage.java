@@ -31,7 +31,7 @@ public class UserStorage {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try {
-            File file = new File("./storage/users.txt");
+            File file = new File("./storage/users.csv");
             Scanner myReader = new Scanner(file);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -70,10 +70,10 @@ public class UserStorage {
 
         FileWriter myWriter = null;
         try {
-            myWriter = new FileWriter("./storage/users.txt");
+            myWriter = new FileWriter("./storage/users.csv");
             myWriter.write("");
             myWriter.close();
-            myWriter = new FileWriter("./storage/users.txt", true);
+            myWriter = new FileWriter("./storage/users.csv", true);
             for(var usr : users) {
                 myWriter.write(usr.toString());
             }

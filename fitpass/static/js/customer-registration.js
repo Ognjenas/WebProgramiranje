@@ -21,26 +21,35 @@ Vue.component("customer-registration", {
 	    <input type="radio" v-model = "customer.gender" name="gender" value="false" > <br>
 	    <label>Datum rodjenja: </label>
 	    <input type="date" v-model = "birth.b" name="birthdate"> <br>
-	    <button v-on:click = "register">
+	    <button class="login-button" v-on:click = "register">Registruj se</button>
 </div>		  
 `
     ,
     methods : {
         register : function () {
-            var date = new Date(this.birth.b)
-            let text = '{ "year" :' + date.getFullYear() + ', "month" : ' + date.getMonth() + ', "day" : ' + date.getDay() + ' }';
+
+            const date = new Date(this.birth.b);
+            const month = date.getMonth()+1;
+            let text = '{ "year" :' + date.getFullYear() + ', "month" : ' + month + ', "day" : ' + date.getDate() + ' }';
 
             const obj = JSON.parse(text);
             this.customer.birthDate = obj;
             const promise = axios.post('/users/register-customer', this.customer);
             promise.then(response => {
                 if(response.data === false) {
+                    alert(this.$cookie.get('isLogged'))
                     alert("Vec postoji sa tim username-om");
                 } else {
-                    router.push(`/`)
+                    router.push(`/login`)
                 }
             })
+        },
+        getCookie : function (name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
         }
+
     },
 
     mounted () {

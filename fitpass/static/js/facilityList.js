@@ -70,6 +70,7 @@ Vue.component("facility-list", {
 	<p>
 		<a href="#/cnt">Contact</a>
 	</p>
+	<button class="login-button" v-on:click="logout">Odjavi se</button>
 </div>		  
 `
     ,
@@ -80,14 +81,23 @@ Vue.component("facility-list", {
                     .then(response => (this.facilitiesDto = response.data))
 
             },
+            logout : function () {
+                $cookies.remove('isLogged')
+                router.push('/login')
+            }
 
 
 
     },
 
     mounted () {
-        axios
-            .get('/facilities/')
-            .then(response => (this.facilitiesDto = response.data))
+        if($cookies.get('isLogged') === 'true') {
+            axios
+                .get('/facilities/')
+                .then(response => (this.facilitiesDto = response.data))
+        } else {
+            router.push('/login')
+        }
+
     },
 });
