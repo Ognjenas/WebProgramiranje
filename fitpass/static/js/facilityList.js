@@ -1,11 +1,45 @@
 Vue.component("facility-list", {
     data: function () {
         return {
-           facilitiesDto: null
+            facilitiesDto: null,
+            form:{  name: "",
+                    type:"",
+                    city:"",
+                    grade:""
+                    }
+
         }
     },
     template: ` 
 <div>
+    <p>
+    Search:
+    <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:change="searchFacility()" > 
+    <select name="type" v-model="form.type" v-on:change="searchFacility()">
+      <option value="">Select Type</option>
+      <option value="GYM">GYM</option>
+      <option value="FIGHTING_GYM">FIGHTING_GYM</option>
+      <option value="SWIMMING_POOL">SWIMMING_POOL</option>
+      <option value="SPORTS_CENTER">SPORTS_CENTER</option>
+      <option value="DANCE_STUDIO">DANCE_STUDIO</option>
+      <option value="STADIUM">STADIUM</option>
+    </select>
+    <select name="city" v-model="form.city" v-on:change="searchFacility()" >
+      <option value="">Select City</option>
+      <option value="Novi Sad">NS</option>
+      <option value="Beograd">BG</option>
+      <option value="Apatin">APA</option>
+    </select>
+    <select name="grade" v-model="form.grade" v-on:change="searchFacility()" >
+      <option value="">Average Grade</option>
+      <option value="0-1"><1</option>
+      <option value="1-2">1-2</option>
+      <option value="2-3">2-3</option>
+      <option value="3-4">3-4</option>
+      <option value="4-5">>4</option>
+    </select>
+    <p>search-form:  |{{form.name}}|,|{{form.type}}|,|{{form.city}}|,|{{form.grade}}| </p>
+    </p>
 	Available Facilities:
 	<table>
 	<tr>
@@ -17,7 +51,7 @@ Vue.component("facility-list", {
 		<th>Working Hours</th>
 	</tr>
 		
-	<tr v-for="f in facilitiesDto.allFacilities">
+	<tr v-for="f in facilitiesDto.allFacilities" >
 		<td></td>
 		<td>{{f.name}}</td>
 		<td>{{f.type}}</td>
@@ -41,6 +75,13 @@ Vue.component("facility-list", {
     ,
     methods :
         {
+            searchFacility : function () {
+                axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade)
+                    .then(response => (this.facilitiesDto = response.data))
+
+            },
+
+
 
     },
 

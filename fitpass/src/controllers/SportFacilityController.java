@@ -19,10 +19,21 @@ public class SportFacilityController {
     public static void test() {
         get("facilities/", (req, res) -> {
                     res.type("application/json");
-                    String payload = req.body();
-                    AllFacilitiesDto s = SportFacilityService.getAllFacilities();
+                    AllFacilitiesDto s = facilityService.getAllFacilities();
                     return g.toJson(s);
                 }
         );
+
+        get("facilities/search",(req,res)->{
+                    res.type("application/json");
+                    String name= req.queryParams("name");
+                    String type= req.queryParams("type");
+                    String city= req.queryParams("city");
+                    String grade= req.queryParams("grade");
+                    AllFacilitiesDto s = facilityService.getSearchedFacilities(name,type,city,grade);
+                    //return null;
+                    return g.toJson(s);
+                }
+                );
     }
 }

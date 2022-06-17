@@ -45,15 +45,46 @@ public class SportFacilityService {
     public static AllFacilitiesDto getAllFacilities() {  //MORAO SAM OVO SVE U STATIC?
         List<SportFacilityDto> list = new ArrayList<>();
         for (SportFacility facility : AllFacilities) {
-            LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
-                    facility.getLocation().getAdress().getStreet(), facility.getLocation().getAdress().getStrNumber(), facility.getLocation().getAdress().getPostalCode());
-            WorkingHoursDto work = new WorkingHoursDto(facility.getOpenTime().getStartWorkingDays(), facility.getOpenTime().getEndWorkingDays(), facility.getOpenTime().getStartSaturday(),
-                    facility.getOpenTime().getEndSaturday(), facility.getOpenTime().getStartSunday(), facility.getOpenTime().getEndSunday());
-            SportFacilityDto fac = new SportFacilityDto(facility.getName(), facility.getType(), loc, facility.isOpen(), facility.getAverageGrade(), work);
-            list.add(fac);
+            list.add(makeFacilityDto(facility));
+        }
+        return new AllFacilitiesDto(list);
+    }
+    
+    public static AllFacilitiesDto getSearchedFacilities(String name,String type,String city,String grade) {
+        List<SportFacilityDto> list = new ArrayList<>();
+
+        for(SportFacility facility:AllFacilities){
+            if(isSearched(facility,name,type,city,grade)){
+                list.add(makeFacilityDto(facility));
+            }
         }
         return new AllFacilitiesDto(list);
     }
 
+    private static boolean isSearched(SportFacility facility,String name,String type,String city,String grade){
+        // IF AVERAGE GRADE NOT SELECTED THEN BETWEEN 0-5
+        double minGrade;
+        double maxGrade;
+        if(grade.equals("")) {
+            minGrade=0;
+            maxGrade=5;
+        }else{
+            String[] grades = grade.split("-");
+            minGrade = Double.parseDouble(grades[0]);
+            maxGrade = Double.parseDouble(grades[1]);
+        }
+        //MAKES UPPER LOWER VALUES FOR AVERAGE GRADE
 
+        return facility.getName().toLowerCase().contains(name.toLowerCase()) && facility.getType().toString().toLowerCase().contains(type.toLowerCase())
+                && facility.getLocation().getAdress().getCity().toLowerCase().contains(city.toLowerCase()) && minGrade<=facility.getAverageGrade() && facility.getAverageGrade()<=maxGrade;
+    }
+
+    private static SportFacilityDto makeFacilityDto(SportFacility facility){
+        LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
+                facility.getLocation().getAdress().getStreet(), facility.getLocation().getAdress().getStrNumber(), facility.getLocation().getAdress().getPostalCode());
+        WorkingHoursDto work = new WorkingHoursDto(facility.getOpenTime().getStartWorkingDays(), facility.getOpenTime().getEndWorkingDays(), facility.getOpenTime().getStartSaturday(),
+                facility.getOpenTime().getEndSaturday(), facility.getOpenTime().getStartSunday(), facility.getOpenTime().getEndSunday());
+        SportFacilityDto fac = new SportFacilityDto(facility.getName(), facility.getType(), loc, facility.isOpen(), facility.getAverageGrade(), work);
+        return fac;
+    }
 }
