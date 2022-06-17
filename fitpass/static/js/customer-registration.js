@@ -29,6 +29,7 @@ Vue.component("customer-registration", {
         register : function () {
             var date = new Date(this.birth.b)
             let text = '{ "year" :' + date.getFullYear() + ', "month" : ' + date.getMonth() + ', "day" : ' + date.getDay() + ' }';
+
             const obj = JSON.parse(text);
             this.customer.birthDate = obj;
             const promise = axios.post('/users/register-customer', this.customer);
