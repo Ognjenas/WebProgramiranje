@@ -10,17 +10,19 @@ public class SportFacilityDto {
     private boolean isOpen;
     private double averageGrade;
     private WorkingHoursDto openTime;
+    private String imgSource;
 
     public SportFacilityDto() {
     }
 
-    public SportFacilityDto(String name, SportFacilityType type, LocationDto location, boolean isOpen, double averageGrade, WorkingHoursDto openTime) {
+    public SportFacilityDto(String name, SportFacilityType type, LocationDto location, boolean isOpen, double averageGrade, WorkingHoursDto openTime, String imgSource) {
         this.name = name;
         this.type = type;
         this.location = location;
         this.isOpen = isOpen;
         this.averageGrade = averageGrade;
         this.openTime = openTime;
+        this.imgSource = imgSource;
     }
 
     public String getName() {
