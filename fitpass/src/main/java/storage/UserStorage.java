@@ -36,13 +36,11 @@ public class UserStorage {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] separatedData = data.split("\\|");
-                System.out.println(separatedData[0].getClass());
                 Role role = Role.valueOf(Role.class,separatedData[7]);
                 int id = Integer.parseInt(separatedData[0]);
                 users.add(new User(id, separatedData[1], separatedData[2],
                         separatedData[3], separatedData[4], Boolean.parseBoolean(separatedData[5]),
                         LocalDate.parse(separatedData[6]), role));
-                System.out.println(users.get(0).getName());
             }
             myReader.close();
         } catch (FileNotFoundException e) {

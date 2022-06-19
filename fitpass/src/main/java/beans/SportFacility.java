@@ -10,15 +10,17 @@ public class SportFacility {
     private List<String> offers;
     private boolean isOpen;
     // STA STAVITI ZA SLIKU?
+    private String imgSource;
     private Location location;
     private double averageGrade;
     private WorkingHours openTime; //OVDE BIH NAPRAVIO KLASU POSEBNU ZA RADNO VREME ZA SVAKI DAN
 
-    public SportFacility(String name, SportFacilityType type, List<String> offers, boolean isOpen, Location location, double averageGrade, WorkingHours openTime) {
+    public SportFacility(String name, SportFacilityType type, List<String> offers, boolean isOpen, String imgSource, Location location, double averageGrade, WorkingHours openTime) {
         this.name = name;
         this.type = type;
         this.offers = offers;
         this.isOpen = isOpen;
+        this.imgSource = imgSource;
         this.location = location;
         this.averageGrade = averageGrade;
         this.openTime = openTime;
@@ -80,12 +82,11 @@ public class SportFacility {
         this.openTime = openTime;
     }
 
-    @Override
-    public String toString() {
-        return  "Name='" + name + '\'' +
-                ", Type=" + type +
-                ", Location=" + location.toString() +
-                ", AvrageGrade=" + averageGrade +
-                ", OpenTime=" + openTime;
+    public String getImgSource() {
+        return imgSource;
+    }
+
+    public void setImgSource(String imgSource) {
+        this.imgSource = imgSource;
     }
 }
