@@ -47,7 +47,6 @@ Vue.component("customer-registration", {
             const promise = axios.post('/users/register-customer', this.customer);
             promise.then(response => {
                 if(response.data === false) {
-                    alert(this.$cookie.get('isLogged'))
                     alert("Vec postoji sa tim username-om");
                 } else {
                     router.push(`/login`)

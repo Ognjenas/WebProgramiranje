@@ -59,6 +59,7 @@ Vue.component("facility-list", {
 		<th>Location</th>
 		<th>Average Grade</th>
 		<th>Working Hours</th>
+		<th>Image</th>
 	</tr>
 		
 	<tr v-for="f in facilitiesDto.allFacilities" >
@@ -75,6 +76,9 @@ Vue.component("facility-list", {
 		    <p>Saturday: From {{f.openTime.startSaturday.hour}}:{{f.openTime.startSaturday.minute}} to {{f.openTime.endSaturday.hour}}:{{f.openTime.endSaturday.minute}}</p>
 		    <p>Sunday: From {{f.openTime.startSunday.hour}}:{{f.openTime.startSunday.minute}} to {{f.openTime.endSunday.hour}}:{{f.openTime.endSunday.minute}}</p>
 		</td>
+		<td>
+		    <img :src="f.imgSource" width="100" height="100">
+        </td>
 	</tr>
 </table>
 	<p>
