@@ -4,6 +4,7 @@ import beans.users.Role;
 import beans.users.User;
 import dto.users.LoginDto;
 import dto.users.RegisterCustomerDto;
+import dto.users.UserInfoDto;
 import storage.UserStorage;
 
 import java.util.List;
@@ -36,14 +37,19 @@ public class UserService {
         return true;
     }
 
-    public boolean checkLogin(LoginDto loginDto) {
+    public User checkLogin(LoginDto loginDto) {
         UserStorage storage = UserStorage.getInstance();
         List<User> users = storage.getAll();
         for(var user : users) {
             if(user.getUsername().equals(loginDto.getUsername()) && user.getPassword().equals(loginDto.getPassword())) {
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
+    }
+
+    public UserInfoDto getUserInfo(String username) {
+        User user = UserStorage.getInstance().getUserByUsername(username);
+        return new UserInfoDto(user.getUsername(), user.getRole().toString());
     }
 }

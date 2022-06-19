@@ -7,30 +7,36 @@ Vue.component("login", {
     template: ` 
 <div>
     <h1>Login</h1>
-    <div class="login-container"
+    <div class="login-container">
     <div class="login-box">
-	    <label>Username: </label>
-	    <input type="text" v-model = "login.username" name="username"> <br>
-	    <label>Password: </label>
-	    <input type="password" v-model = "login.password" name="password"> <br>
-	    <button v-on:click = "tryLogin" class="login-button">Login</button>
+    <table>
+	    <tr><td>Username: </td>
+	    <td><input type="text" v-model = "login.username" name="username"> </td></tr>
+	    <tr><td>Password: </td>
+	    <td><input type="password" v-model = "login.password" name="password"> </td></tr>
+	    <tr><td><button v-on:click = "tryLogin" class="login-button">Login</button></td>
+	    <td><button v-on:click = "registration" class="login-button">Registracija</button></td></tr>
+	</table>
 	</div>
-</div>		  
+</div>		
+</div>  
 `
     ,
     methods: {
         tryLogin: function () {
             const promise = axios.post('/users/login', this.login);
             promise.then(response => {
-                if (response.data === false) {
+                if (response.data === "") {
                     alert("Pogresan login");
-                    toast("asdasdasd");
                 } else {
-                    $cookies.set("isLogged", true, 10000)
+                    $cookies.set("token", response.data, 10000)
                     router.push(`/`)
                 }
             })
         },
+        registration: function () {
+            router.push("/customer-registration")
+        }
 
     },
 

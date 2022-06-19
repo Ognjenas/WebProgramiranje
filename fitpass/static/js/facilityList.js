@@ -1,19 +1,29 @@
 Vue.component("facility-list", {
     data: function () {
+
         return {
             facilitiesDto: null,
             form:{  name: "",
                     type:"",
                     city:"",
                     grade:""
-                    }
-
+                    },
+            configHeaders : {
+                headers: {
+                    token: $cookies.get("token"),
+                }
+            },
+            userInfo : {
+                username : "",
+                role : ""
+            }
         }
     },
     template: ` 
 <div>
+    <label>Username: {{userInfo.username}}</label>
     <p>
-    Search:
+    Search:</p>
     <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:change="searchFacility()" > 
     <select name="type" v-model="form.type" v-on:change="searchFacility()">
       <option value="">Select Type</option>
@@ -77,12 +87,16 @@ Vue.component("facility-list", {
     methods :
         {
             searchFacility : function () {
-                axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade)
-                    .then(response => (this.facilitiesDto = response.data))
+                axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
+                    .then(response => {
+                        if(response.status === 401) {
+                            router.push("/");
+                        }
+                        this.facilitiesDto = response.data})
 
             },
             logout : function () {
-                $cookies.remove('isLogged')
+                $cookies.remove('token')
                 router.push('/login')
             }
 
@@ -91,13 +105,23 @@ Vue.component("facility-list", {
     },
 
     mounted () {
-        if($cookies.get('isLogged') === 'true') {
-            axios
-                .get('/facilities/')
-                .then(response => (this.facilitiesDto = response.data))
-        } else {
-            router.push('/login')
+        if($cookies.get("token") == null) {
+            router.push("/login")
         }
+            axios
+                .get('/facilities/', this.configHeaders)
+                .then(response =>{
+                    if(response.status === 200) {
+                        this.facilitiesDto = response.data
+                    } else if (response.status === 401) {
+                        router.push("/");
+                    }
+
+                })
+            axios.post('users/get-info', $cookies.get("token"))
+                .then(response => {
+                    this.userInfo = response.data
+                })
 
     },
 });
