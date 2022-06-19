@@ -63,6 +63,15 @@ public class UserStorage {
         return highestId+1;
     }
 
+    public User getUserByUsername(String username) {
+        for(var user : getAll()) {
+            if(username.equals(user.getUsername())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public void addUser(User user) {
         List<User> users = getAll();
         user.setId(getId());
