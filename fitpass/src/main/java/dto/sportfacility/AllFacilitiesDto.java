@@ -1,4 +1,4 @@
-package dto;
+package dto.sportfacility;
 
 import java.util.List;
 

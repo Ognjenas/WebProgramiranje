@@ -1,7 +1,6 @@
-package dto;
+package dto.sportfacility;
 
 import beans.SportFacilityType;
-import dto.sportfacility.WorkingHoursDto;
 
 public class SportFacilityDto {
     private String name;

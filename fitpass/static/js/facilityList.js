@@ -2,7 +2,7 @@ Vue.component("facility-list", {
     data: function () {
 
         return {
-            facilitiesDto: null,
+            facilitiesDto: "",
             form:{  name: "",
                     type:"",
                     city:"",
@@ -24,7 +24,7 @@ Vue.component("facility-list", {
     <label>Username: {{userInfo.username}}</label>
     <p>
     Search:</p>
-    <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:change="searchFacility()" > 
+    <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:input="searchFacility()" > 
     <select name="type" v-model="form.type" v-on:change="searchFacility()">
       <option value="">Select Type</option>
       <option value="GYM">GYM</option>
@@ -81,9 +81,6 @@ Vue.component("facility-list", {
         </td>
 	</tr>
 </table>
-	<p>
-		<a href="#/cnt">Contact</a>
-	</p>
 	<button class="login-button" v-on:click="logout">Odjavi se</button>
 </div>		  
 `
@@ -92,11 +89,8 @@ Vue.component("facility-list", {
         {
             searchFacility : function () {
                 axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
-                    .then(response => {
-                        if(response.status === 401) {
-                            router.push("/");
-                        }
-                        this.facilitiesDto = response.data})
+                    .then(response => {this.facilitiesDto = response.data
+                    })
 
             },
             logout : function () {
@@ -114,13 +108,7 @@ Vue.component("facility-list", {
         }
             axios
                 .get('/facilities/', this.configHeaders)
-                .then(response =>{
-                    if(response.status === 200) {
-                        this.facilitiesDto = response.data
-                    } else if (response.status === 401) {
-                        router.push("/");
-                    }
-
+                .then(response =>{this.facilitiesDto = response.data
                 })
             axios.post('users/get-info', $cookies.get("token"))
                 .then(response => {

@@ -34,14 +34,12 @@ public class SportFacilityStorage {
     }
 
     public List<SportFacility> getAll() {
+        List<SportFacility> sportFacilities = new ArrayList<>();
         try {
             Reader reader = Files.newBufferedReader(Paths.get("./storage/sportFacilities.json"));
-
             // convert JSON array to list of users
-            List<SportFacility> sportFacilities = new Gson().fromJson(reader, new TypeToken<List<SportFacility>>() {}.getType());
-
+            sportFacilities = new Gson().fromJson(reader, new TypeToken<List<SportFacility>>() {}.getType());
             // print users
-
             // close reader
             reader.close();
             return sportFacilities;
@@ -50,8 +48,31 @@ public class SportFacilityStorage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return sportFacilities;
     }
 
+    public boolean create(SportFacility facility){
+        List<SportFacility> sportFacilities = getAll();
+        int id=getCount()+1;
+        facility.setId(id);
+        System.out.println(facility.getId());
+
+        try(FileWriter writer =new FileWriter("./storage/sportFacilities.json")){
+            sportFacilities.add(facility);
+            new Gson().toJson(sportFacilities, writer);
+            writer.close();
+            return true;
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private int getCount() {
+        List<SportFacility> sportFacilities = getAll();
+        return sportFacilities.size();
+    }
 
 }
