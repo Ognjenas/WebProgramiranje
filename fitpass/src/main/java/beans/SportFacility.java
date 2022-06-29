@@ -2,9 +2,12 @@ package beans;
 
 import utilities.WorkingHours;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SportFacility {
+    private int id;
     private String name;
     private SportFacilityType type;
     private List<String> offers;
@@ -14,8 +17,10 @@ public class SportFacility {
     private Location location;
     private double averageGrade;
     private WorkingHours openTime; //OVDE BIH NAPRAVIO KLASU POSEBNU ZA RADNO VREME ZA SVAKI DAN
+    private boolean isDeleted;
 
-    public SportFacility(String name, SportFacilityType type, List<String> offers, boolean isOpen, String imgSource, Location location, double averageGrade, WorkingHours openTime) {
+    public SportFacility(int id, String name, SportFacilityType type, List<String> offers, boolean isOpen, String imgSource, Location location, double averageGrade, WorkingHours openTime,boolean deleted) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.offers = offers;
@@ -24,7 +29,27 @@ public class SportFacility {
         this.location = location;
         this.averageGrade = averageGrade;
         this.openTime = openTime;
+        this.isDeleted = deleted;
     }
+
+    public SportFacility(int id, String name, SportFacilityType facType, Location loc) {
+        this.id = id;
+        this.name = name;
+        this.type = facType;
+        this.imgSource = "";
+        this.location = loc;
+
+        this.offers = new ArrayList<>();
+        this.isOpen = false;
+        this.averageGrade = 0.0;
+        LocalTime zeroTime = LocalTime.of(0, 0, 0, 0);
+        this.openTime = new WorkingHours(zeroTime, zeroTime, zeroTime, zeroTime, zeroTime, zeroTime);
+        this.isDeleted = false;
+    }
+
+    public int getId() { return id;  }
+
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -88,5 +113,13 @@ public class SportFacility {
 
     public void setImgSource(String imgSource) {
         this.imgSource = imgSource;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -1,17 +1,10 @@
 package controllers;
 
-import com.google.gson.Gson;
-import dto.AllFacilitiesDto;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import rest.SparkMainApp;
-import services.SportFacilityService;
-import spark.Filter;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
-
-import java.util.Calendar;
 
 import static spark.Spark.halt;
 

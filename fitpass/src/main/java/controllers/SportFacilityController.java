@@ -1,12 +1,15 @@
 package controllers;
 
+import beans.users.User;
 import com.google.gson.Gson;
-import dto.AllFacilitiesDto;
+import dto.sportfacility.AllFacilitiesDto;
+import dto.sportfacility.CreateSportFacilityDto;
+import dto.users.LoginDto;
 import services.SportFacilityService;
-import spark.Request;
-import spark.Response;
+import services.UserService;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 
 public class SportFacilityController {
@@ -29,9 +32,16 @@ public class SportFacilityController {
                     String city= req.queryParams("city");
                     String grade= req.queryParams("grade");
                     AllFacilitiesDto s = facilityService.getSearchedFacilities(name,type,city,grade);
-                    //return null;
                     return g.toJson(s);
                 }
-                );
+        );
+
+        post("facilities/create",(req,res)->{
+                    String payload = req.body();
+                    CreateSportFacilityDto facilityDto = g.fromJson(payload, CreateSportFacilityDto.class);
+                    boolean created = facilityService.createFacility(facilityDto);
+                    return true;
+                }
+        );
     }
 }

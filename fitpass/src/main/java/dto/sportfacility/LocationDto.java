@@ -1,4 +1,4 @@
-package dto;
+package dto.sportfacility;
 
 public class LocationDto {
     private double geoLength;

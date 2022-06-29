@@ -4,14 +4,9 @@ import beans.Address;
 import beans.Location;
 import beans.SportFacility;
 import beans.SportFacilityType;
-import dto.AllFacilitiesDto;
-import dto.LocationDto;
-import dto.SportFacilityDto;
-import dto.sportfacility.WorkingHoursDto;
+import dto.sportfacility.*;
 import storage.SportFacilityStorage;
-import utilities.WorkingHours;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +54,15 @@ public class SportFacilityService {
                 && facility.getLocation().getAdress().getCity().toLowerCase().contains(city.toLowerCase()) && minGrade<=facility.getAverageGrade() && facility.getAverageGrade()<=maxGrade;
     }
 
+    public boolean createFacility(CreateSportFacilityDto facilityDto) {
+        Address adr=new Address(facilityDto.getCity(),facilityDto.getStreet(),facilityDto.getStrNum(),facilityDto.getPostCode());
+        Location loc= new Location(facilityDto.getGeoLength(),facilityDto.getGeoWidth(),adr);
+        SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc);
+
+        SportFacilityStorage storage=SportFacilityStorage.getInstance();
+        return storage.create(facility);
+    }
+
     private static SportFacilityDto makeFacilityDto(SportFacility facility){
         LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
                 facility.getLocation().getAdress().getStreet(), facility.getLocation().getAdress().getStrNumber(), facility.getLocation().getAdress().getPostalCode());
@@ -67,4 +71,6 @@ public class SportFacilityService {
         SportFacilityDto fac = new SportFacilityDto(facility.getName(), facility.getType(), loc, facility.isOpen(), facility.getAverageGrade(), work, facility.getImgSource());
         return fac;
     }
+
+
 }
