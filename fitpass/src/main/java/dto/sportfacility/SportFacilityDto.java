@@ -10,7 +10,6 @@ public class SportFacilityDto {
     private double averageGrade;
     private WorkingHoursDto openTime;
     private String imgSource;
-
     public SportFacilityDto() {
     }
 
@@ -71,4 +70,5 @@ public class SportFacilityDto {
     public void setOpenTime(WorkingHoursDto openTime) {
         this.openTime = openTime;
     }
+
 }

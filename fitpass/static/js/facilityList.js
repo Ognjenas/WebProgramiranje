@@ -2,20 +2,23 @@ Vue.component("facility-list", {
     data: function () {
 
         return {
-            facilitiesDto: "",
-            form:{  name: "",
-                    type:"",
-                    city:"",
-                    grade:""
-                    },
-            configHeaders : {
+            facilityList: "",
+            sortDirection: null,
+            sortIndex: null,
+            form: {
+                name: "",
+                type: "",
+                city: "",
+                grade: ""
+            },
+            configHeaders: {
                 headers: {
                     token: $cookies.get("token"),
                 }
             },
-            userInfo : {
-                username : "",
-                role : ""
+            userInfo: {
+                username: "",
+                role: ""
             }
         }
     },
@@ -53,17 +56,15 @@ Vue.component("facility-list", {
 	Available Facilities:
 	<table>
 	<tr>
-	    <th></th>
-		<th>Name</th>
+		<th v-on:click="sortList(0)">Name</th>
 		<th>Type</th>
-		<th>Location</th>
-		<th>Average Grade</th>
+		<th v-on:click="sortList(1)">Location</th>
+		<th v-on:click="sortList(2)">Average Grade</th>
 		<th>Working Hours</th>
 		<th>Image</th>
 	</tr>
 		
-	<tr v-for="f in facilitiesDto.allFacilities" >
-		<td></td>
+	<tr v-for="f in facilityList">
 		<td>{{f.name}}</td>
 		<td>{{f.type}}</td>
 		<td>
@@ -86,15 +87,19 @@ Vue.component("facility-list", {
 </div>		  
 `
     ,
-    methods :
+    methods:
         {
-            searchFacility : function () {
-                axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
-                    .then(response => {this.facilitiesDto = response.data
+            searchFacility: function () {
+                axios.get('facilities/search?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
+                    .then(response => {
+                        this.facilityList = response.data.allFacilities;
                     })
+                this.sortIndex=null;
+                this.sortDirection=null;
 
             },
-            logout : function () {
+
+            logout: function () {
                 $cookies.remove('token')
                 router.push('/login')
             },
@@ -103,21 +108,63 @@ Vue.component("facility-list", {
             }
 
 
+            sortList(indexCol) {
+                if(this.sortIndex===indexCol) {
+                    if (this.sortDirection === "desc") {
+                        this.sortDirection = "asc";
+                        this.sorting(indexCol);
+                    } else {
+                        this.sortDirection = "desc";
+                        this.sorting(indexCol);
+                    }
+                }else{
+                    this.sortIndex=indexCol;
+                    this.sortDirection = "asc";
+                    this.sorting(indexCol);
+                }
+            },
 
-    },
 
-    mounted () {
-        if($cookies.get("token") == null) {
+            sorting(indexCol){
+                console.log(indexCol);
+                console.log(this.sortDirection);
+                if (indexCol===0) {
+                    if(this.sortDirection==="asc") {
+                        this.facilityList.sort((a, b) => a.name > b.name ? 1 : -1);
+                    }else{
+                        this.facilityList.sort((a, b) => a.name < b.name ? 1 : -1);
+                    }
+                } else if (indexCol===1){
+                    if(this.sortDirection==="asc") {
+                        this.facilityList.sort((a, b) => a.location.city > b.location.city ? 1 : -1);
+                    }else{
+                        this.facilityList.sort((a, b) => a.location.city < b.location.city ? 1 : -1);
+                    }
+                } else if (indexCol===2){
+                    if(this.sortDirection==="asc") {
+                        this.facilityList.sort((a, b) => a.averageGrade > b.averageGrade ? 1 : -1);
+                    }else{
+                        this.facilityList.sort((a, b) => a.averageGrade < b.averageGrade ? 1 : -1);
+                    }
+                }
+            },
+
+
+        },
+
+    mounted() {
+        if ($cookies.get("token") == null) {
             router.push("/login")
         }
-            axios
-                .get('/facilities/', this.configHeaders)
-                .then(response =>{this.facilitiesDto = response.data
-                })
-            axios.post('users/get-info', $cookies.get("token"))
-                .then(response => {
-                    this.userInfo = response.data
-                })
+        axios
+            .get('/facilities/', this.configHeaders)
+            .then(response => {
+                this.facilityList = response.data.allFacilities;
+            })
+        axios.post('users/get-info', $cookies.get("token"))
+            .then(response => {
+                this.userInfo = response.data
+            })
 
     },
 });

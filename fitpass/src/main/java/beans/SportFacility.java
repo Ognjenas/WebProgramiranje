@@ -122,4 +122,24 @@ public class SportFacility {
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
+
+    public boolean isSearched(String name,String type,String city,String grade){
+        // IF AVERAGE GRADE NOT SELECTED THEN BETWEEN 0-5
+        double minGrade;
+        double maxGrade;
+        if(grade.equals("")) {
+            minGrade=0;
+            maxGrade=5;
+        }else{
+            String[] grades = grade.split("-");
+            minGrade = Double.parseDouble(grades[0]);
+            maxGrade = Double.parseDouble(grades[1]);
+        }
+        //MAKES UPPER LOWER VALUES FOR AVERAGE GRADE
+
+        return this.name.toLowerCase().contains(name.toLowerCase()) && this.type.toString().toLowerCase().contains(type.toLowerCase())
+                && this.location.getAdress().getCity().toLowerCase().contains(city.toLowerCase()) && minGrade<=averageGrade && averageGrade<=maxGrade;
+    }
+
+
 }
