@@ -8,6 +8,8 @@ import dto.sportfacility.*;
 import storage.SportFacilityStorage;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class SportFacilityService {
@@ -29,29 +31,11 @@ public class SportFacilityService {
         List<SportFacilityDto> list = new ArrayList<>();
 
         for(SportFacility facility:SportFacilityStorage.getInstance().getAll()){
-            if(isSearched(facility,name,type,city,grade)){
+            if(facility.isSearched(name,type,city,grade)){
                 list.add(makeFacilityDto(facility));
             }
         }
-        return new AllFacilitiesDto(list);
-    }
-
-    private static boolean isSearched(SportFacility facility,String name,String type,String city,String grade){
-        // IF AVERAGE GRADE NOT SELECTED THEN BETWEEN 0-5
-        double minGrade;
-        double maxGrade;
-        if(grade.equals("")) {
-            minGrade=0;
-            maxGrade=5;
-        }else{
-            String[] grades = grade.split("-");
-            minGrade = Double.parseDouble(grades[0]);
-            maxGrade = Double.parseDouble(grades[1]);
-        }
-        //MAKES UPPER LOWER VALUES FOR AVERAGE GRADE
-
-        return facility.getName().toLowerCase().contains(name.toLowerCase()) && facility.getType().toString().toLowerCase().contains(type.toLowerCase())
-                && facility.getLocation().getAdress().getCity().toLowerCase().contains(city.toLowerCase()) && minGrade<=facility.getAverageGrade() && facility.getAverageGrade()<=maxGrade;
+        return  new AllFacilitiesDto(list);
     }
 
     public boolean createFacility(CreateSportFacilityDto facilityDto) {
