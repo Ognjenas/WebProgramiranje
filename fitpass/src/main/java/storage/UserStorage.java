@@ -2,15 +2,14 @@ package storage;
 
 import beans.users.Role;
 import beans.users.User;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class UserStorage {
 
@@ -29,36 +28,35 @@ public class UserStorage {
     }
 
     public List<User> getAll() {
-        List<User> users = new ArrayList<>();
+        List<User> allUsers = new ArrayList<>();
+
         try {
-            File file = new File("./storage/users.csv");
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] separatedData = data.split("\\|");
-                Role role = Role.valueOf(Role.class,separatedData[7]);
-                int id = Integer.parseInt(separatedData[0]);
-                users.add(new User(id, separatedData[1], separatedData[2],
-                        separatedData[3], separatedData[4], Boolean.parseBoolean(separatedData[5]),
-                        LocalDate.parse(separatedData[6]), role));
-            }
-            myReader.close();
+            Reader reader = Files.newBufferedReader(Paths.get("./storage/users.json"));
+            allUsers = new Gson().fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            reader.close();
+//            allUsers.add(new User("","","","",true,LocalDate.now(),Role.CUSTOMER));
+            return allUsers;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        cache = users;
+        return allUsers;
+    }
+
+    public List<User> getAllNotDeleted() {
+        List<User> users = new ArrayList<>();
+        for (var user : getAll()) {
+            if(!user.isDeleted()) {
+                users.add(user);
+            }
+        }
         return users;
     }
 
     private int getId() {
-        List<User> users = getAll();
-        int highestId = -1;
-        for(var user : users) {
-            if(user.getId() > highestId) {
-                highestId = user.getId();
-            }
-        }
-        return highestId+1;
+        List<User> all = getAll();
+        return all.size();
     }
 
     public User getUserByUsername(String username) {
@@ -70,24 +68,18 @@ public class UserStorage {
         return null;
     }
 
-    public void addUser(User user) {
+    public User addUser(User user) {
         List<User> users = getAll();
         user.setId(getId());
-        users.add(user);
 
-        FileWriter myWriter = null;
-        try {
-            myWriter = new FileWriter("./storage/users.csv");
-            myWriter.write("");
-            myWriter.close();
-            myWriter = new FileWriter("./storage/users.csv", true);
-            for(var usr : users) {
-                myWriter.write(usr.toString());
-            }
-            myWriter.close();
+        try(FileWriter writer =new FileWriter("./storage/users.json")){
+
+            users.add(user);
+            new Gson().toJson(users, writer);
+            return user;
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 }

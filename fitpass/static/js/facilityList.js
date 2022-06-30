@@ -82,6 +82,7 @@ Vue.component("facility-list", {
 	</tr>
 </table>
 	<button class="login-button" v-on:click="logout">Odjavi se</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
 </div>		  
 `
     ,
@@ -96,6 +97,9 @@ Vue.component("facility-list", {
             logout : function () {
                 $cookies.remove('token')
                 router.push('/login')
+            },
+            listUsers : function () {
+                router.push('/users-list')
             }
 
 
