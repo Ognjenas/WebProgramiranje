@@ -1,9 +1,12 @@
 package controllers;
 
 import beans.users.User;
+import dto.users.AllUsersDto;
 import dto.users.LoginDto;
+import dto.users.MakeUserDto;
 import dto.users.RegisterCustomerDto;
 import rest.SparkMainApp;
+import services.SecretKeyGetter;
 import services.UserService;
 
 import static spark.Spark.delete;
@@ -34,6 +37,15 @@ public class UserController {
         );
     }
 
+    public static void getAllUsers() {
+        get(
+                "users/", (req, res) -> {
+                    AllUsersDto dto = UserService.getInstance().getAllUsers();
+                    return gson.toJson(dto);
+                }
+        );
+    }
+
     public static void login() {
         post(
                 "users/login", (req, res) -> {
@@ -44,7 +56,7 @@ public class UserController {
                     if (loggedUser != null) {
                         String jws = Jwts.builder()
                                 .setSubject(loggedUser.getUsername())
-                                .signWith(SparkMainApp.key).compact();
+                                .signWith(SecretKeyGetter.get()).compact();
 
                         return gson.toJson(jws);
                     }
@@ -59,7 +71,7 @@ public class UserController {
                     res.type("application/json");
                     String payload = req.body();
                     String token = gson.fromJson(payload, String.class);
-                    String username = Jwts.parserBuilder().setSigningKey(SparkMainApp.key).build().parseClaimsJws(token).getBody().getSubject();
+                    String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
                     return gson.toJson(UserService.getInstance().getUserInfo(username));
                 }
         );
