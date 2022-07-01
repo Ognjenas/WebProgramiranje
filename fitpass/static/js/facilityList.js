@@ -27,6 +27,7 @@ Vue.component("facility-list", {
     <label>Username: {{userInfo.username}}</label>
     <p>
     Search:</p>
+    
     <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:input="searchFacility()" > 
     <select name="type" v-model="form.type" v-on:change="searchFacility()">
       <option value="">Select Type</option>
@@ -105,7 +106,7 @@ Vue.component("facility-list", {
             },
             listUsers : function () {
                 router.push('/users-list')
-            }
+            },
 
 
             sortList(indexCol) {
