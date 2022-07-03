@@ -1,6 +1,6 @@
 package beans.users;
 
-import beans.SportFacility;
+import beans.sportfacility.SportFacility;
 
 import java.time.LocalDate;
 import java.util.List;

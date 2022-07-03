@@ -1,6 +1,6 @@
 package dto.sportfacility;
 
-import beans.SportFacilityType;
+import beans.sportfacility.SportFacilityType;
 
 public class CreateSportFacilityDto {
 
@@ -13,8 +13,9 @@ public class CreateSportFacilityDto {
     private double geoWidth;
     private double geoLength;
     private String imgSource;
+    private int managerId;
 
-    public CreateSportFacilityDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String imgSource) {
+    public CreateSportFacilityDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String imgSource,int managerId) {
         this.name = name;
         this.type = type;
         this.city = city;
@@ -24,6 +25,7 @@ public class CreateSportFacilityDto {
         this.geoWidth = geoWidth;
         this.geoLength = geoLength;
         this.imgSource = imgSource;
+        this.managerId = managerId;
     }
 
     public String getName() {
@@ -96,5 +98,13 @@ public class CreateSportFacilityDto {
 
     public void setImgSource(String imgSource) {
         this.imgSource = imgSource;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 }

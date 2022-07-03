@@ -1,28 +1,38 @@
 package services;
 
-import beans.Address;
-import beans.Location;
-import beans.SportFacility;
-import beans.SportFacilityType;
+import beans.sportfacility.Address;
+import beans.sportfacility.Location;
+import beans.sportfacility.SportFacility;
+import beans.users.Manager;
+import beans.users.Role;
+import beans.users.User;
 import dto.sportfacility.*;
+import storage.ManagerStorage;
 import storage.SportFacilityStorage;
+import storage.UserStorage;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class SportFacilityService {
-    private static List<SportFacility> AllFacilities = new ArrayList<SportFacility>(); //MORAO SAM OVO SVE U STATIC?
+    private static SportFacilityService instance = null;
+
+    public static SportFacilityService getInstance() {
+        if (instance == null) {
+            instance = new SportFacilityService();
+        }
+        return instance;
+    }
+
 
     public SportFacilityService() {
 
     }
 
-    public static AllFacilitiesDto getAllFacilities() {  //MORAO SAM OVO SVE U STATIC?
+    public static AllFacilitiesDto getAllFacilities() {
         List<SportFacilityDto> list = new ArrayList<>();
         for (SportFacility facility : SportFacilityStorage.getInstance().getAll()) {
-            list.add(makeFacilityDto(facility));
+            list.add(returnFacilityDto(facility));
         }
         return new AllFacilitiesDto(list);
     }
@@ -32,7 +42,7 @@ public class SportFacilityService {
 
         for(SportFacility facility:SportFacilityStorage.getInstance().getAll()){
             if(facility.isSearched(name,type,city,grade)){
-                list.add(makeFacilityDto(facility));
+                list.add(returnFacilityDto(facility));
             }
         }
         return  new AllFacilitiesDto(list);
@@ -43,11 +53,14 @@ public class SportFacilityService {
         Location loc= new Location(facilityDto.getGeoLength(),facilityDto.getGeoWidth(),adr);
         SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc);
 
-        SportFacilityStorage storage=SportFacilityStorage.getInstance();
-        return storage.create(facility);
+        Manager manager= ManagerStorage.getInstance().getById(facilityDto.getManagerId());
+        manager.setSportFacility(SportFacilityStorage.getInstance().create(facility));
+        ManagerStorage.getInstance().update(manager);
+
+        return true;
     }
 
-    private static SportFacilityDto makeFacilityDto(SportFacility facility){
+    private static SportFacilityDto returnFacilityDto(SportFacility facility){
         LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
                 facility.getLocation().getAdress().getStreet(), facility.getLocation().getAdress().getStrNumber(), facility.getLocation().getAdress().getPostalCode());
         WorkingHoursDto work = new WorkingHoursDto(facility.getOpenTime().getStartWorkingDays(), facility.getOpenTime().getEndWorkingDays(), facility.getOpenTime().getStartSaturday(),
@@ -56,5 +69,35 @@ public class SportFacilityService {
         return fac;
     }
 
+    public AllFreeManagersDto getFreeManagers() {
+        ManagerStorage storage=ManagerStorage.getInstance();
+        List<Manager> allManagers=storage.getAll();
+        List<FreeManagerDto> freeManagers = new ArrayList<>();
 
+        for (Manager man:allManagers) {
+            if(man.getSportFacility()==null){
+                freeManagers.add(new FreeManagerDto(man.getId(),man.getName(),man.getSurname()));
+            }
+        }
+        if(freeManagers.isEmpty()) freeManagers=null;
+
+        return new AllFreeManagersDto(freeManagers);
+    }
+
+    public boolean createFacilityWithManager(CreateFacilityWithManagerDto dto) {
+        if(UserStorage.getInstance().getUserByUsername(dto.getManagerUsername()) != null) {
+            return false;
+        }
+
+        User user = UserStorage.getInstance().addUser(new User(dto.getManagerUsername(),
+                dto.getManagerPassword(),
+                dto.getManagerName(),
+                dto.getManagerSurname(),
+                dto.isManagerGender(),
+                dto.getManagerBirthDate(),
+                Role.MANAGER));
+        ManagerStorage.getInstance().add(new Manager(user, null));
+
+        return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId()));
+    }
 }

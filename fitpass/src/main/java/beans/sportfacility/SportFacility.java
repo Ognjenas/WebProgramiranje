@@ -1,4 +1,4 @@
-package beans;
+package beans.sportfacility;
 
 import utilities.WorkingHours;
 
@@ -83,11 +83,11 @@ public class SportFacility {
         isOpen = open;
     }
 
-    public beans.Location getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(beans.Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
