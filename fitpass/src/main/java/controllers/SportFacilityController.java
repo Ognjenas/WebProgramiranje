@@ -2,6 +2,7 @@ package controllers;
 
 import com.google.gson.Gson;
 import dto.sportfacility.AllFacilitiesDto;
+import dto.sportfacility.SportFacilityDto;
 import services.SportFacilityService;
 import spark.Request;
 import spark.Response;
@@ -14,7 +15,7 @@ public class SportFacilityController {
 
     public static String loadFacilities(Request req, Response res) {
         res.type("application/json");
-        AllFacilitiesDto s = facilityService.getAllFacilities();
+        AllFacilitiesDto s = facilityService.getAllFacilitiesDto();
         return g.toJson(s);
     }
 
@@ -26,7 +27,13 @@ public class SportFacilityController {
         String grade = req.queryParams("grade");
         AllFacilitiesDto s = facilityService.getSearchedFacilities(name, type, city, grade);
         return g.toJson(s);
+    }
 
+    public static String showFacility(Request req, Response res) {
+        res.type("application/json");
+        String id = req.queryParams("id");
+        SportFacilityDto s = facilityService.getFacilityToShow(Integer.parseInt(id));
+        return g.toJson(s);
     }
 
 }

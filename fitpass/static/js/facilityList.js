@@ -65,7 +65,7 @@ Vue.component("facility-list", {
 		<th>Image</th>
 	</tr>
 		
-	<tr v-for="f in facilityList">
+	<tr v-for="f in facilityList" v-on:click="selectedFacility(f)">
 		<td>{{f.name}}</td>
 		<td>{{f.type}}</td>
 		<td>
@@ -90,7 +90,11 @@ Vue.component("facility-list", {
     ,
     methods:
         {
-            searchFacility: function () {
+            selectedFacility(f){
+                router.push('/facility-show/'+f.id);
+            },
+
+            searchFacility() {
                 axios.get('facilities/search?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
                     .then(response => {
                         this.facilityList = response.data.allFacilities;
@@ -100,7 +104,7 @@ Vue.component("facility-list", {
 
             },
 
-            logout: function () {
+            logout() {
                 $cookies.remove('token')
                 router.push('/login')
             },

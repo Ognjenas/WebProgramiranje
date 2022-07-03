@@ -29,10 +29,14 @@ public class SportFacilityService {
 
     }
 
-    public static AllFacilitiesDto getAllFacilities() {
+    private static List<SportFacility> getAllFacilities(){
+        return SportFacilityStorage.getInstance().getAll();
+    }
+
+    public static AllFacilitiesDto getAllFacilitiesDto() {
         List<SportFacilityDto> list = new ArrayList<>();
-        for (SportFacility facility : SportFacilityStorage.getInstance().getAll()) {
-            list.add(returnFacilityDto(facility));
+        for (SportFacility facility : getAllFacilities()) {
+            list.add(makeFacilityDto(facility));
         }
         return new AllFacilitiesDto(list);
     }
@@ -40,9 +44,9 @@ public class SportFacilityService {
     public static AllFacilitiesDto getSearchedFacilities(String name,String type,String city,String grade) {
         List<SportFacilityDto> list = new ArrayList<>();
 
-        for(SportFacility facility:SportFacilityStorage.getInstance().getAll()){
+        for(SportFacility facility:getAllFacilities()){
             if(facility.isSearched(name,type,city,grade)){
-                list.add(returnFacilityDto(facility));
+                list.add(makeFacilityDto(facility));
             }
         }
         return  new AllFacilitiesDto(list);
@@ -60,12 +64,12 @@ public class SportFacilityService {
         return true;
     }
 
-    private static SportFacilityDto returnFacilityDto(SportFacility facility){
+    private static SportFacilityDto makeFacilityDto(SportFacility facility){
         LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
                 facility.getLocation().getAdress().getStreet(), facility.getLocation().getAdress().getStrNumber(), facility.getLocation().getAdress().getPostalCode());
         WorkingHoursDto work = new WorkingHoursDto(facility.getOpenTime().getStartWorkingDays(), facility.getOpenTime().getEndWorkingDays(), facility.getOpenTime().getStartSaturday(),
                 facility.getOpenTime().getEndSaturday(), facility.getOpenTime().getStartSunday(), facility.getOpenTime().getEndSunday());
-        SportFacilityDto fac = new SportFacilityDto(facility.getName(), facility.getType(), loc, facility.isOpen(), facility.getAverageGrade(), work, facility.getImgSource());
+        SportFacilityDto fac = new SportFacilityDto(facility.getId(),facility.getName(), facility.getType(), loc, facility.isOpen(), facility.getAverageGrade(), work, facility.getImgSource());
         return fac;
     }
 
@@ -99,5 +103,12 @@ public class SportFacilityService {
         ManagerStorage.getInstance().add(new Manager(user, null));
 
         return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId()));
+    }
+
+    public SportFacilityDto getFacilityToShow(int facilityId){
+        for (SportFacility facility:getAllFacilities()) {
+            if(facility.getId()==facilityId) return makeFacilityDto(facility);
+        }
+        return null;
     }
 }

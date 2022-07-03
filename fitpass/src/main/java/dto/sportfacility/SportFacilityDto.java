@@ -3,6 +3,7 @@ package dto.sportfacility;
 import beans.sportfacility.SportFacilityType;
 
 public class SportFacilityDto {
+    private int id;
     private String name;
     private SportFacilityType type;
     private LocationDto location;
@@ -13,7 +14,8 @@ public class SportFacilityDto {
     public SportFacilityDto() {
     }
 
-    public SportFacilityDto(String name, SportFacilityType type, LocationDto location, boolean isOpen, double averageGrade, WorkingHoursDto openTime, String imgSource) {
+    public SportFacilityDto(int id,String name, SportFacilityType type, LocationDto location, boolean isOpen, double averageGrade, WorkingHoursDto openTime, String imgSource) {
+        this.id=id;
         this.name = name;
         this.type = type;
         this.location = location;
@@ -21,6 +23,14 @@ public class SportFacilityDto {
         this.averageGrade = averageGrade;
         this.openTime = openTime;
         this.imgSource = imgSource;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -22,6 +22,7 @@ public class SparkMainApp {
             before("/*", AuthController::authFilter);
             get("/",SportFacilityController::loadFacilities);
             get("/search",SportFacilityController::searchFacilities);
+            get("/show",SportFacilityController::showFacility);
 
         });
 

@@ -210,7 +210,7 @@ Vue.component("facility-create", {
                 axios.post('/administrator/create-facility', this.form, this.configHeaders);
             }
 
-            router.push('#/');
+            router.push('/');
         }
 
         ,
@@ -247,7 +247,6 @@ Vue.component("facility-create", {
                 }
             }
 
-            //TREBA ROUTER PUSHOVATI FACILITY-LIST TJ. HOME PAGE!
         }
         ,
 
