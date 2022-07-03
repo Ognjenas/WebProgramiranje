@@ -1,18 +1,12 @@
 package storage;
 
-import beans.Address;
-import beans.Location;
-import beans.SportFacility;
-import beans.SportFacilityType;
-import beans.users.User;
+import beans.sportfacility.SportFacility;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import utilities.WorkingHours;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +45,7 @@ public class SportFacilityStorage {
         return sportFacilities;
     }
 
-    public boolean create(SportFacility facility){
+    public SportFacility create(SportFacility facility){
         List<SportFacility> sportFacilities = getAll();
         int id=getCount()+1;
         facility.setId(id);
@@ -61,13 +55,13 @@ public class SportFacilityStorage {
             sportFacilities.add(facility);
             new Gson().toJson(sportFacilities, writer);
             writer.close();
-            return true;
+            return facility;
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     private int getCount() {

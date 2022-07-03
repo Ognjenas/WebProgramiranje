@@ -1,25 +1,23 @@
 package beans.users;
 
-import beans.SportFacility;
-
-import java.util.List;
+import beans.sportfacility.SportFacility;
 
 public class Manager extends User{
-    private List<SportFacility> sportFacilities;
+    private SportFacility sportFacility;
 
     public Manager() {
     }
 
-    public Manager(User user, List<SportFacility> sportFacilities) {
+    public Manager(User user, SportFacility sportFacility) {
         super(user.getId(), user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.isGender(), user.getBirthDate(), user.getRole());
-        this.sportFacilities = sportFacilities;
+        this.sportFacility = sportFacility;
     }
 
-    public List<SportFacility> getSportFacilities() {
-        return sportFacilities;
+    public SportFacility getSportFacility() {
+        return sportFacility;
     }
 
-    public void setSportFacilities(List<SportFacility> sportFacilities) {
-        this.sportFacilities = sportFacilities;
+    public void setSportFacility(SportFacility sportFacility) {
+        this.sportFacility = sportFacility;
     }
 }

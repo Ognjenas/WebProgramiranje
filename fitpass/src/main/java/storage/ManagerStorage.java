@@ -1,7 +1,7 @@
 package storage;
 
 import beans.users.Manager;
-import beans.users.Trainer;
+import beans.users.Role;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +54,37 @@ public class ManagerStorage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Manager getById(int id){
+        List<Manager> managers = getAll();
+        for(Manager man:managers){
+            if(man.getId()==id) return man;
+        }
+        return null;
+    }
+
+    public boolean update(Manager manager){
+        List<Manager> managers = getAll();
+        try(FileWriter writer =new FileWriter("./storage/managers.json")){
+            for(Manager man:managers){
+                if(man.getId()==manager.getId()){
+                    man.setUsername(manager.getUsername());
+                    man.setPassword(manager.getPassword());
+                    man.setName(manager.getName());
+                    man.setSurname(manager.getSurname());
+                    man.setGender(manager.isGender());
+                    man.setBirthDate(manager.getBirthDate());
+                    man.setRole(manager.getRole());
+                    man.setDeleted(manager.isDeleted());
+                    man.setSportFacility(manager.getSportFacility());
+                }
+            }
+            new Gson().toJson(managers, writer);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

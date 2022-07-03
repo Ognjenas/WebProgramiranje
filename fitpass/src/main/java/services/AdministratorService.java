@@ -1,5 +1,6 @@
 package services;
 
+import beans.sportfacility.SportFacility;
 import beans.users.Manager;
 import beans.users.Role;
 import beans.users.Trainer;
@@ -52,7 +53,7 @@ public class AdministratorService {
                 makeUserDto.isGender(),
                 makeUserDto.getBirthDate(),
                 Role.valueOf(makeUserDto.getRole())));
-        ManagerStorage.getInstance().add(new Manager(user, new ArrayList<>()));
+        ManagerStorage.getInstance().add(new Manager(user, null));
         return true;
     }
 }
