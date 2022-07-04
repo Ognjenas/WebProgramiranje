@@ -10,11 +10,22 @@ Vue.component("facility-show", {
             },
             currentFacility: null,
             id: "",
+            userInfo: {
+                username: "",
+                role: ""
+            }
 
         }
     },
     template: ` 
 <div>
+<div v-if="$cookies.get('token') != null">
+        <label>Username: {{userInfo.username}}</label>
+        <button v-on:click="editProfile">Profile</button>
+    </div>
+    <div v-if="$cookies.get('token') == null">
+        <button v-on:click="login">Login</button>
+    </div>
     <h1>SHOW FACILITY</h1>
     <table>
         <tr>
@@ -61,14 +72,29 @@ Vue.component("facility-show", {
 `
     ,
     methods:
-        {},
+        {
+            login() {
+                router.push('/login')
+            },
+            editProfile() {
+                router.push("/edit-profile")
+            }
+        },
 
     mounted() {
 
         axios
-            .get('facilities/show?id=' + this.$route.params.id, this.configHeaders)
+            .get('/show-facility?id=' + this.$route.params.id)
             .then(response => {
                 this.currentFacility = response.data;
         });
+
+        if ($cookies.get("token") != null) {
+            axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
+                .then(response => {
+                    this.userInfo = response.data
+                    $cookies.set("userInfo", response.data, 10000)
+                })
+        }
     },
 });

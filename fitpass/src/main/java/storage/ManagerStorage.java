@@ -2,6 +2,8 @@ package storage;
 
 import beans.users.Manager;
 import beans.users.Role;
+import beans.users.Trainer;
+import beans.users.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -86,5 +88,25 @@ public class ManagerStorage {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void editUser(User user) {
+        List<Manager> managers = getAll();
+
+        for(int i = 0; i<managers.size();i++) {
+            if(managers.get(i).getId() == user.getId()) {
+                managers.set(i,new Manager(user, managers.get(i).getSportFacility()));
+                break;
+            }
+        }
+        save(managers);
+    }
+
+    private void save(List<Manager> managers) {
+        try(FileWriter writer =new FileWriter("./storage/managers.json")){
+            new Gson().toJson(managers, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

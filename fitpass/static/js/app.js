@@ -7,6 +7,7 @@ const UsersList = { template: '<users-list></users-list>' }
 const CreateTrainer = { template: '<create-trainer></create-trainer>' }
 const CreateManager = { template: '<create-manager></create-manager>' }
 const FacilityShow= {template: '<facility-show></facility-show>'}
+const EditProfile= {template: '<edit-profile></edit-profile>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -19,7 +20,8 @@ const router = new VueRouter({
         {path: '/users-list', component: UsersList},
         {path: '/create-trainer', component: CreateTrainer},
         {path: '/create-manager', component: CreateManager},
-        {path: '/facility-show/:id', component: FacilityShow}
+        {path: '/facility-show/:id', component: FacilityShow},
+        {path: '/edit-profile', component: EditProfile}
     ]
 });
 
