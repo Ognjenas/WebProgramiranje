@@ -27,6 +27,10 @@ public class UserStorage {
     private UserStorage() {
     }
 
+    public User getById(int id) {
+        return getAll().stream().filter(usr -> usr.getId() == id).findFirst().orElse(null);
+    }
+
     public List<User> getAll() {
         List<User> allUsers = new ArrayList<>();
 
@@ -68,6 +72,17 @@ public class UserStorage {
         return null;
     }
 
+    public void editUser(User user) {
+        List<User> users = getAll();
+        for(int i = 0; i<users.size();i++) {
+            if(users.get(i).getId() == user.getId()) {
+                users.set(i,user);
+                break;
+            }
+        }
+        save(users);
+    }
+
     public User addUser(User user) {
         List<User> users = getAll();
         user.setId(getId());
@@ -81,5 +96,13 @@ public class UserStorage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void save(List<User> users) {
+        try(FileWriter writer =new FileWriter("./storage/users.json")){
+            new Gson().toJson(users, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

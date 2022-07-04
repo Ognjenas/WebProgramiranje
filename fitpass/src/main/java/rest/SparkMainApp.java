@@ -18,27 +18,33 @@ public class SparkMainApp {
 
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
-        path("/facilities", () -> {
-            before("/*", AuthController::authFilter);
-            get("/",SportFacilityController::loadFacilities);
-            get("/search",SportFacilityController::searchFacilities);
-            get("/show",SportFacilityController::showFacility);
 
+
+        path("/", () -> {
+            get("/get-facilities",SportFacilityController::loadFacilities);
+            get("/search-facility",SportFacilityController::searchFacilities);
+            get("/show-facility",SportFacilityController::showFacility);
+            post("/register-customer", UserController::registerCustomer);
+            post("/login", UserController::login);
         });
 
 
         path("/administrator", () -> {
             before("/*", AuthController::authFilter);
             before("/*", AuthController::authAdministrator);
-            get("/users", AdministratorController::getAllUsers);
+            get("/get-users", AdministratorController::getAllUsers);
             post("/register-trainer", AdministratorController::registerTrainer);
             post("/register-manager", AdministratorController::registerManager);
             get("/get-free-managers",AdministratorController::getFreeManagers);
             post("/create-facility",AdministratorController::createFacility);
             post("/create-facility-with-manager",AdministratorController::createFacilityWithManager);
         });
-        UserController.registerCustomer();
-        UserController.getInfo();
-        UserController.login();
+
+        path("/users", () -> {
+            before("/*", AuthController::authFilter);
+            post("/get-info", UserController::getInfo);
+            get("/get-user", UserController::getUser);
+            post("/edit-user", UserController::editUser);
+        });
     }
 }

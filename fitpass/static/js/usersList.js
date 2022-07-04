@@ -76,7 +76,7 @@ Vue.component("users-list", {
                 }
             })
         axios
-            .get('/administrator/users', this.configHeaders)
+            .get('/administrator/get-users', this.configHeaders)
             .then(response =>{this.usersDto = response.data
             })
 

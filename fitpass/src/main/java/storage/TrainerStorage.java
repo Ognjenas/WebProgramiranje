@@ -1,6 +1,7 @@
 package storage;
 
 import beans.users.Trainer;
+import beans.users.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -53,5 +54,25 @@ public class TrainerStorage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void editUser(User user) {
+        List<Trainer> trainers = getAll();
+
+        for(int i = 0; i<trainers.size();i++) {
+            if(trainers.get(i).getId() == user.getId()) {
+                trainers.set(i,new Trainer(user, trainers.get(i).getTrainingHistory()));
+                break;
+            }
+        }
+        save(trainers);
+    }
+
+    private void save(List<Trainer> trainers) {
+        try(FileWriter writer =new FileWriter("./storage/trainers.json")){
+            new Gson().toJson(trainers, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

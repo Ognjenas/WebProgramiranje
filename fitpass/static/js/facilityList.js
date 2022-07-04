@@ -24,7 +24,14 @@ Vue.component("facility-list", {
     },
     template: ` 
 <div>
-    <label>Username: {{userInfo.username}}</label>
+    <div v-if="$cookies.get('token') != null">
+        <label>Username: {{userInfo.username}}</label>
+        <button v-on:click="editProfile">Profile</button>
+    </div>
+    <div v-if="$cookies.get('token') == null">
+        <button v-on:click="login">Login</button>
+    </div>
+    
     <p>
     Search:</p>
     
@@ -83,7 +90,7 @@ Vue.component("facility-list", {
         </td>
 	</tr>
 </table>
-	<button class="login-button" v-on:click="logout">Odjavi se</button>
+	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
 	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
 </div>		  
 `
@@ -95,7 +102,7 @@ Vue.component("facility-list", {
             },
 
             searchFacility() {
-                axios.get('facilities/search?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
+                axios.get('/search-facility?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade)
                     .then(response => {
                         this.facilityList = response.data.allFacilities;
                     })
@@ -106,6 +113,9 @@ Vue.component("facility-list", {
 
             logout() {
                 $cookies.remove('token')
+                router.push('/login')
+            },
+            login() {
                 router.push('/login')
             },
             listUsers : function () {
@@ -153,23 +163,28 @@ Vue.component("facility-list", {
                     }
                 }
             },
+            editProfile() {
+                router.push("/edit-profile")
+            }
 
 
         },
 
     mounted() {
-        if ($cookies.get("token") == null) {
-            router.push("/login")
-        }
+
         axios
-            .get('/facilities/', this.configHeaders)
+            .get('/get-facilities')
             .then(response => {
                 this.facilityList = response.data.allFacilities;
             })
-        axios.post('users/get-info', $cookies.get("token"))
-            .then(response => {
-                this.userInfo = response.data
-            })
+        if ($cookies.get("token") != null) {
+            axios.post('/users/get-info', $cookies.get("token"), this.configHeaders)
+                .then(response => {
+                    this.userInfo = response.data
+                    $cookies.set("userInfo", response.data, 10000)
+                })
+        }
+
 
     },
 });
