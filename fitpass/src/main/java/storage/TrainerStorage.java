@@ -28,6 +28,10 @@ public class TrainerStorage {
     private TrainerStorage() {
     }
 
+    public Trainer getById(int id) {
+        return getAll().stream().filter(trainer-> trainer.getId() == id).findFirst().orElse(null);
+    }
+
     public List<Trainer> getAll() {
         List<Trainer> allTrainers = new ArrayList<>();
 

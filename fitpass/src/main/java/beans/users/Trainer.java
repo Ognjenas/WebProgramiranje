@@ -1,8 +1,6 @@
 package beans.users;
 
-import beans.training.TrainingHistory;
-
-import java.time.LocalDate;
+import beans.offer.TrainingHistory;
 
 
 public class Trainer extends User{

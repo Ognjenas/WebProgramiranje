@@ -1,5 +1,8 @@
 package beans.sportfacility;
 
+import beans.offer.Offer;
+import beans.offer.OfferType;
+import beans.offer.Training;
 import utilities.WorkingHours;
 
 import java.time.LocalTime;
@@ -10,7 +13,7 @@ public class SportFacility {
     private int id;
     private String name;
     private SportFacilityType type;
-    private List<String> offers;
+    private List<Offer> offers;
     private boolean isOpen;
     // STA STAVITI ZA SLIKU?
     private String imgSource;
@@ -19,7 +22,8 @@ public class SportFacility {
     private WorkingHours openTime; //OVDE BIH NAPRAVIO KLASU POSEBNU ZA RADNO VREME ZA SVAKI DAN
     private boolean isDeleted;
 
-    public SportFacility(int id, String name, SportFacilityType type, List<String> offers, boolean isOpen, String imgSource, Location location, double averageGrade, WorkingHours openTime,boolean deleted) {
+    public SportFacility(int id, String name, SportFacilityType type, List<Offer> offers, boolean isOpen,
+                         String imgSource, Location location, double averageGrade, WorkingHours openTime, boolean deleted) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -67,11 +71,11 @@ public class SportFacility {
         this.type = type;
     }
 
-    public List<String> getOffers() {
+    public List<Offer> getOffers() {
         return offers;
     }
 
-    public void setOffers(List<String> offers) {
+    public void setOffers(List<Offer> offers) {
         this.offers = offers;
     }
 
@@ -139,6 +143,10 @@ public class SportFacility {
 
         return this.name.toLowerCase().contains(name.toLowerCase()) && this.type.toString().toLowerCase().contains(type.toLowerCase())
                 && this.location.getAdress().getCity().toLowerCase().contains(city.toLowerCase()) && minGrade<=averageGrade && averageGrade<=maxGrade;
+    }
+
+    public void addOffer(Offer offer) {
+        this.offers.add(offer);
     }
 
 

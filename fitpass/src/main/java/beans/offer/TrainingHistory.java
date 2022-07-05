@@ -1,4 +1,4 @@
-package beans.training;
+package beans.offer;
 
 import java.time.LocalDateTime;
 

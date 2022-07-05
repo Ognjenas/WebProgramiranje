@@ -1,0 +1,14 @@
+[
+  {
+    "id": 0,
+    "name": "asd",
+    "type": "TRAINING",
+    "duration": {
+      "seconds": 43920,
+      "nanos": 0
+    },
+    "description": "asd",
+    "imageLocation": "",
+    "isDeleted": false
+  }
+]

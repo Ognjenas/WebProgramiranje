@@ -1,1 +1,17 @@
-[{"id":5,"username":"trener","password":"trener","name":"trener","surname":"trener","gender":true,"birthDate":{"year":2022,"month":6,"day":24},"role":"TRAINER","isDeleted":false}]
+[
+  {
+    "id": 5,
+    "username": "trener",
+    "password": "trener",
+    "name": "trener",
+    "surname": "trener",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 6,
+      "day": 24
+    },
+    "role": "TRAINER",
+    "isDeleted": false
+  }
+]

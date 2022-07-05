@@ -6,16 +6,21 @@ import beans.sportfacility.SportFacility;
 import beans.users.Manager;
 import beans.users.Role;
 import beans.users.User;
+import dto.offer.OffersToShowDto;
+import dto.offer.ShortOfferDto;
 import dto.sportfacility.*;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
 import storage.UserStorage;
+import storage.offer.OfferStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SportFacilityService {
     private static SportFacilityService instance = null;
+    private static final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
+    private static final OfferStorage offerStorage = OfferStorage.getInstance();
 
     public static SportFacilityService getInstance() {
         if (instance == null) {

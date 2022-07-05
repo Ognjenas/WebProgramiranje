@@ -28,6 +28,9 @@ Vue.component("facility-list", {
         <label>Username: {{userInfo.username}}</label>
         <button v-on:click="editProfile">Profile</button>
     </div>
+    <div v-if="userInfo.role == 'MANAGER'">
+        <button v-on:click="myFacility">My facility</button>
+    </div>
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
@@ -138,8 +141,6 @@ Vue.component("facility-list", {
                     this.sorting(indexCol);
                 }
             },
-
-
             sorting(indexCol){
                 console.log(indexCol);
                 console.log(this.sortDirection);
@@ -165,6 +166,9 @@ Vue.component("facility-list", {
             },
             editProfile() {
                 router.push("/edit-profile")
+            },
+            myFacility() {
+                router.push("/open-facility")
             }
 
 
@@ -184,7 +188,5 @@ Vue.component("facility-list", {
                     $cookies.set("userInfo", response.data, 10000)
                 })
         }
-
-
     },
 });
