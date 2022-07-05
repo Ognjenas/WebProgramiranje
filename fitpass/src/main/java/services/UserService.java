@@ -6,8 +6,11 @@ import dto.users.*;
 import storage.ManagerStorage;
 import storage.TrainerStorage;
 import storage.UserStorage;
+import utilities.ComparatorFactory;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,5 +114,32 @@ public class UserService {
 
     private EditUserDto makeEditUserDto(User user) {
         return new EditUserDto(String.valueOf(user.getId()), user.getName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getRole().toString());
+    }
+
+    public AllUsersDto getSearchedUsers(String searchInput, String userRole, String userType) {
+        List<UserDto> list=new ArrayList<>();
+        for(User user:UserStorage.getInstance().getAllNotDeleted()){
+            if(user.isSearched(searchInput,userRole,userType)) {
+                list.add(makeUserDto(user));
+            }
+        }
+        return new AllUsersDto(list);
+    }
+
+    public AllUsersDto getSortedAndSearchedUsers(String searchInput, String userRole, String userType, String columnIndex, String sortDir) {
+        AllUsersDto searched=getSearchedUsers(searchInput,userRole,userType);
+        List<UserDto> searchedUsers=searched.getUsers();
+
+        if(Integer.parseInt(columnIndex)==0){
+            Collections.sort(searchedUsers,new ComparatorFactory.UserCompareName());
+        } else if (Integer.parseInt(columnIndex)==1) {
+            Collections.sort(searchedUsers,new ComparatorFactory.UserCompareSurname());
+        } else if (Integer.parseInt(columnIndex)==2) {
+            Collections.sort(searchedUsers,new ComparatorFactory.UserCompareUsername());
+        }
+
+        if(sortDir.equals("desc")) Collections.reverse(searchedUsers);
+
+        return new AllUsersDto(searchedUsers);
     }
 }

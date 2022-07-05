@@ -46,4 +46,24 @@ public class AdministratorController {
         CreateFacilityWithManagerDto dto= new Gson().fromJson(payload, CreateFacilityWithManagerDto.class);
         return new Gson().toJson(SportFacilityService.getInstance().createFacilityWithManager(dto));
     }
+
+    public static String serachUsers(Request req, Response res) {
+        res.type("application/json");
+        String searchInput = req.queryParams("searchInput");
+        String userRole = req.queryParams("userRole");
+        String userType = req.queryParams("userType");
+        AllUsersDto dto = UserService.getInstance().getSearchedUsers(searchInput,userRole,userType);
+        return new Gson().toJson(dto);
+    }
+
+    public static Object sortAndSearchUsers(Request req, Response res) {
+        res.type("application/json");
+        String searchInput = req.queryParams("searchInput");
+        String userRole = req.queryParams("userRole");
+        String userType = req.queryParams("userType");
+        String columnIndex = req.queryParams("columnIndex");
+        String sortDir = req.queryParams("sortDir");
+        AllUsersDto dto = UserService.getInstance().getSortedAndSearchedUsers(searchInput,userRole,userType,columnIndex,sortDir);
+        return new Gson().toJson(dto);
+    }
 }

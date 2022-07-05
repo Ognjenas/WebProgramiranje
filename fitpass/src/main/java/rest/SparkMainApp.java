@@ -20,6 +20,7 @@ public class SparkMainApp {
         path("/", () -> {
             get("/get-facilities",SportFacilityController::loadFacilities);
             get("/search-facility",SportFacilityController::searchFacilities);
+            get("/sort-search-facilites",SportFacilityController::sortAndSearchFacilites);
             get("/show-facility",SportFacilityController::showFacility);
             post("/register-customer", UserController::registerCustomer);
             post("/login", UserController::login);
@@ -35,6 +36,8 @@ public class SparkMainApp {
             get("/get-free-managers",AdministratorController::getFreeManagers);
             post("/create-facility",AdministratorController::createFacility);
             post("/create-facility-with-manager",AdministratorController::createFacilityWithManager);
+            get("/search-users",AdministratorController::serachUsers);
+            get("/sort-search-users",AdministratorController::sortAndSearchUsers);
         });
 
         path("/manager", () -> {
