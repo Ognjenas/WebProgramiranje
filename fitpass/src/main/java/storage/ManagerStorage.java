@@ -1,16 +1,17 @@
 package storage;
 
+import beans.sportfacility.SportFacility;
 import beans.users.Manager;
 import beans.users.Role;
 import beans.users.Trainer;
 import beans.users.User;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -30,12 +31,18 @@ public class ManagerStorage {
     private ManagerStorage() {
     }
 
+    Gson gson = new GsonBuilder()
+            .setExclusionStrategies(new FacilityExcluder())
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
+
     public List<Manager> getAll() {
         List<Manager> allManagers = new ArrayList<>();
 
         try {
             Reader reader = Files.newBufferedReader(Paths.get("./storage/managers.json"));
-            allManagers = new Gson().fromJson(reader, new TypeToken<List<Manager>>() {}.getType());
+            allManagers = gson.fromJson(reader, new TypeToken<List<Manager>>() {}.getType());
             reader.close();
             return allManagers;
         } catch (FileNotFoundException e) {
@@ -50,12 +57,16 @@ public class ManagerStorage {
         List<Manager> managers = getAll();
         try(FileWriter writer =new FileWriter("./storage/managers.json")){
             managers.add(manager);
-            new Gson().toJson(managers, writer);
+            gson.toJson(managers, writer);
             return manager;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Manager getByUsername(String username) {
+        return getAll().stream().filter(manager -> manager.getUsername().equals(username)).findFirst().orElse(null);
     }
 
     public Manager getById(int id){
@@ -82,7 +93,7 @@ public class ManagerStorage {
                     man.setSportFacility(manager.getSportFacility());
                 }
             }
-            new Gson().toJson(managers, writer);
+            gson.toJson(managers, writer);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,9 +115,22 @@ public class ManagerStorage {
 
     private void save(List<Manager> managers) {
         try(FileWriter writer =new FileWriter("./storage/managers.json")){
-            new Gson().toJson(managers, writer);
+            gson.toJson(managers, writer);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class FacilityExcluder implements ExclusionStrategy {
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+            return fieldAttributes.getDeclaringClass() == SportFacility.class && !fieldAttributes.getName().equals("id");
+        }
+
+        @Override
+        public boolean shouldSkipClass(Class<?> aClass) {
+            return false;
         }
     }
 }

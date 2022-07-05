@@ -1,9 +1,6 @@
 package rest;
 
-import controllers.AdministratorController;
-import controllers.AuthController;
-import controllers.UserController;
-import controllers.SportFacilityController;
+import controllers.*;
 import dto.sportfacility.AllFacilitiesDto;
 
 import java.io.File;
@@ -42,6 +39,16 @@ public class SparkMainApp {
             get("/search-users",AdministratorController::serachUsers);
             get("/sort-search-users",AdministratorController::sortAndSearchUsers);
         });
+
+        path("/manager", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authManager);
+            get("/get-facility", ManagerController::getManagersFacility);
+            get("/get-facility-offers", ManagerController::getFacilityOffers);
+            get("/create-offer/get-all-trainers", ManagerController::getAllTrainers);
+            post("/create-offer", ManagerController::makeOffer);
+        });
+
 
         path("/users", () -> {
             before("/*", AuthController::authFilter);

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserStorage {
 
@@ -46,6 +47,10 @@ public class UserStorage {
             e.printStackTrace();
         }
         return allUsers;
+    }
+
+    public List<User> getAllTrainers() {
+        return getAll().stream().filter(user -> user.getRole().equals(Role.TRAINER)).collect(Collectors.toList());
     }
 
     public List<User> getAllNotDeleted() {

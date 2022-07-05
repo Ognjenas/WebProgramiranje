@@ -8,6 +8,8 @@ const CreateTrainer = { template: '<create-trainer></create-trainer>' }
 const CreateManager = { template: '<create-manager></create-manager>' }
 const FacilityShow= {template: '<facility-show></facility-show>'}
 const EditProfile= {template: '<edit-profile></edit-profile>'}
+const OpenFacility= {template: '<open-facility></open-facility>'}
+const CreateOffer= {template: '<create-offer></create-offer>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -21,7 +23,9 @@ const router = new VueRouter({
         {path: '/create-trainer', component: CreateTrainer},
         {path: '/create-manager', component: CreateManager},
         {path: '/facility-show/:id', component: FacilityShow},
-        {path: '/edit-profile', component: EditProfile}
+        {path: '/edit-profile', component: EditProfile},
+        {path: '/open-facility', component: OpenFacility},
+        {path: '/open-facility/create-offer', component: CreateOffer}
     ]
 });
 

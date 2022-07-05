@@ -1,27 +1,46 @@
-package beans.training;
+package beans.offer;
 
 import beans.users.Trainer;
 
 import java.time.Duration;
 
-public class Training {
+public class Offer {
+    private int id;
     private String name;
-    private TrainingType type;
+    private OfferType type;
     private Duration duration;
-    private Trainer belongingTrainer;
     private String description;
     private String imageLocation;
+    private boolean isDeleted;
 
-    public Training() {
+    public Offer() {
     }
 
-    public Training(String name, TrainingType type, Duration duration, Trainer belongingTrainer, String description, String imageLocation) {
+    public Offer(String name, OfferType type, Duration duration, String description, String imageLocation, boolean isDeleted) {
         this.name = name;
         this.type = type;
         this.duration = duration;
-        this.belongingTrainer = belongingTrainer;
         this.description = description;
         this.imageLocation = imageLocation;
+        this.isDeleted = isDeleted;
+    }
+
+    public Offer(int id, String name, OfferType type, Duration duration, String description, String imageLocation, boolean isDeleted) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.duration = duration;
+        this.description = description;
+        this.imageLocation = imageLocation;
+        this.isDeleted = isDeleted;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -32,11 +51,11 @@ public class Training {
         this.name = name;
     }
 
-    public TrainingType getType() {
+    public OfferType getType() {
         return type;
     }
 
-    public void setType(TrainingType type) {
+    public void setType(OfferType type) {
         this.type = type;
     }
 
@@ -46,14 +65,6 @@ public class Training {
 
     public void setDuration(Duration duration) {
         this.duration = duration;
-    }
-
-    public Trainer getBelongingTrainer() {
-        return belongingTrainer;
-    }
-
-    public void setBelongingTrainer(Trainer belongingTrainer) {
-        this.belongingTrainer = belongingTrainer;
     }
 
     public String getDescription() {
@@ -70,5 +81,13 @@ public class Training {
 
     public void setImageLocation(String imageLocation) {
         this.imageLocation = imageLocation;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
