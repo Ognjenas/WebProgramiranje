@@ -42,6 +42,9 @@ public class TrainingStorage {
     private TrainingStorage() {
     }
 
+    public Training getById(int id) {
+        return getAll().stream().filter(training -> training.getId() == id).findFirst().orElse(null);
+    }
 
     public List<Training> getAll() {
         List<Training> allTraining = new ArrayList<>();

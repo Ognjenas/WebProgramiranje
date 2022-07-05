@@ -296,6 +296,9 @@
     "offers": [
       {
         "id": 0
+      },
+      {
+        "id": 1
       }
     ],
     "isOpen": false,

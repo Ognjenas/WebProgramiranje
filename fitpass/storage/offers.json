@@ -10,5 +10,17 @@
     "description": "asd",
     "imageLocation": "",
     "isDeleted": false
+  },
+  {
+    "id": 1,
+    "name": "wer",
+    "type": "SWIMMING_POOL",
+    "duration": {
+      "seconds": 43260,
+      "nanos": 0
+    },
+    "description": "asd",
+    "imageLocation": "",
+    "isDeleted": false
   }
 ]

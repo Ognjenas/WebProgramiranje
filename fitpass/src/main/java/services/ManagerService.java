@@ -15,6 +15,7 @@ import dto.sportfacility.LocationDto;
 import dto.sportfacility.SportFacilityDto;
 import dto.sportfacility.WorkingHoursDto;
 import dto.users.AllTrainersToChooseDto;
+import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
@@ -30,6 +31,7 @@ import java.util.List;
 public class ManagerService {
 
     private static ManagerService instance = null;
+    private static final SportFacilityService sportFacilityService = SportFacilityService.getInstance();
     private static final ManagerStorage managerStorage = ManagerStorage.getInstance();
     private static final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
     private static final OfferStorage offerStorage = OfferStorage.getInstance();
@@ -57,12 +59,7 @@ public class ManagerService {
     public boolean makeOffer(MakeOfferDto makeOfferDto, String managerUsername) {
         Manager manager = managerStorage.getByUsername(managerUsername);
         SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
-        for(var offer : sportFacility.getOffers()) {
-            offer = offerStorage.getById(offer.getId());
-            if(offer.getName().equals(makeOfferDto.getName())){
-                return false;
-            }
-        }
+        if(checkIfOfferExist(sportFacility, makeOfferDto.getName())) return false;
 
         Offer offer = new Offer(makeOfferDto.getName(),
                 OfferType.valueOf(makeOfferDto.getType()),
@@ -73,11 +70,14 @@ public class ManagerService {
         offer = offerStorage.add(offer);
         sportFacility.addOffer(offer);
         sportFacilityStorage.update(sportFacility);
-        Trainer trainer = trainerStorage.getById(makeOfferDto.getTrainerId());
-        if(offer.getType().equals(OfferType.TRAINING)) {
-            trainingStorage.add(new Training(offer, TrainingType.valueOf(makeOfferDto.getTrainingType()), trainer));
-        }
+        makeTraining(makeOfferDto, offer);
         return true;
+    }
+
+    public AllUsersDto getTrainersFromFacility(String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
+        return sportFacilityService.getTrainersFromFacility(sportFacility);
     }
 
     public OffersToShowDto getOffers(String username) {
@@ -101,6 +101,22 @@ public class ManagerService {
         return new AllTrainersToChooseDto(trainerDtos);
     }
 
+    private void makeTraining(MakeOfferDto makeOfferDto, Offer offer) {
+        if(offer.getType().equals(OfferType.TRAINING)) {
+            Trainer trainer = trainerStorage.getById(makeOfferDto.getTrainerId());
+            trainingStorage.add(new Training(offer, TrainingType.valueOf(makeOfferDto.getTrainingType()), trainer));
+        }
+    }
+
+    private boolean checkIfOfferExist(SportFacility sportFacility, String name) {
+        for(var offer : sportFacility.getOffers()) {
+            offer = offerStorage.getById(offer.getId());
+            if(offer.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private static SportFacilityDto makeFacilityDto(SportFacility facility){
         LocationDto loc = new LocationDto(facility.getLocation().getGeoLength(), facility.getLocation().getGeoWidth(), facility.getLocation().getAdress().getCity(),
