@@ -92,6 +92,7 @@ Vue.component("facility-list", {
 </table>
 	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
 	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
+
 </div>		  
 `
     ,
@@ -141,27 +142,11 @@ Vue.component("facility-list", {
 
 
             sorting(indexCol){
-                console.log(indexCol);
-                console.log(this.sortDirection);
-                if (indexCol===0) {
-                    if(this.sortDirection==="asc") {
-                        this.facilityList.sort((a, b) => a.name > b.name ? 1 : -1);
-                    }else{
-                        this.facilityList.sort((a, b) => a.name < b.name ? 1 : -1);
-                    }
-                } else if (indexCol===1){
-                    if(this.sortDirection==="asc") {
-                        this.facilityList.sort((a, b) => a.location.city > b.location.city ? 1 : -1);
-                    }else{
-                        this.facilityList.sort((a, b) => a.location.city < b.location.city ? 1 : -1);
-                    }
-                } else if (indexCol===2){
-                    if(this.sortDirection==="asc") {
-                        this.facilityList.sort((a, b) => a.averageGrade > b.averageGrade ? 1 : -1);
-                    }else{
-                        this.facilityList.sort((a, b) => a.averageGrade < b.averageGrade ? 1 : -1);
-                    }
-                }
+                axios.get('/sort-search-facilites?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade
+                    + '&columnIndex=' + indexCol + '&sortDir=' + this.sortDirection,this.configHeaders)
+                    .then(response => {
+                        this.facilityList = response.data.allFacilities;
+                    })
             },
             editProfile() {
                 router.push("/edit-profile")

@@ -29,6 +29,8 @@ public class SportFacilityController {
         return g.toJson(s);
     }
 
+
+
     public static String showFacility(Request req, Response res) {
         res.type("application/json");
         String id = req.queryParams("id");
@@ -36,4 +38,16 @@ public class SportFacilityController {
         return g.toJson(s);
     }
 
+    public static String sortAndSearchFacilites(Request req, Response res) {
+        res.type("application/json");
+        String name = req.queryParams("name");
+        String type = req.queryParams("type");
+        String city = req.queryParams("city");
+        String grade = req.queryParams("grade");
+        String columnIndex = req.queryParams("columnIndex");
+        String sortDir = req.queryParams("sortDir");
+
+        AllFacilitiesDto s = facilityService.sortAndSearchFacilities(name, type, city, grade,columnIndex,sortDir);
+        return g.toJson(s);
+    }
 }

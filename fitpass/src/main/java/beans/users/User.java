@@ -116,4 +116,10 @@ public class User {
         return this.id + "|" + this.username + "|" + this.password + "|" + this.name + "|" + this.surname + "|" +
                 this.gender + "|" + this.birthDate.toString() + "|" + role.toString() + "\n";
     }
+
+    public boolean isSearched(String searchInput, String userRole, String userType) {
+        //TREBA RESITI USERTYPE
+        return (this.name.toLowerCase().contains(searchInput.toLowerCase()) || this.surname.toLowerCase().contains(searchInput.toLowerCase()) ||
+                this.username.toLowerCase().contains(searchInput.toLowerCase())) && this.role.toString().toLowerCase().contains(userRole.toLowerCase());
+    }
 }

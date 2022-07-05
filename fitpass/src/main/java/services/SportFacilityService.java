@@ -10,9 +10,10 @@ import dto.sportfacility.*;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
 import storage.UserStorage;
+import utilities.ComparatorFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SportFacilityService {
     private static SportFacilityService instance = null;
@@ -110,5 +111,23 @@ public class SportFacilityService {
             if(facility.getId()==facilityId) return makeFacilityDto(facility);
         }
         return null;
+    }
+
+    //SORTIRANJE!
+    public AllFacilitiesDto sortAndSearchFacilities(String name,String type,String city,String grade,String colIndex,String sortDir){
+        AllFacilitiesDto searched=getSearchedFacilities(name,type,city,grade);
+        List<SportFacilityDto> searchedFacilities=searched.getAllFacilities();
+
+        if(Integer.parseInt(colIndex)==0){
+            Collections.sort(searchedFacilities,new ComparatorFactory.FacilityCompareName());
+        } else if (Integer.parseInt(colIndex)==1) {
+            Collections.sort(searchedFacilities,new ComparatorFactory.FacilityCompareLocation());
+        } else if (Integer.parseInt(colIndex)==2) {
+            Collections.sort(searchedFacilities,new ComparatorFactory.FacilityCompareGrade());
+        }
+
+        if(sortDir.equals("desc")) Collections.reverse(searchedFacilities);
+
+        return new AllFacilitiesDto(searchedFacilities);
     }
 }

@@ -1,7 +1,7 @@
 package beans.users;
 
 public class CustomerType {
-    private String name;
+    private CustomerRankType rankType;
     private double discount;
     private double points;
 }
