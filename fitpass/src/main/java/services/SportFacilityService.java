@@ -1,5 +1,7 @@
 package services;
 
+import beans.offer.OfferType;
+import beans.offer.Training;
 import beans.sportfacility.Address;
 import beans.sportfacility.Location;
 import beans.sportfacility.SportFacility;
@@ -9,12 +11,16 @@ import beans.users.User;
 import dto.offer.OffersToShowDto;
 import dto.offer.ShortOfferDto;
 import dto.sportfacility.*;
+import dto.users.AllUsersDto;
+import dto.users.UserDto;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
 import storage.UserStorage;
 import storage.offer.OfferStorage;
+import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,6 +28,8 @@ public class SportFacilityService {
     private static SportFacilityService instance = null;
     private static final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
     private static final OfferStorage offerStorage = OfferStorage.getInstance();
+    private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
+    private static final UserStorage userStorage = UserStorage.getInstance();
 
     public static SportFacilityService getInstance() {
         if (instance == null) {
@@ -134,5 +142,30 @@ public class SportFacilityService {
         if(sortDir.equals("desc")) Collections.reverse(searchedFacilities);
 
         return new AllFacilitiesDto(searchedFacilities);
+    }
+
+    public AllUsersDto getTrainersFromFacility(SportFacility sportFacility) {
+        List<UserDto> trainers = new ArrayList<>();
+        for (var offer : sportFacility.getOffers()) {
+            offer = offerStorage.getById(offer.getId());
+            if(offer.getType().equals(OfferType.TRAINING)) {
+                Training training = trainingStorage.getById(offer.getId());
+                User trainer = userStorage.getById(training.getBelongingTrainer().getId());
+                addUserToDtoList(trainer, trainers);
+            }
+        }
+        return new AllUsersDto(trainers);
+    }
+
+    private void addUserToDtoList(User user, List<UserDto> users) {
+        if(users.stream().noneMatch(userDto -> userDto.getUsername().equals(user.getUsername()))) {
+            users.add(makeUserDto(user));
+        }
+    }
+
+    private UserDto makeUserDto(User user) {
+        String birth = user.getBirthDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String gender = user.isGender() ? "MUSKO" : "ZENSKO";
+        return new UserDto(user.getName(), user.getSurname(), user.getUsername(), user.getRole().toString(), gender, birth);
     }
 }

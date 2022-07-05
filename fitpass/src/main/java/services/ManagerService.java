@@ -15,6 +15,7 @@ import dto.sportfacility.LocationDto;
 import dto.sportfacility.SportFacilityDto;
 import dto.sportfacility.WorkingHoursDto;
 import dto.users.AllTrainersToChooseDto;
+import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
@@ -30,6 +31,7 @@ import java.util.List;
 public class ManagerService {
 
     private static ManagerService instance = null;
+    private static final SportFacilityService sportFacilityService = SportFacilityService.getInstance();
     private static final ManagerStorage managerStorage = ManagerStorage.getInstance();
     private static final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
     private static final OfferStorage offerStorage = OfferStorage.getInstance();
@@ -99,6 +101,12 @@ public class ManagerService {
             trainerDtos.add(new TrainerToChooseDto(trainer.getId(), trainer.getName(), trainer.getSurname(), trainer.getUsername()));
         }
         return new AllTrainersToChooseDto(trainerDtos);
+    }
+
+    public AllUsersDto getTrainersFromFacility(String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
+        return sportFacilityService.getTrainersFromFacility(sportFacility);
     }
 
 

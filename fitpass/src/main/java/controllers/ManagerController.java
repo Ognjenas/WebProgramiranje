@@ -41,4 +41,11 @@ public class ManagerController {
         MakeOfferDto makeOfferDto = gson.fromJson(payload, MakeOfferDto.class);
         return gson.toJson(managerService.makeOffer(makeOfferDto, username));
     }
+
+    public static String getTrainersFromFacility(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(managerService.getTrainersFromFacility(username));
+    }
 }
