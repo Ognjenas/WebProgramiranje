@@ -67,4 +67,16 @@ public class UserDto {
     public void setBirth(String birth) {
         this.birth = birth;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birth='" + birth + '\'' +
+                '}';
+    }
 }
