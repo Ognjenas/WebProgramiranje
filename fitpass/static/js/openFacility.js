@@ -78,6 +78,7 @@ Vue.component("open-facility", {
         </tr>
     </table>
     <button v-on:click="createOffer">Create offer</button>
+    <button v-on:click="getTrainers">Trainers</button>
     <div>
     <table>
 	<tr>
@@ -106,7 +107,11 @@ Vue.component("open-facility", {
             },
             createOffer() {
                 router.push("/open-facility/create-offer")
+            },
+            getTrainers() {
+                router.push("/open-facility/trainers")
             }
+
         },
 
     mounted() {
