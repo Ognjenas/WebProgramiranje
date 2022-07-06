@@ -3,6 +3,7 @@ package storage;
 import beans.users.Role;
 import beans.users.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
@@ -16,7 +17,10 @@ public class UserStorage {
 
     private static UserStorage instance = null;
 
-    private static List<User> cache = new ArrayList<>();
+    Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
 
     public static UserStorage getInstance() {
         if (instance == null) {
@@ -37,7 +41,7 @@ public class UserStorage {
 
         try {
             Reader reader = Files.newBufferedReader(Paths.get("./storage/users.json"));
-            allUsers = new Gson().fromJson(reader, new TypeToken<List<User>>() {}.getType());
+            allUsers =gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
             reader.close();
 //            allUsers.add(new User("","","","",true,LocalDate.now(),Role.CUSTOMER));
             return allUsers;
@@ -95,7 +99,8 @@ public class UserStorage {
         try(FileWriter writer =new FileWriter("./storage/users.json")){
 
             users.add(user);
-            new Gson().toJson(users, writer);
+            gson.toJson(users, writer);
+            writer.close();
             return user;
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +110,7 @@ public class UserStorage {
 
     private void save(List<User> users) {
         try(FileWriter writer =new FileWriter("./storage/users.json")){
-            new Gson().toJson(users, writer);
+            gson.toJson(users, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }

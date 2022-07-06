@@ -95,6 +95,7 @@ Vue.component("facility-list", {
 </table>
 	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
 	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
+	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription">Subscription</button>
 
 </div>		  
 `
@@ -115,6 +116,9 @@ Vue.component("facility-list", {
 
             },
 
+            subscription(){
+                router.push('/subscription')
+            },
             logout() {
                 $cookies.remove('token')
                 router.push('/login')

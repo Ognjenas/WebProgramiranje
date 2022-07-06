@@ -1,18 +1,18 @@
 package services;
 
-import beans.users.Role;
-import beans.users.User;
+import beans.users.*;
 import dto.users.*;
-import storage.ManagerStorage;
-import storage.TrainerStorage;
-import storage.UserStorage;
+import storage.*;
 import utilities.ComparatorFactory;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 public class UserService {
 
@@ -20,6 +20,8 @@ public class UserService {
     private static final UserStorage userStorage = UserStorage.getInstance();
     private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
     private static final ManagerStorage managerStorage = ManagerStorage.getInstance();
+    private static final CustomerStorage customerStorage = CustomerStorage.getInstance();
+    private static final SubscriptionStorage subscriptionStorage= SubscriptionStorage.getInstance();
 
     public static UserService getInstance() {
         if (instance == null) {
@@ -39,8 +41,9 @@ public class UserService {
                 return false;
             }
         }
-        userStorage.addUser(new User(customerDto.getUsername(), customerDto.getPassword(), customerDto.getName(),
+        User addedUser=userStorage.addUser(new User(customerDto.getUsername(), customerDto.getPassword(), customerDto.getName(),
                 customerDto.getSurname(), customerDto.isGender(), customerDto.getBirthDate(), Role.CUSTOMER));
+        customerStorage.addCustomer(new Customer(addedUser,null,null, new CustomerType(CustomerRankType.NONE,0,0)));
         return true;
     }
 
@@ -141,5 +144,49 @@ public class UserService {
         if(sortDir.equals("desc")) Collections.reverse(searchedUsers);
 
         return new AllUsersDto(searchedUsers);
+    }
+
+    public boolean createSubscription(MakeSubscriptionDto dto) {
+        Customer customer=customerStorage.getCustomerByUsername(dto.getUsername());
+        Subscription subscription=makeSubscriptionInstance(dto,customer);
+        customer.setSubscription(subscription);
+        customerStorage.editCustomer(customer);
+
+        return true;
+    }
+
+    private static Subscription makeSubscriptionInstance(MakeSubscriptionDto dto, Customer customer){
+        if(customer.getSubscription()!=null){
+            Subscription previosuSubscription=subscriptionStorage.getById(customer.getSubscription().getId());
+            previosuSubscription.setDeleted(true);
+            previosuSubscription.setStatus(false);
+            subscriptionStorage.edit(previosuSubscription);
+        }
+
+        String Id = generateRandomId(10);
+        LocalDate startDate=LocalDate.now();
+        LocalDate endDate;
+        if(dto.getType()==SubscriptionType.MONTHLY){
+            endDate=startDate.plusMonths(1);
+        }else{
+            endDate=startDate.plusYears(1);
+        }
+
+        return subscriptionStorage.add(new Subscription(Id,dto.getType(),startDate,endDate,dto.getPrice(),customer,true,dto.getDailyTrainings()));
+    }
+
+    private static String generateRandomId(int len) {
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        return sb.toString();
+    }
+
+    public ShowSubscriptionDto getCurrentSubscription(String username) {
+        Subscription subscription=subscriptionStorage.getActiveByCustomerId(customerStorage.getCustomerByUsername(username).getId());
+        if(subscription==null) return null;
+        return new ShowSubscriptionDto(subscription.getId(),subscription.getType(),subscription.getPayDate(),subscription.getValidUntil(), subscription.getDailyEnteringNumber());
     }
 }

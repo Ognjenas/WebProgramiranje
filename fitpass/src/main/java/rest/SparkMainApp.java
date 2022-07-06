@@ -56,6 +56,8 @@ public class SparkMainApp {
             post("/get-info", UserController::getInfo);
             get("/get-user", UserController::getUser);
             post("/edit-user", UserController::editUser);
+            post("/create-subscription",UserController::createSubscription);
+            get("/get-subscription",UserController::getCurrentSubscription);
         });
     }
 }

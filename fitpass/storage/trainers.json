@@ -1,17 +1,1 @@
-[
-  {
-    "id": 5,
-    "username": "trener",
-    "password": "trener",
-    "name": "trener",
-    "surname": "trener",
-    "gender": true,
-    "birthDate": {
-      "year": 2022,
-      "month": 6,
-      "day": 24
-    },
-    "role": "TRAINER",
-    "isDeleted": false
-  }
-]
+[{"id":1,"username":"trener","password":"trener","name":"Luka","surname":"Licina","gender":true,"birthDate":{"year":2022,"month":7,"day":8},"role":"TRAINER","isDeleted":false},{"id":2,"username":"trener1","password":"trener1","name":"Bumbar","surname":"Simpcina","gender":false,"birthDate":{"year":2022,"month":7,"day":11},"role":"TRAINER","isDeleted":false}]

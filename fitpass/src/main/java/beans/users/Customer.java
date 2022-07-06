@@ -10,13 +10,8 @@ public class Customer extends User{
     private List<SportFacility> visitedFacilities;
     private CustomerType type;
 
-    public Customer(String username, String password, String name, String surname, boolean gender, LocalDate birthDate, Role role) {
-        super(username, password, name, surname, gender, birthDate, role);
-    }
-
-    public Customer(int id, String username, String password, String name, String surname, boolean gender,
-                    LocalDate birthDate, Role role, Subscription subscription, List<SportFacility> visitedFacilities, CustomerType type) {
-        super(id, username, password, name, surname, gender, birthDate, role);
+    public Customer(User user,Subscription subscription, List<SportFacility> visitedFacilities, CustomerType type) {
+        super(user.getId(), user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.isGender(), user.getBirthDate(), user.getRole());
         this.subscription = subscription;
         this.visitedFacilities = visitedFacilities;
         this.type = type;
