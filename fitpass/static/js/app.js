@@ -11,6 +11,7 @@ const EditProfile= {template: '<edit-profile></edit-profile>'}
 const OpenFacility= {template: '<open-facility></open-facility>'}
 const CreateOffer= {template: '<create-offer></create-offer>'}
 const TrainersList= {template: '<trainers-list></trainers-list>'}
+const EditOffer= {template: '<edit-offer></edit-offer>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -27,7 +28,8 @@ const router = new VueRouter({
         {path: '/edit-profile', component: EditProfile},
         {path: '/open-facility', component: OpenFacility},
         {path: '/open-facility/create-offer', component: CreateOffer},
-        {path: '/open-facility/trainers', component: TrainersList}
+        {path: '/open-facility/trainers', component: TrainersList},
+        {path: '/open-facility/offers/:id', component: EditOffer}
     ]
 });
 

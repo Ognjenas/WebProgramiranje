@@ -9,6 +9,7 @@ import beans.users.Manager;
 import beans.users.Trainer;
 import beans.users.User;
 import dto.offer.MakeOfferDto;
+import dto.offer.OfferDto;
 import dto.offer.OffersToShowDto;
 import dto.offer.ShortOfferDto;
 import dto.sportfacility.LocationDto;
@@ -71,6 +72,7 @@ public class ManagerService {
                 Duration.ofHours(makeOfferDto.getHourDuration()).plus(Duration.ofMinutes(makeOfferDto.getMinuteDuration())),
                 makeOfferDto.getDescription(),
                 "",
+                makeOfferDto.getPrice(),
                 false);
         offer = offerStorage.add(offer);
         sportFacility.addOffer(offer);
@@ -88,10 +90,25 @@ public class ManagerService {
         List<ShortOfferDto> shortOfferDtos = new ArrayList<>();
         for(var offer : sportFacility.getOffers()){
             offer = offerStorage.getById(offer.getId());
-            shortOfferDtos.add(new ShortOfferDto(offer.getName(), offer.getType().toString()));
+            shortOfferDtos.add(new ShortOfferDto(offer.getId(), offer.getName(), offer.getType().toString()));
         }
 
         return new OffersToShowDto(shortOfferDtos);
+    }
+
+    public OfferDto getOffer(int id, String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getId());
+        if(sportFacility.getOffers().stream().noneMatch(offer -> offer.getId() == id)) {
+            return null;
+        }
+        return sportFacilityService.getOfferById(id);
+    }
+
+    public boolean editOffer(OfferDto offerDto, String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
+        return sportFacilityService.updateOffer(offerDto, sportFacility);
     }
 
     public AllTrainersToChooseDto getAllTrainers() {

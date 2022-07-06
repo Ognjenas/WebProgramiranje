@@ -2,37 +2,40 @@
   {
     "id": 0,
     "name": "asd",
-    "type": "TRAINING",
+    "type": "SAUNA",
     "duration": {
       "seconds": 43920,
       "nanos": 0
     },
     "description": "asd",
     "imageLocation": "",
-    "isDeleted": false
+    "isDeleted": false,
+    "price": 12.0
   },
   {
     "id": 1,
-    "name": "asdsss",
-    "type": "TRAINING",
+    "name": "dsdwe",
+    "type": "SAUNA",
     "duration": {
-      "seconds": 43920,
+      "seconds": 45120,
       "nanos": 0
     },
-    "description": "asd",
+    "description": "23asd",
     "imageLocation": "",
-    "isDeleted": false
+    "isDeleted": false,
+    "price": 12.0
   },
   {
     "id": 2,
-    "name": "sdwdq",
-    "type": "SAUNA",
+    "name": "dweq222",
+    "type": "TRAINING",
     "duration": {
-      "seconds": 43380,
+      "seconds": 84060,
       "nanos": 0
     },
     "description": "asd",
     "imageLocation": "",
-    "isDeleted": false
+    "isDeleted": false,
+    "price": 21.0
   }
 ]

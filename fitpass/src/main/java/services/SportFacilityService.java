@@ -1,25 +1,32 @@
 package services;
 
+import beans.offer.Offer;
 import beans.offer.OfferType;
 import beans.offer.Training;
+import beans.offer.TrainingType;
 import beans.sportfacility.Address;
 import beans.sportfacility.Location;
 import beans.sportfacility.SportFacility;
 import beans.users.Manager;
 import beans.users.Role;
+import beans.users.Trainer;
 import beans.users.User;
+import dto.offer.OfferDto;
 import dto.offer.OffersToShowDto;
 import dto.offer.ShortOfferDto;
 import dto.sportfacility.*;
 import dto.users.AllUsersDto;
+import dto.users.TrainerToChooseDto;
 import dto.users.UserDto;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
+import storage.TrainerStorage;
 import storage.UserStorage;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
 
+import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +37,7 @@ public class SportFacilityService {
     private static final OfferStorage offerStorage = OfferStorage.getInstance();
     private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private static final UserStorage userStorage = UserStorage.getInstance();
+    private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
 
     public static SportFacilityService getInstance() {
         if (instance == null) {
@@ -155,6 +163,58 @@ public class SportFacilityService {
             }
         }
         return new AllUsersDto(trainers);
+    }
+
+    public OfferDto getOfferById(int id) {
+        Offer offer = offerStorage.getById(id);
+        OfferDto offerDto = new OfferDto(id, offer.getName(),
+                offer.getType().toString(),
+                offer.getDescription(),
+                ((int) offer.getDuration().toHours()),
+                offer.getDuration().toMinutesPart(),
+                ((int) offer.getPrice()));
+        if(offer.getType().equals(OfferType.TRAINING)) {
+            Training training = trainingStorage.getById(offer.getId());
+            User trainer = userStorage.getById(training.getBelongingTrainer().getId());
+            offerDto.setTrainer(new TrainerToChooseDto(trainer.getId(), trainer.getName(), trainer.getSurname(), trainer.getUsername()));
+            offerDto.setTrainingType(training.getTrainingType().toString());
+            offerDto.setTrainerId(trainer.getId());
+        }
+        return offerDto;
+    }
+
+    public boolean updateOffer(OfferDto offerDto, SportFacility sportFacility) {
+        Offer offer = offerStorage.getById(offerDto.getId());
+        for(var iterOffer : sportFacility.getOffers()) {
+            iterOffer = offerStorage.getById(iterOffer.getId());
+            if(iterOffer.getName().equals(offerDto.getName()) && iterOffer.getId() != offerDto.getId()) {
+                return false;
+            }
+        }
+        offer.setName(offerDto.getName());
+        offer.setDescription(offerDto.getDescription());
+        offer.setPrice(offerDto.getPrice());
+        offer.setDuration(Duration.ofHours(offerDto.getHourDuration()).plusMinutes(offerDto.getMinuteDuration()));
+
+        if(offer.getType().equals(OfferType.TRAINING) && !OfferType.valueOf(offerDto.getType()).equals(OfferType.TRAINING)) {
+            trainingStorage.deleteById(offer.getId());
+        }
+
+        if(OfferType.valueOf(offerDto.getType()).equals(OfferType.TRAINING)) {
+            Trainer trainer = trainerStorage.getById(offerDto.getTrainer().getId());
+            if(offer.getType().equals(OfferType.TRAINING)) {
+                Training training = trainingStorage.getById(offer.getId());
+                training.setTrainingType(TrainingType.valueOf(offerDto.getTrainingType()));
+                training.setBelongingTrainer(trainer);
+                trainingStorage.update(training);
+            } else {
+                Training training = new Training(offer, TrainingType.valueOf(offerDto.getTrainingType()), trainer);
+                trainingStorage.add(training);
+            }
+        }
+        offer.setType(OfferType.valueOf(offerDto.getType()));
+        offerStorage.update(offer);
+        return true;
     }
 
     private void addUserToDtoList(User user, List<UserDto> users) {

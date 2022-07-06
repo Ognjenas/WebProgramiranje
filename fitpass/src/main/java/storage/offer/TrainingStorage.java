@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainingStorage {
 
@@ -46,6 +47,17 @@ public class TrainingStorage {
         return getAll().stream().filter(training -> training.getId() == id).findFirst().orElse(null);
     }
 
+    public void deleteById(int id) {
+        List<Training> trainings = getAll();
+        for(var training : trainings) {
+            if(training.getId() == id) {
+                training.setId(-1);
+                training.setDeleted(true);
+            }
+        }
+        save(trainings);
+    }
+
     public List<Training> getAll() {
         List<Training> allTraining = new ArrayList<>();
 
@@ -61,6 +73,43 @@ public class TrainingStorage {
             e.printStackTrace();
         }
         return allTraining;
+    }
+
+    public List<Training> getAllNotDeleted() {
+        List<Training> allTraining = new ArrayList<>();
+
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get("./storage/trainings.json"));
+            allTraining = gson.fromJson(reader, new TypeToken<List<Training>>() {
+            }.getType());
+            reader.close();
+            return allTraining.stream().filter(training -> !training.isDeleted()).collect(Collectors.toList());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return allTraining;
+    }
+
+    public Training update(Training training) {
+        List<Training> trainings = getAll();
+        for(int i = 0; i < trainings.size(); i++) {
+            if(trainings.get(i).getId() == training.getId()) {
+                trainings.set(i, training);
+                save(trainings);
+                return training;
+            }
+        }
+        return null;
+    }
+
+    private void save(List<Training> trainings) {
+        try(FileWriter writer =new FileWriter("./storage/trainings.json")){
+            gson.toJson(trainings, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Training add(Training training) {
@@ -79,7 +128,7 @@ public class TrainingStorage {
 
         @Override
         public boolean shouldSkipField(FieldAttributes fieldAttributes) {
-            if (fieldAttributes.getDeclaringClass() == Offer.class && !fieldAttributes.getName().equals("id")) {
+            if (fieldAttributes.getDeclaringClass() == Offer.class && !fieldAttributes.getName().equals("id") && !fieldAttributes.getName().equals("isDeleted")) {
                 return true;
             } else if (fieldAttributes.getDeclaringClass() == Trainer.class && !fieldAttributes.getName().equals("id")) {
                 return true;
