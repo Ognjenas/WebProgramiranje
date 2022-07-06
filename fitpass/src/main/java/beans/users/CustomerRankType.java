@@ -1,5 +1,5 @@
 package beans.users;
 
 public enum CustomerRankType {
-    BRONZE,SILVER,GOLD
+    NONE,BRONZE,SILVER,GOLD
 }

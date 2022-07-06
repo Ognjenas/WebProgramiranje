@@ -293,17 +293,7 @@
     "id": 6,
     "name": "asd",
     "type": "SWIMMING_POOL",
-    "offers": [
-      {
-        "id": 0
-      },
-      {
-        "id": 1
-      },
-      {
-        "id": 2
-      }
-    ],
+    "offers": [],
     "isOpen": false,
     "imgSource": "",
     "location": {

@@ -1,1 +1,107 @@
-[{"id":0,"username":"jajee","password":"jajee","name":"asd","surname":"asd","gender":true,"birthDate":{"year":2022,"month":6,"day":24},"role":"ADMINISTRATOR","isDeleted":false},{"id":1,"username":"rendezvousdev2","password":"rendezvousdevpass","name":"asd","surname":"asd","gender":true,"birthDate":{"year":2022,"month":6,"day":23},"role":"CUSTOMER","isDeleted":false},{"id":2,"username":"rendezvousdevasd","password":"rendezvosusdevpass","name":"asd","surname":"asd","gender":true,"birthDate":{"year":2022,"month":7,"day":1},"role":"CUSTOMER","isDeleted":false},{"id":3,"username":"123123","password":"asdasdasd","name":"asd","surname":"asd","gender":true,"birthDate":{"year":2022,"month":7,"day":1},"role":"CUSTOMER","isDeleted":false},{"id":4,"username":"rendezvousdevss","password":"rendezvousdevpass","name":"asd","surname":"asd","gender":false,"birthDate":{"year":2022,"month":6,"day":30},"role":"CUSTOMER","isDeleted":false},{"id":5,"username":"trener","password":"trener","name":"trener","surname":"trener","gender":true,"birthDate":{"year":2022,"month":6,"day":24},"role":"TRAINER","isDeleted":false},{"id":6,"username":"manager","password":"manager","name":"asd","surname":"asd","gender":true,"birthDate":{"year":2022,"month":7,"day":2},"role":"MANAGER","isDeleted":false},{"id":7,"username":"kukic","password":"kukic","name":"Novo","surname":"Kukic","gender":true,"birthDate":{"year":2022,"month":6,"day":27},"role":"MANAGER","isDeleted":false},{"id":8,"username":"dasda","password":"asdasd","name":"ASDASD","surname":"dasdas","gender":true,"birthDate":{"year":2022,"month":7,"day":13},"role":"MANAGER","isDeleted":false},{"id":9,"username":"asd","password":"asd","name":"asd","surname":"ds","gender":false,"birthDate":{"year":2022,"month":7,"day":5},"role":"MANAGER","isDeleted":false},{"id":10,"username":"ddf","password":"sds","name":"jjj","surname":"jjj","gender":true,"birthDate":{"year":2022,"month":7,"day":12},"role":"MANAGER","isDeleted":false},{"id":11,"username":"domaci","password":"zadatak","name":"paja","surname":"patak","gender":false,"birthDate":{"year":2022,"month":7,"day":6},"role":"MANAGER","isDeleted":false}]
+[
+  {
+    "id": 0,
+    "username": "jajee",
+    "password": "jajee",
+    "name": "asd",
+    "surname": "asd",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 6,
+      "day": 24
+    },
+    "role": "ADMINISTRATOR",
+    "isDeleted": false
+  },
+  {
+    "id": 1,
+    "username": "trener",
+    "password": "trener",
+    "name": "Luka",
+    "surname": "Licina",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 8
+    },
+    "role": "TRAINER",
+    "isDeleted": false
+  },
+  {
+    "id": 2,
+    "username": "trener1",
+    "password": "trener1",
+    "name": "Bumbar",
+    "surname": "Simpcina",
+    "gender": false,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 11
+    },
+    "role": "TRAINER",
+    "isDeleted": false
+  },
+  {
+    "id": 3,
+    "username": "manager",
+    "password": "manager",
+    "name": "Terenji",
+    "surname": "Madjardzer",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 6,
+      "day": 29
+    },
+    "role": "MANAGER",
+    "isDeleted": false
+  },
+  {
+    "id": 4,
+    "username": "kraljina",
+    "password": "glavata",
+    "name": "Ognjen",
+    "surname": "Svraka",
+    "gender": false,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 8
+    },
+    "role": "MANAGER",
+    "isDeleted": false
+  },
+  {
+    "id": 5,
+    "username": "korisnik",
+    "password": "korisnik",
+    "name": "Miki",
+    "surname": "Pimpcina",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 15
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "id": 6,
+    "username": "123123",
+    "password": "123123",
+    "name": "Janjic",
+    "surname": "Alkoholicar",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 9
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  }
+]

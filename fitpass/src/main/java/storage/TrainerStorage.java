@@ -3,6 +3,7 @@ package storage;
 import beans.users.Trainer;
 import beans.users.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileNotFoundException;
@@ -18,6 +19,10 @@ public class TrainerStorage {
 
     private static TrainerStorage instance = null;
 
+    Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
     public static TrainerStorage getInstance() {
         if (instance == null) {
             instance = new TrainerStorage();
@@ -37,7 +42,7 @@ public class TrainerStorage {
 
         try {
             Reader reader = Files.newBufferedReader(Paths.get("./storage/trainers.json"));
-            allTrainers = new Gson().fromJson(reader, new TypeToken<List<Trainer>>() {}.getType());
+            allTrainers = gson.fromJson(reader, new TypeToken<List<Trainer>>() {}.getType());
             reader.close();
             return allTrainers;
         } catch (FileNotFoundException e) {
@@ -52,7 +57,7 @@ public class TrainerStorage {
         List<Trainer> trainers = getAll();
         try(FileWriter writer =new FileWriter("./storage/trainers.json")){
             trainers.add(trainer);
-            new Gson().toJson(trainers, writer);
+            gson.toJson(trainers, writer);
             return trainer;
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,7 +79,7 @@ public class TrainerStorage {
 
     private void save(List<Trainer> trainers) {
         try(FileWriter writer =new FileWriter("./storage/trainers.json")){
-            new Gson().toJson(trainers, writer);
+            gson.toJson(trainers, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }

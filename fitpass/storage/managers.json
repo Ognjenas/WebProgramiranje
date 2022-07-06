@@ -1,98 +1,32 @@
 [
   {
-    "sportFacility": {
-      "id": 6
-    },
-    "id": 6,
+    "sportFacility": null,
+    "id": 3,
     "username": "manager",
     "password": "manager",
-    "name": "asd",
-    "surname": "asd",
-    "gender": true,
-    "birthDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 2
-    },
-    "role": "MANAGER",
-    "isDeleted": false
-  },
-  {
-    "sportFacility": null,
-    "id": 7,
-    "username": "kukic",
-    "password": "kukic",
-    "name": "Novo",
-    "surname": "Kukic",
+    "name": "Terenji",
+    "surname": "Madjardzer",
     "gender": true,
     "birthDate": {
       "year": 2022,
       "month": 6,
-      "day": 27
+      "day": 29
     },
     "role": "MANAGER",
     "isDeleted": false
   },
   {
     "sportFacility": null,
-    "id": 8,
-    "username": "dasda",
-    "password": "asdasd",
-    "name": "ASDASD",
-    "surname": "dasdas",
-    "gender": true,
-    "birthDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 13
-    },
-    "role": "MANAGER",
-    "isDeleted": false
-  },
-  {
-    "sportFacility": null,
-    "id": 9,
-    "username": "asd",
-    "password": "asd",
-    "name": "asd",
-    "surname": "ds",
+    "id": 4,
+    "username": "kraljina",
+    "password": "glavata",
+    "name": "Ognjen",
+    "surname": "Svraka",
     "gender": false,
     "birthDate": {
       "year": 2022,
       "month": 7,
-      "day": 5
-    },
-    "role": "MANAGER",
-    "isDeleted": false
-  },
-  {
-    "sportFacility": null,
-    "id": 10,
-    "username": "ddf",
-    "password": "sds",
-    "name": "jjj",
-    "surname": "jjj",
-    "gender": true,
-    "birthDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 12
-    },
-    "role": "MANAGER",
-    "isDeleted": false
-  },
-  {
-    "sportFacility": null,
-    "id": 11,
-    "username": "domaci",
-    "password": "zadatak",
-    "name": "paja",
-    "surname": "patak",
-    "gender": false,
-    "birthDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 6
+      "day": 8
     },
     "role": "MANAGER",
     "isDeleted": false

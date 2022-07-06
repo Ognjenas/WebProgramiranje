@@ -2,7 +2,6 @@ package controllers;
 
 import beans.users.User;
 import dto.users.*;
-import rest.SparkMainApp;
 import services.SecretKeyGetter;
 import services.UserService;
 
@@ -12,16 +11,10 @@ import static spark.Spark.put;
 import static spark.Spark.post;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
-import java.security.Key;
 
 import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
-
-import java.time.LocalDate;
 
 public class UserController {
 
@@ -93,4 +86,16 @@ public class UserController {
 
     }
 
+    public static String createSubscription(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        MakeSubscriptionDto dto = gson.fromJson(payload, MakeSubscriptionDto.class);
+        return gson.toJson(userService.createSubscription(dto));
+    }
+
+    public static String getCurrentSubscription(Request req, Response res) {
+        res.type("application/json");
+        String username =req.queryParams("username");
+        return gson.toJson(userService.getCurrentSubscription(username));
+    }
 }
