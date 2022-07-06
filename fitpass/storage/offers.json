@@ -1,1 +1,42 @@
-[]
+
+[
+  {
+    "id": 0,
+    "name": "asd",
+    "type": "SAUNA",
+    "duration": {
+      "seconds": 43920,
+      "nanos": 0
+    },
+    "description": "asd",
+    "imageLocation": "",
+    "isDeleted": false,
+    "price": 12.0
+  },
+  {
+    "id": 1,
+    "name": "dsdwe",
+    "type": "SAUNA",
+    "duration": {
+      "seconds": 45120,
+      "nanos": 0
+    },
+    "description": "23asd",
+    "imageLocation": "",
+    "isDeleted": false,
+    "price": 12.0
+  },
+  {
+    "id": 2,
+    "name": "dweq222",
+    "type": "TRAINING",
+    "duration": {
+      "seconds": 84060,
+      "nanos": 0
+    },
+    "description": "asd",
+    "imageLocation": "",
+    "isDeleted": false,
+    "price": 21.0
+  }
+]

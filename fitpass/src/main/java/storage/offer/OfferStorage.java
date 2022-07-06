@@ -1,7 +1,6 @@
 package storage.offer;
 
 import beans.offer.Offer;
-import beans.offer.Training;
 import beans.sportfacility.SportFacility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,6 +52,26 @@ public class OfferStorage {
 
     public Offer getById(int id) {
         return getAll().stream().filter(offer -> offer.getId() == id).findFirst().orElse(null);
+    }
+
+    public Offer update(Offer offer) {
+        List<Offer> offers = getAll();
+        for(int i = 0; i < offers.size(); i++) {
+            if(offers.get(i).getId() == offer.getId()) {
+                offers.set(i, offer);
+                save(offers);
+                return offer;
+            }
+        }
+        return null;
+    }
+
+    private void save(List<Offer> offers) {
+        try(FileWriter writer =new FileWriter("./storage/offers.json")){
+            gson.toJson(offers, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private int getId() {

@@ -12,26 +12,29 @@ public class Offer {
     private String description;
     private String imageLocation;
     private boolean isDeleted;
+    private double price;
 
     public Offer() {
     }
 
-    public Offer(String name, OfferType type, Duration duration, String description, String imageLocation, boolean isDeleted) {
+    public Offer(String name, OfferType type, Duration duration, String description, String imageLocation, double price,boolean isDeleted) {
         this.name = name;
         this.type = type;
         this.duration = duration;
         this.description = description;
         this.imageLocation = imageLocation;
+        this.price = price;
         this.isDeleted = isDeleted;
     }
 
-    public Offer(int id, String name, OfferType type, Duration duration, String description, String imageLocation, boolean isDeleted) {
+    public Offer(int id, String name, OfferType type, Duration duration, String description, String imageLocation, double price, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.duration = duration;
         this.description = description;
         this.imageLocation = imageLocation;
+        this.price = price;
         this.isDeleted = isDeleted;
     }
 
@@ -57,6 +60,14 @@ public class Offer {
 
     public void setType(OfferType type) {
         this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Duration getDuration() {
