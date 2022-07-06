@@ -2,6 +2,7 @@ package controllers;
 
 import com.google.gson.Gson;
 import dto.offer.MakeOfferDto;
+import dto.offer.OfferDto;
 import dto.users.LoginDto;
 import io.jsonwebtoken.Jwts;
 import services.ManagerService;
@@ -47,5 +48,22 @@ public class ManagerController {
         String token = gson.fromJson(req.headers("token"), String.class);
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(managerService.getTrainersFromFacility(username));
+    }
+
+    public static String getOffer(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        int id = Integer.parseInt(req.queryParams("id"));
+        return gson.toJson(managerService.getOffer(id, username));
+    }
+
+    public static String editOffer(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        String payload = req.body();
+        OfferDto offerDto = gson.fromJson(payload, OfferDto.class);
+        return gson.toJson(managerService.editOffer(offerDto, username));
     }
 }

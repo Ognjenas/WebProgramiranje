@@ -1,15 +1,25 @@
 package dto.offer;
 
 public class ShortOfferDto {
+    private int id;
     private String name;
     private String type;
 
     public ShortOfferDto() {
     }
 
-    public ShortOfferDto(String name, String type) {
+    public ShortOfferDto(int id, String name, String type) {
+        this.id = id;
         this.name = name;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
