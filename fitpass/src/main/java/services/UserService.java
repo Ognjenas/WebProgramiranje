@@ -22,6 +22,7 @@ public class UserService {
     private static final ManagerStorage managerStorage = ManagerStorage.getInstance();
     private static final CustomerStorage customerStorage = CustomerStorage.getInstance();
     private static final SubscriptionStorage subscriptionStorage= SubscriptionStorage.getInstance();
+    private static final PromoCodeStorage promoCodeStorage= PromoCodeStorage.getInstance();
 
     public static UserService getInstance() {
         if (instance == null) {
@@ -149,10 +150,17 @@ public class UserService {
     public boolean createSubscription(MakeSubscriptionDto dto) {
         Customer customer=customerStorage.getCustomerByUsername(dto.getUsername());
         Subscription subscription=makeSubscriptionInstance(dto,customer);
+        subPromoCode(dto.getPromoCode());
         customer.setSubscription(subscription);
         customerStorage.editCustomer(customer);
 
         return true;
+    }
+
+    private void subPromoCode(String promoCode) {
+        PromoCode code=PromoCodeStorage.getInstance().getByCode(promoCode);
+        code.setUsageTimes(code.getUsageTimes()-1);
+        PromoCodeStorage.getInstance().edit(code);
     }
 
     private static Subscription makeSubscriptionInstance(MakeSubscriptionDto dto, Customer customer){
@@ -172,6 +180,8 @@ public class UserService {
             endDate=startDate.plusYears(1);
         }
 
+
+
         return subscriptionStorage.add(new Subscription(Id,dto.getType(),startDate,endDate,dto.getPrice(),customer,true,dto.getDailyTrainings()));
     }
 
@@ -188,5 +198,15 @@ public class UserService {
         Subscription subscription=subscriptionStorage.getActiveByCustomerId(customerStorage.getCustomerByUsername(username).getId());
         if(subscription==null) return null;
         return new ShowSubscriptionDto(subscription.getId(),subscription.getType(),subscription.getPayDate(),subscription.getValidUntil(), subscription.getDailyEnteringNumber());
+    }
+
+    public PromoCode checkPromoCode(String searchedCode) {
+        for (PromoCode promoCode:promoCodeStorage.getAllActive(LocalDate.now())){
+            if(promoCode.getCode().equals(searchedCode)) {
+                System.out.println(promoCode);
+                return promoCode;
+            }
+        }
+        return null;
     }
 }

@@ -96,6 +96,7 @@ Vue.component("facility-list", {
 	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
 	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
 	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription">Subscription</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode">Promo Codes</button>
 
 </div>		  
 `
@@ -116,6 +117,9 @@ Vue.component("facility-list", {
 
             },
 
+            promoCode(){
+                router.push('/promo-code')
+            },
             subscription(){
                 router.push('/subscription')
             },
