@@ -5,6 +5,7 @@ import dto.sportfacility.CreateFacilityWithManagerDto;
 import dto.sportfacility.CreateSportFacilityDto;
 import dto.users.AllUsersDto;
 import dto.users.MakeUserDto;
+import dto.users.PromoCodeCreateDto;
 import services.AdministratorService;
 import services.SportFacilityService;
 import services.UserService;
@@ -56,7 +57,7 @@ public class AdministratorController {
         return new Gson().toJson(dto);
     }
 
-    public static Object sortAndSearchUsers(Request req, Response res) {
+    public static String sortAndSearchUsers(Request req, Response res) {
         res.type("application/json");
         String searchInput = req.queryParams("searchInput");
         String userRole = req.queryParams("userRole");
@@ -65,5 +66,18 @@ public class AdministratorController {
         String sortDir = req.queryParams("sortDir");
         AllUsersDto dto = UserService.getInstance().getSortedAndSearchedUsers(searchInput,userRole,userType,columnIndex,sortDir);
         return new Gson().toJson(dto);
+    }
+
+    public static String getValidPromoCodes(Request req, Response res) {
+        res.type("application/json");
+        System.out.println("USO U CONTROLER");
+        return new Gson().toJson(AdministratorService.getInstance().getValidPromoCodes());
+    }
+
+    public static String createPromoCode(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        PromoCodeCreateDto dto= new Gson().fromJson(payload, PromoCodeCreateDto.class);
+        return new Gson().toJson(AdministratorService.getInstance().createPromoCode(dto));
     }
 }

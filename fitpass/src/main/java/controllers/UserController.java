@@ -98,4 +98,10 @@ public class UserController {
         String username =req.queryParams("username");
         return gson.toJson(userService.getCurrentSubscription(username));
     }
+
+    public static Object checkPromoCode(Request req, Response res) {
+        res.type("application/json");
+        String searchedCode =req.queryParams("src");
+        return gson.toJson(userService.checkPromoCode(searchedCode));
+    }
 }

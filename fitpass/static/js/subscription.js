@@ -15,10 +15,15 @@ Vue.component("subscription", {
                 type: "",
                 price: "",
                 dailyTrainings: "",
-                username: ""
+                username: "",
+                promoCode: "",
             },
             showSubs: true,
             currentSubscription: null,
+            searchedPromoCode: "",
+            validPromoCode: null,
+            discountedPrice: "",
+
         }
     },
     template: ` 
@@ -82,8 +87,8 @@ Vue.component("subscription", {
     <tr><td><b>Type:</b></td><td>{{this.subOffer.type}}</td></tr>
     <tr><td><b>Price:</b></td><td>{{this.subOffer.price}}</td></tr>
     <tr><td><b>Daily Trainings:</b></td><td>{{this.subOffer.dailyTrainings}}</td></tr>
-    <tr><td><b>Promo Code</b></td><td><input></td></tr>
-    <tr><td><b>Final Price</b></td><td></td></tr>
+    <tr><td><b>Promo Code</b></td><td><input v-model="searchedPromoCode" v-on:input="checkPromoCode"></td><p v-if="validPromoCode"></p></tr>
+    <tr><td><b>Final Price</b></td><td>{{this.discountedPrice}}</td></tr>
     <tr><td><button v-on:click="reset">Cancel</button></td><td><button v-on:click="orderFinish">FINISH ORDER</button></td></tr>
 
 </table>
@@ -95,7 +100,33 @@ Vue.component("subscription", {
     ,
     methods:
         {
+            checkPromoCode() {
+                axios.get('/users/check-promo-code?src=' + this.searchedPromoCode, this.configHeaders)
+                    .then(response => {
+                        this.validPromoCode = response.data
+                        if (this.validPromoCode != null) {
+                            this.calculateDiscountedPrice();
+                        } else {
+                            this.discountedPrice = this.subOffer.price;
+                        }
+
+
+                    })
+
+            },
+
+            calculateDiscountedPrice() {
+                console.log("Uso u calculate price")
+                var price = this.subOffer.price;
+                price = price - price * this.validPromoCode.discount / 100;
+                this.discountedPrice = price;
+            },
+
+
             orderFinish() {
+                if(this.validPromoCode){
+                    this.subOffer.promoCode = this.validPromoCode.code
+                }
                 axios.post('/users/create-subscription', this.subOffer, this.configHeaders);
                 router.push('/');
             },
@@ -104,7 +135,9 @@ Vue.component("subscription", {
                 this.subOffer.type = "";
                 this.subOffer.price = "";
                 this.subOffer.dailyTrainings = "";
+                this.searchedPromoCode = "";
                 this.showSubs = true;
+                this.validPromoCode = null;
             },
 
             conslog() {
@@ -113,28 +146,31 @@ Vue.component("subscription", {
                 console.log(this.subOffer.dailyTrainings);
                 console.log(this.subOffer.username);
                 console.log(this.configHeaders.headers.token);
+                console.log(this.validPromoCode);
+                this.calculateDiscountedPrice()
 
 
             },
             order(id) {
                 if (id === 0) {
                     this.subOffer.type = "MONTHLY";
-                    this.subOffer.price = "2000";
+                    this.subOffer.price = 2000;
                     this.subOffer.dailyTrainings = "1";
                 } else if (id === 1) {
                     this.subOffer.type = "MONTHLY";
-                    this.subOffer.price = "3000";
+                    this.subOffer.price = 3000;
                     this.subOffer.dailyTrainings = "3";
                 } else if (id === 2) {
                     this.subOffer.type = "YEARLY";
-                    this.subOffer.price = "20000";
+                    this.subOffer.price = 20000;
                     this.subOffer.dailyTrainings = "3";
                 } else if (id === 3) {
                     this.subOffer.type = "YEARLY";
-                    this.subOffer.price = "30000";
+                    this.subOffer.price = 30000;
                     this.subOffer.dailyTrainings = "10";
                 }
                 this.showSubs = false;
+                this.discountedPrice = this.subOffer.price;
             }
 
         },
@@ -147,14 +183,15 @@ Vue.component("subscription", {
             .then(response => {
                 this.userInfo = response.data
                 this.subOffer.username = this.userInfo.username
-                axios.get('users/get-subscription?username='+this.subOffer.username, this.configHeaders)
+                axios.get('users/get-subscription?username=' + this.subOffer.username, this.configHeaders)
                     .then(response => {
-                        this.currentSubscription=response.data
+                        this.currentSubscription = response.data
                     })
                 if (this.userInfo.role !== 'CUSTOMER') {
                     router.push("/")
                 }
             })
+
 
     },
 });
