@@ -7,12 +7,14 @@ public class MakeSubscriptionDto {
     private double price;
     private int dailyTrainings;
     private String username;
+    private String promoCode;
 
-    public MakeSubscriptionDto(SubscriptionType type, double price, int dailyTrainings, String username) {
+    public MakeSubscriptionDto(SubscriptionType type, double price, int dailyTrainings, String username,String promoCode) {
         this.type = type;
         this.price = price;
         this.dailyTrainings = dailyTrainings;
         this.username = username;
+        this.promoCode=promoCode;
     }
 
     public SubscriptionType getType() {
@@ -45,5 +47,13 @@ public class MakeSubscriptionDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(String promoCode) {
+        this.promoCode = promoCode;
     }
 }

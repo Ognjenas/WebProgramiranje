@@ -41,6 +41,8 @@ public class SparkMainApp {
             post("/create-facility-with-manager",AdministratorController::createFacilityWithManager);
             get("/search-users",AdministratorController::serachUsers);
             get("/sort-search-users",AdministratorController::sortAndSearchUsers);
+            get("/get-promo-codes",AdministratorController::getValidPromoCodes);
+            post("/create-promo-code",AdministratorController::createPromoCode);
         });
 
         path("/manager", () -> {
@@ -68,6 +70,7 @@ public class SparkMainApp {
             post("/edit-user", UserController::editUser);
             post("/create-subscription",UserController::createSubscription);
             get("/get-subscription",UserController::getCurrentSubscription);
+            get("/check-promo-code",UserController::checkPromoCode);
         });
     }
 }

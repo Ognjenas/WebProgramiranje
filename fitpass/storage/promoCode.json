@@ -1,0 +1,47 @@
+[
+  {
+    "code": "promo1",
+    "discount": 22.0,
+    "startDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 7
+    },
+    "endDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 15
+    },
+    "usageTimes": 0
+  },
+  {
+    "code": "promo2",
+    "discount": 10.0,
+    "startDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 7
+    },
+    "endDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "usageTimes": 0
+  },
+  {
+    "code": "pizda",
+    "discount": 50.0,
+    "startDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 7
+    },
+    "endDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 29
+    },
+    "usageTimes": 48
+  }
+]

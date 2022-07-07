@@ -1,16 +1,17 @@
 package services;
 
-import beans.sportfacility.SportFacility;
-import beans.users.Manager;
-import beans.users.Role;
-import beans.users.Trainer;
-import beans.users.User;
+import beans.users.*;
 import dto.users.MakeUserDto;
+import dto.users.PromoCodeCreateDto;
+import dto.users.PromoCodeShowDto;
 import storage.ManagerStorage;
+import storage.PromoCodeStorage;
 import storage.TrainerStorage;
 import storage.UserStorage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdministratorService {
 
@@ -54,6 +55,23 @@ public class AdministratorService {
                 makeUserDto.getBirthDate(),
                 Role.valueOf(makeUserDto.getRole())));
         ManagerStorage.getInstance().add(new Manager(user, null));
+        return true;
+    }
+
+    public PromoCodeShowDto getValidPromoCodes() {
+        System.out.println("USO U SERVIS");
+        List<PromoCode> list = new ArrayList<>();
+        for (PromoCode promo : PromoCodeStorage.getInstance().getAllActive(LocalDate.now())) {
+            list.add(promo);
+            System.out.println(promo);
+        }
+        if(list.isEmpty()) return null;
+        return new PromoCodeShowDto(list);
+    }
+
+    public boolean createPromoCode(PromoCodeCreateDto dto){
+        PromoCode promoCode=new PromoCode(dto.getCode(),dto.getDiscount(),LocalDate.now(),dto.getEndDate(),dto.getUsageTimes());
+        PromoCodeStorage.getInstance().add(promoCode);
         return true;
     }
 }
