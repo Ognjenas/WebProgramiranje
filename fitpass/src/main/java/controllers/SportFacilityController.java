@@ -29,7 +29,11 @@ public class SportFacilityController {
         return g.toJson(s);
     }
 
-
+    public static String getOffersByFacilityId(Request req, Response res) {
+        res.type("application/json");
+        int id = Integer.parseInt(req.queryParams("id"));
+        return g.toJson(facilityService.getOffersByFacilityId(id));
+    }
 
     public static String showFacility(Request req, Response res) {
         res.type("application/json");
@@ -49,5 +53,11 @@ public class SportFacilityController {
 
         AllFacilitiesDto s = facilityService.sortAndSearchFacilities(name, type, city, grade,columnIndex,sortDir);
         return g.toJson(s);
+    }
+
+    public static String getOfferById(Request req, Response res) {
+        res.type("application/json");
+        int id = Integer.parseInt(req.queryParams("id"));
+        return g.toJson(facilityService.getOffer(id));
     }
 }

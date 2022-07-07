@@ -24,6 +24,9 @@ public class SparkMainApp {
             get("/show-facility",SportFacilityController::showFacility);
             post("/register-customer", UserController::registerCustomer);
             post("/login", UserController::login);
+            get("/show-facility/offers", SportFacilityController::getOffersByFacilityId);
+            get("/show-facility/get-offer", SportFacilityController::getOfferById);
+            post("/show-facility/get-offer/get-available-appointments", CustomerController::getAvailableTimesForOfferByDate);
         });
 
 
@@ -54,6 +57,11 @@ public class SparkMainApp {
             post("/create-offer", ManagerController::makeOffer);
         });
 
+        path("/customer", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authCustomer);
+            post("/make-appointment", CustomerController::reserveOffer);
+        });
 
         path("/users", () -> {
             before("/*", AuthController::authFilter);

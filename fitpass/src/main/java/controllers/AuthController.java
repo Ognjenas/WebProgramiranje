@@ -73,6 +73,27 @@ public class AuthController {
         }
     }
 
+    public static void authCustomer(Request request, Response response) {
+        if(request.headers("token") != null) {
+            try{
+                String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build()
+                        .parseClaimsJws(request.headers("token")).getBody().getSubject();
+                User user = UserService.getInstance().getByUsername(username);
+                if(user == null || !checkUser(user, Role.CUSTOMER)) {
+                    halt(401);
+                }
+            }catch (JwtException e) {
+                System.out.println("Nije dobar token");
+                response.removeCookie("token");
+                halt(401);
+                response.status(401);
+            }
+        } else {
+            System.out.println("Nije dobar token");
+            halt(401);
+        }
+    }
+
     private static boolean checkUser(User user, Role role) {
         return !user.isDeleted() && user.getRole().equals(role);
     }

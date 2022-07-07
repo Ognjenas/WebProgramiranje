@@ -1,6 +1,8 @@
 [
   {
-    "sportFacility": null,
+    "sportFacility": {
+      "id": 1
+    },
     "id": 3,
     "username": "manager",
     "password": "manager",

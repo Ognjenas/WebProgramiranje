@@ -1,42 +1,28 @@
-
 [
   {
     "id": 0,
-    "name": "asd",
+    "name": "offer1",
     "type": "SAUNA",
     "duration": {
-      "seconds": 43920,
+      "seconds": 5400,
       "nanos": 0
     },
-    "description": "asd",
+    "description": "asdasd",
     "imageLocation": "",
     "isDeleted": false,
     "price": 12.0
   },
   {
     "id": 1,
-    "name": "dsdwe",
-    "type": "SAUNA",
-    "duration": {
-      "seconds": 45120,
-      "nanos": 0
-    },
-    "description": "23asd",
-    "imageLocation": "",
-    "isDeleted": false,
-    "price": 12.0
-  },
-  {
-    "id": 2,
-    "name": "dweq222",
+    "name": "training1",
     "type": "TRAINING",
     "duration": {
-      "seconds": 84060,
+      "seconds": 4800,
       "nanos": 0
     },
-    "description": "asd",
+    "description": "asdasd",
     "imageLocation": "",
     "isDeleted": false,
-    "price": 21.0
+    "price": 123.0
   }
 ]

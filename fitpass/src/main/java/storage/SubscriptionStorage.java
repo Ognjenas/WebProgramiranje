@@ -1,9 +1,7 @@
 package storage;
 
-import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Subscription;
-import beans.users.Trainer;
 import beans.users.User;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -71,6 +69,7 @@ public class SubscriptionStorage {
                 sub.setStatus(subscription.isStatus());
                 sub.setDailyEnteringNumber(subscription.getDailyEnteringNumber());
                 sub.setDeleted(subscription.isDeleted());
+                sub.setOrderedAppointments(subscription.getOrderedAppointments());
                 break;
             }
         }

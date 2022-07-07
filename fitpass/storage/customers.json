@@ -1,6 +1,8 @@
 [
   {
-    "subscription": null,
+    "subscription": {
+      "id": "pBGotEB3PE"
+    },
     "visitedFacilities": null,
     "type": {
       "rankType": "NONE",
