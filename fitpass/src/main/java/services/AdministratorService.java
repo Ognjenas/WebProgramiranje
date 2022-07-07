@@ -38,7 +38,7 @@ public class AdministratorService {
                 makeUserDto.isGender(),
                 makeUserDto.getBirthDate(),
                 Role.valueOf(makeUserDto.getRole())));
-        TrainerStorage.getInstance().add(new Trainer(user, null));
+        TrainerStorage.getInstance().add(new Trainer(user, new ArrayList<>()));
         return true;
     }
 

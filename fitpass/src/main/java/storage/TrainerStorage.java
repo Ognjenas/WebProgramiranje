@@ -1,7 +1,12 @@
 package storage;
 
+import beans.offer.Offer;
+import beans.offer.OfferHistory;
+import beans.users.Customer;
 import beans.users.Trainer;
 import beans.users.User;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +25,7 @@ public class TrainerStorage {
     private static TrainerStorage instance = null;
 
     Gson gson = new GsonBuilder()
+            .setExclusionStrategies(new OfferHistoryExcluder())
             .setPrettyPrinting()
             .serializeNulls()
             .create();
@@ -65,6 +71,18 @@ public class TrainerStorage {
         return null;
     }
 
+    public void editTrainer(Trainer trainer) {
+        List<Trainer> trainers = getAll();
+
+        for(int i = 0; i<trainers.size();i++) {
+            if(trainers.get(i).getId() == trainer.getId()) {
+                trainers.set(i,trainer);
+                break;
+            }
+        }
+        save(trainers);
+    }
+
     public void editUser(User user) {
         List<Trainer> trainers = getAll();
 
@@ -82,6 +100,23 @@ public class TrainerStorage {
             gson.toJson(trainers, writer);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class OfferHistoryExcluder implements ExclusionStrategy {
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+            if (fieldAttributes.getDeclaringClass() == OfferHistory.class && !fieldAttributes.getName().equals("id")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean shouldSkipClass(Class<?> aClass) {
+            return false;
         }
     }
 }

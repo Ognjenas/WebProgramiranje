@@ -3,7 +3,14 @@
     "id": 1,
     "name": "fac",
     "type": "GYM",
-    "offers": [],
+    "offers": [
+      {
+        "id": 0
+      },
+      {
+        "id": 1
+      }
+    ],
     "isOpen": false,
     "imgSource": "",
     "location": {

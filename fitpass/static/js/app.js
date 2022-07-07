@@ -13,6 +13,7 @@ const CreateOffer= {template: '<create-offer></create-offer>'}
 const TrainersList= {template: '<trainers-list></trainers-list>'}
 const Subscription={template:'<subscription></subscription>'}
 const EditOffer= {template: '<edit-offer></edit-offer>'}
+const ReserveOffer= {template: '<reserve-offer></reserve-offer>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -26,6 +27,7 @@ const router = new VueRouter({
         {path: '/create-trainer', component: CreateTrainer},
         {path: '/create-manager', component: CreateManager},
         {path: '/facility-show/:id', component: FacilityShow},
+        {path: '/facility-show/offer/:id', component: ReserveOffer},
         {path: '/edit-profile', component: EditProfile},
         {path: '/open-facility', component: OpenFacility},
         {path: '/open-facility/create-offer', component: CreateOffer},

@@ -13,8 +13,10 @@ public class Subscription {
     private boolean status;
     private int dailyEnteringNumber;
     private boolean isDeleted;
+    private int orderedAppointments;
 
-    public Subscription(String id, SubscriptionType type, LocalDate payDate, LocalDate validUntil, double price, Customer customer, boolean status, int dailyEnteringNumber) {
+    public Subscription(String id, SubscriptionType type, LocalDate payDate, LocalDate validUntil,
+                        double price, Customer customer, boolean status, int dailyEnteringNumber) {
         this.id = id;
         this.type = type;
         this.payDate = payDate;
@@ -23,7 +25,8 @@ public class Subscription {
         this.customer = customer;
         this.status = status;
         this.dailyEnteringNumber = dailyEnteringNumber;
-        this.isDeleted=false;
+        this.isDeleted = false;
+        this.orderedAppointments = 0;
     }
 
     public String getId() {
@@ -97,6 +100,24 @@ public class Subscription {
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
+
+
+    public int getOrderedAppointments() {
+        return orderedAppointments;
+    }
+
+    public void setOrderedAppointments(int orderedAppointments) {
+        this.orderedAppointments = orderedAppointments;
+    }
+
+    public int getMaximumAppointments() {
+        if(type.equals(SubscriptionType.MONTHLY)) {
+            return 31 * this.dailyEnteringNumber;
+        } else {
+            return 365 * this.dailyEnteringNumber;
+        }
+    }
+
 
     @Override
     public String toString() {

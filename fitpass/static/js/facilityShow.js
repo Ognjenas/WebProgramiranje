@@ -13,7 +13,10 @@ Vue.component("facility-show", {
             userInfo: {
                 username: "",
                 role: ""
-            }
+            },
+            offers : "",
+            reserveOffer: {date: {}, time: "", id: ""},
+            dateValue: ""
 
         }
     },
@@ -68,6 +71,14 @@ Vue.component("facility-show", {
 		    <p>Sunday: From {{currentFacility.openTime.startSunday.hour}}:{{currentFacility.openTime.startSunday.minute}} to {{currentFacility.openTime.endSunday.hour}}:{{currentFacility.openTime.endSunday.minute}}</p></td>
         </tr>
     </table>
+    
+    <h1>Offers</h1>
+    <div v-for="offer in offers">
+        <p>Name: {{offer.name}}</p>
+        <p>Type: {{offer.type}}</p>
+        <p>Duration: {{offer.duration}}</p>
+        <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton(offer.id)">Reserve</button>
+    </div>
 </div>		  
 `
     ,
@@ -78,6 +89,9 @@ Vue.component("facility-show", {
             },
             editProfile() {
                 router.push("/edit-profile")
+            },
+            reserveButton(id) {
+                router.push("/facility-show/offer/"+id);
             }
         },
 
@@ -93,8 +107,14 @@ Vue.component("facility-show", {
             axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
                 .then(response => {
                     this.userInfo = response.data
-                    $cookies.set("userInfo", response.data, 10000)
                 })
         }
+
+        axios
+            .get('/show-facility/offers?id=' + this.$route.params.id)
+            .then(response => {
+                this.offers = response.data.offers;
+            })
+
     },
 });
