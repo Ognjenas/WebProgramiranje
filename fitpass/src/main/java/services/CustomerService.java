@@ -1,12 +1,16 @@
 package services;
 
 import beans.offer.*;
+import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Subscription;
 import beans.users.Trainer;
 import dto.offer.AvailableTimesDto;
 import dto.offer.ReserveOfferDto;
+import dto.offerhistory.AllOrdersToShowDto;
+import dto.offerhistory.OrderToShowDto;
 import storage.CustomerStorage;
+import storage.SportFacilityStorage;
 import storage.SubscriptionStorage;
 import storage.TrainerStorage;
 import storage.offer.OfferHistoryStorage;
@@ -30,6 +34,7 @@ public class CustomerService {
     private final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private final TrainerStorage trainerStorage = TrainerStorage.getInstance();
     private final OfferHistoryStorage offerHistoryStorage = OfferHistoryStorage.getInstance();
+    private final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
 
     public static CustomerService getInstance() {
         if (instance == null) {
@@ -102,6 +107,19 @@ public class CustomerService {
             }
         }
         return new AvailableTimesDto(times);
+    }
+
+    public AllOrdersToShowDto getTrainings(String username) {
+        Customer customer = customerStorage.getCustomerByUsername(username);
+        List<OfferHistory> offerHistories = offerHistoryStorage.getByCustomerId(customer.getId());
+        List<OrderToShowDto> orders = new ArrayList<>();
+        for (var order : offerHistories) {
+            Offer offer = offerStorage.getById(order.getOffer().getId());
+            SportFacility sportFacility = sportFacilityStorage.getById(offer.getSportFacility().getId());
+            orders.add(new OrderToShowDto(order.getId(), offer.getName(), sportFacility.getName(), offer.getType().toString(),
+                    order.getCheckIn().toString()));
+        }
+        return new AllOrdersToShowDto(orders);
     }
 
     private boolean checkIfAvailableTime(LocalTime time, List<OfferHistory> offerHistories, Duration duration) {

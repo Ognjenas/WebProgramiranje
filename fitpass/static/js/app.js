@@ -17,6 +17,7 @@ const ReserveOffer= {template: '<reserve-offer></reserve-offer>'}
 const PromoCode= {template: '<promo-code></promo-code>'}
 const TrainerTrainings= {template: '<trainer-trainings></trainer-trainings>'}
 const ManagerTrainings= {template: '<manager-trainings></manager-trainings>'}
+const CustomerTrainings= {template: '<customer-trainings></customer-trainings>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -39,6 +40,7 @@ const router = new VueRouter({
         {path: '/open-facility/offers/:id', component: EditOffer},
         {path: '/promo-code',component: PromoCode},
         {path: '/trainer-trainings',component: TrainerTrainings},
+        {path: '/customer-trainings',component: CustomerTrainings},
         {path: '/open-facility/trainings',component: ManagerTrainings}
     ]
 });

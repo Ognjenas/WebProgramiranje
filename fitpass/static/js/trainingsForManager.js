@@ -26,7 +26,7 @@ Vue.component("manager-trainings", {
     </div>
     
     <h1>Trainings</h1>   
-    <div v-for="order in orders" style="border: 1px solid black; display: inline-block">
+    <div v-for="order in orders" style="display: inline-block; border: 1px solid black; margin: 10px; padding: 10px">
         <p>Name: {{order.name}}</p>
         <p>Type: {{order.type}}</p>
         <p>Facility: {{order.facilityName}}</p>
