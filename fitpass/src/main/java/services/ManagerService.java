@@ -1,9 +1,6 @@
 package services;
 
-import beans.offer.Offer;
-import beans.offer.OfferType;
-import beans.offer.Training;
-import beans.offer.TrainingType;
+import beans.offer.*;
 import beans.sportfacility.SportFacility;
 import beans.users.Manager;
 import beans.users.Trainer;
@@ -12,6 +9,8 @@ import dto.offer.MakeOfferDto;
 import dto.offer.OfferDto;
 import dto.offer.OffersToShowDto;
 import dto.offer.ShortOfferDto;
+import dto.offerhistory.AllOrdersToShowDto;
+import dto.offerhistory.OrderToShowDto;
 import dto.sportfacility.LocationDto;
 import dto.sportfacility.SportFacilityDto;
 import dto.sportfacility.WorkingHoursDto;
@@ -22,6 +21,7 @@ import storage.ManagerStorage;
 import storage.SportFacilityStorage;
 import storage.TrainerStorage;
 import storage.UserStorage;
+import storage.offer.OfferHistoryStorage;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 
@@ -39,6 +39,7 @@ public class ManagerService {
     private static final UserStorage userStorage = UserStorage.getInstance();
     private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
+    private static final OfferHistoryStorage offerHistoryStorage = OfferHistoryStorage.getInstance();
 
     public static ManagerService getInstance() {
         if (instance == null) {
@@ -124,6 +125,20 @@ public class ManagerService {
         Manager manager = managerStorage.getByUsername(username);
         SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
         return sportFacilityService.getTrainersFromFacility(sportFacility);
+    }
+
+    public AllOrdersToShowDto getTrainingsFromFacility(String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
+        List<OrderToShowDto> orders = new ArrayList<>();
+        for(var offerHistory : offerHistoryStorage.getNotDeleted()) {
+            Offer offer = offerStorage.getById(offerHistory.getOffer().getId());
+            if(offer.getSportFacility().getId() == sportFacility.getId()) {
+                orders.add(new OrderToShowDto(offerHistory.getId(), offer.getName(), sportFacility.getName(),
+                        offer.getType().toString(), offerHistory.getCheckIn().toString()));
+            }
+        }
+        return new AllOrdersToShowDto(orders);
     }
 
 

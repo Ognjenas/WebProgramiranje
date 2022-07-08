@@ -79,6 +79,7 @@ Vue.component("open-facility", {
     </table>
     <button v-on:click="createOffer">Create offer</button>
     <button v-on:click="getTrainers">Trainers</button>
+    <button v-on:click="getTrainings">Trainings</button>
     <div>
     <h2>Offers</h2>
     <table>
@@ -115,6 +116,9 @@ Vue.component("open-facility", {
             },
             editOffer(id) {
                 router.push("/open-facility/offers/"+id)
+            },
+            getTrainings() {
+                router.push("/open-facility/trainings")
             }
 
         },
