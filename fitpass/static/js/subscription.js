@@ -126,8 +126,10 @@ Vue.component("subscription", {
                 if(this.validPromoCode){
                     this.subOffer.promoCode = this.validPromoCode.code
                 }
-                axios.post('/users/create-subscription', this.subOffer, this.configHeaders);
-                router.push('/');
+                axios.post('/users/create-subscription', this.subOffer, this.configHeaders)
+                    .then(response=>{
+                        router.push('/');
+                    })
             },
 
             reset() {

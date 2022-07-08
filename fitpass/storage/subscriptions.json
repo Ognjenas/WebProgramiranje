@@ -236,8 +236,30 @@
     "customer": {
       "id": 6
     },
-    "status": true,
+    "status": false,
     "dailyEnteringNumber": 3,
+    "isDeleted": true,
+    "orderedAppointments": 50
+  },
+  {
+    "id": "nL0pM3f@um",
+    "type": "YEARLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 8
+    },
+    "validUntil": {
+      "year": 2023,
+      "month": 7,
+      "day": 8
+    },
+    "price": 30000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": true,
+    "dailyEnteringNumber": 10,
     "isDeleted": false,
     "orderedAppointments": 0
   }
