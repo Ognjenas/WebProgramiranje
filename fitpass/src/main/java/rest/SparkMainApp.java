@@ -67,6 +67,7 @@ public class SparkMainApp {
             before("/*", AuthController::authFilter);
             before("/*", AuthController::authTrainer);
             get("/get-trainings", TrainerController::getTrainings);
+            get("/get-trainings/cancel", TrainerController::cancelTraining);
         });
 
 

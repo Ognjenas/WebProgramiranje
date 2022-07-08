@@ -42,6 +42,10 @@ public class OfferHistoryStorage {
     private OfferHistoryStorage() {
     }
 
+    public OfferHistory getById(int id) {
+        return getAll().stream().filter(oh -> !oh.isDeleted()).filter(oh -> oh.getId() == id).findFirst().orElse(null);
+    }
+
     public List<OfferHistory> getAll() {
         List<OfferHistory> allOffersHistories = new ArrayList<>();
 
@@ -98,6 +102,26 @@ public class OfferHistoryStorage {
         return getAll().stream()
                 .filter(oh -> !oh.isDeleted() && oh.getCustomer().getId() == customerId && oh.getCheckIn().toLocalDate().isEqual(date))
                 .collect(Collectors.toList());
+    }
+
+    public OfferHistory update(OfferHistory offerHistory) {
+        List<OfferHistory> offerHistories = getAll();
+        for(int i = 0; i < offerHistories.size(); i++) {
+            if(offerHistories.get(i).getId() == offerHistory.getId()) {
+                offerHistories.set(i, offerHistory);
+                save(offerHistories);
+                return offerHistory;
+            }
+        }
+        return null;
+    }
+
+    private void save(List<OfferHistory> offerHistory) {
+        try(FileWriter writer =new FileWriter("./storage/offerHistories.json")){
+            gson.toJson(offerHistory, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static class TrainerAndCustomerExcluder implements ExclusionStrategy {

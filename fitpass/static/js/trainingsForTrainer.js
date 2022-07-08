@@ -13,7 +13,9 @@ Vue.component("trainer-trainings", {
                 username: "",
                 role: ""
             },
-            orders: ""
+            orders: "",
+            canCancel: true
+
         }
     },
     template: ` 
@@ -29,7 +31,8 @@ Vue.component("trainer-trainings", {
         <p>Type: {{order.type}}</p>
         <p>Facility: {{order.facilityName}}</p>
         <p>Time: {{order.time}}</p>
-        <button v-if="order.type == 'PERSONAL'">Cancel</button>
+        <button v-if="order.type == 'PERSONAL'" v-on:click="cancel(order.id)">Cancel</button>
+        <p v-if="!canCancel">You can't cancel in less than 2 days!</p>
     </div>
 	
 </div>		  
@@ -40,7 +43,16 @@ Vue.component("trainer-trainings", {
             editProfile() {
                 router.push("/edit-profile")
             },
-
+            cancel(id) {
+                axios
+                    .get('/trainer/get-trainings/cancel?id='+id, this.configHeaders)
+                    .then(response => {
+                        this.canCancel = response.data;
+                        if(this.canCancel) {
+                            location.reload();
+                        }
+                    })
+            }
         },
 
     mounted() {

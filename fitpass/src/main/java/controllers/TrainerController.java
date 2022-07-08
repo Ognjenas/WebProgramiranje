@@ -19,4 +19,12 @@ public class TrainerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(trainerService.getTrainingsForTrainer(username));
     }
+
+    public static String cancelTraining(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        int id = Integer.parseInt(req.queryParams("id"));
+        return gson.toJson(trainerService.cancelTraining(id, username));
+    }
 }
