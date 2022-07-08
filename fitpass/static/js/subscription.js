@@ -116,7 +116,6 @@ Vue.component("subscription", {
             },
 
             calculateDiscountedPrice() {
-                console.log("Uso u calculate price")
                 var price = this.subOffer.price;
                 price = price - price * this.validPromoCode.discount / 100;
                 this.discountedPrice = price;

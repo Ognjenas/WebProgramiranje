@@ -104,4 +104,12 @@ public class UserController {
         String searchedCode =req.queryParams("src");
         return gson.toJson(userService.checkPromoCode(searchedCode));
     }
+
+    public static Object checkSubscriptionValid(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        UserInfoDto dto = gson.fromJson(payload, UserInfoDto.class);
+        userService.checkSubscriptionValid(dto.getUsername());
+        return gson.toJson("");
+    }
 }

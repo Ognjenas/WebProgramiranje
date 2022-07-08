@@ -149,12 +149,25 @@ public class UserService {
 
     public boolean createSubscription(MakeSubscriptionDto dto) {
         Customer customer=customerStorage.getCustomerByUsername(dto.getUsername());
+        if(customer.getSubscription()!=null){
+            Subscription previosuSubscription=deletePreviousSubscription(customer);
+            customer=calculatePoints(customer,previosuSubscription);
+        }
+
         Subscription subscription=makeSubscriptionInstance(dto,customer);
         subPromoCode(dto.getPromoCode());
         customer.setSubscription(subscription);
         customerStorage.editCustomer(customer);
 
         return true;
+    }
+
+    private Subscription deletePreviousSubscription(Customer customer) {
+        Subscription previousSubscription=subscriptionStorage.getById(customer.getSubscription().getId());
+        previousSubscription.setDeleted(true);
+        previousSubscription.setStatus(false);
+        subscriptionStorage.edit(previousSubscription);
+        return previousSubscription;
     }
 
     private void subPromoCode(String promoCode) {
@@ -164,13 +177,6 @@ public class UserService {
     }
 
     private static Subscription makeSubscriptionInstance(MakeSubscriptionDto dto, Customer customer){
-        if(customer.getSubscription()!=null){
-            Subscription previosuSubscription=subscriptionStorage.getById(customer.getSubscription().getId());
-            previosuSubscription.setDeleted(true);
-            previosuSubscription.setStatus(false);
-            subscriptionStorage.edit(previosuSubscription);
-        }
-
         String Id = generateRandomId(10);
         LocalDate startDate=LocalDate.now();
         LocalDate endDate;
@@ -179,10 +185,28 @@ public class UserService {
         }else{
             endDate=startDate.plusYears(1);
         }
-
-
-
         return subscriptionStorage.add(new Subscription(Id,dto.getType(),startDate,endDate,dto.getPrice(),customer,true,dto.getDailyTrainings()));
+    }
+
+    private static Customer calculatePoints(Customer customer, Subscription previosuSubscription) {
+        double points=previosuSubscription.getPrice()/1000* previosuSubscription.getOrderedAppointments();
+
+        if(previosuSubscription.getOrderedAppointments()< previosuSubscription.getMaximumAppointments()/3){
+            points=points-previosuSubscription.getPrice()/1000*4;
+        }
+        customer.getType().setPoints(customer.getType().getPoints()+points);
+
+        if(customer.getType().getPoints()<2000){
+            customer.getType().setRankType(CustomerRankType.NONE);
+        } else if (customer.getType().getPoints()>=2000 && customer.getType().getPoints()<3000) {
+            customer.getType().setRankType(CustomerRankType.BRONZE);
+        }else if (customer.getType().getPoints()>=3000 && customer.getType().getPoints()<4000) {
+            customer.getType().setRankType(CustomerRankType.SILVER);
+        }else if (customer.getType().getPoints()>=4000) {
+            customer.getType().setRankType(CustomerRankType.GOLD);
+        }
+
+        return customer;
     }
 
     private static String generateRandomId(int len) {
@@ -203,10 +227,23 @@ public class UserService {
     public PromoCode checkPromoCode(String searchedCode) {
         for (PromoCode promoCode:promoCodeStorage.getAllActive(LocalDate.now())){
             if(promoCode.getCode().equals(searchedCode)) {
-                System.out.println(promoCode);
                 return promoCode;
             }
         }
         return null;
+    }
+
+    public void checkSubscriptionValid(String username) {
+        Customer customer=customerStorage.getCustomerByUsername(username);
+        Subscription subscription=subscriptionStorage.getActiveByCustomerId(customer.getId());
+        if(subscription.hasExpired(LocalDate.now())){
+
+            subscription.setDeleted(true);
+            subscription.setStatus(false);
+            subscriptionStorage.edit(subscription);
+            customer=calculatePoints(customer,subscription);
+            customer.setSubscription(null);
+            customerStorage.editCustomer(customer);
+        }
     }
 }

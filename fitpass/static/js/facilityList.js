@@ -191,7 +191,11 @@ Vue.component("facility-list", {
                 .then(response => {
                     this.userInfo = response.data
                     $cookies.set("userInfo", response.data, 10000)
+                    if(this.userInfo.role=='CUSTOMER'){
+                        axios.post('/users/check-subscription-valid',this.userInfo,this.configHeaders)
+                    }
                 })
         }
+
     },
 });
