@@ -81,6 +81,7 @@ public class SparkMainApp {
             post("/create-subscription",UserController::createSubscription);
             get("/get-subscription",UserController::getCurrentSubscription);
             get("/check-promo-code",UserController::checkPromoCode);
+            post("/check-subscription-valid",UserController::checkSubscriptionValid);
         });
     }
 }

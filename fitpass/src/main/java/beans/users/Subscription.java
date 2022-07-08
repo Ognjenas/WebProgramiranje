@@ -118,6 +118,10 @@ public class Subscription {
         }
     }
 
+    public boolean hasExpired(LocalDate now){
+        return now.isAfter(validUntil);
+    }
+
 
     @Override
     public String toString() {
