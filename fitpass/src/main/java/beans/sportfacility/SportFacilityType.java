@@ -1,4 +1,4 @@
-package beans;
+package beans.sportfacility;
 
 public enum SportFacilityType {
     GYM,

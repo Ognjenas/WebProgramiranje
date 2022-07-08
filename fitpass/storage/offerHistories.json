@@ -1,0 +1,132 @@
+[
+  {
+    "id": 0,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 15
+      },
+      "time": {
+        "hour": 9,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 1
+    },
+    "offer": {
+      "id": 1
+    },
+    "isDeleted": true
+  },
+  {
+    "id": 1,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 19
+      },
+      "time": {
+        "hour": 9,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 1
+    },
+    "offer": {
+      "id": 1
+    },
+    "isDeleted": true
+  },
+  {
+    "id": 2,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 22
+      },
+      "time": {
+        "hour": 10,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 1
+    },
+    "offer": {
+      "id": 1
+    },
+    "isDeleted": true
+  },
+  {
+    "id": 3,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 28
+      },
+      "time": {
+        "hour": 10,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 0
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 4,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 28
+      },
+      "time": {
+        "hour": 15,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 1
+    },
+    "offer": {
+      "id": 1
+    },
+    "isDeleted": false
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "subscription": {
+      "id": "pBGotEB3PE"
+    },
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 5,
+    "username": "korisnik",
+    "password": "korisnik",
+    "name": "Miki",
+    "surname": "Pimpcina",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 15
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "subscription": {
+      "id": "tYX%StBu@Y"
+    },
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 6,
+    "username": "123123",
+    "password": "123123",
+    "name": "Janjic",
+    "surname": "Alkoholicar",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 9
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  }
+]

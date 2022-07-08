@@ -1,0 +1,107 @@
+[
+  {
+    "id": 0,
+    "username": "jajee",
+    "password": "jajee",
+    "name": "asd",
+    "surname": "asd",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 6,
+      "day": 24
+    },
+    "role": "ADMINISTRATOR",
+    "isDeleted": false
+  },
+  {
+    "id": 1,
+    "username": "trener",
+    "password": "trener",
+    "name": "Luka",
+    "surname": "Licina",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 8
+    },
+    "role": "TRAINER",
+    "isDeleted": false
+  },
+  {
+    "id": 2,
+    "username": "trener1",
+    "password": "trener1",
+    "name": "Bumbar",
+    "surname": "Simpcina",
+    "gender": false,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 11
+    },
+    "role": "TRAINER",
+    "isDeleted": false
+  },
+  {
+    "id": 3,
+    "username": "manager",
+    "password": "manager",
+    "name": "Terenji",
+    "surname": "Madjardzer",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 6,
+      "day": 29
+    },
+    "role": "MANAGER",
+    "isDeleted": false
+  },
+  {
+    "id": 4,
+    "username": "kraljina",
+    "password": "glavata",
+    "name": "Ognjen",
+    "surname": "Svraka",
+    "gender": false,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 8
+    },
+    "role": "MANAGER",
+    "isDeleted": false
+  },
+  {
+    "id": 5,
+    "username": "korisnik",
+    "password": "korisnik",
+    "name": "Miki",
+    "surname": "Pimpcina",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 15
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "id": 6,
+    "username": "123123",
+    "password": "123123",
+    "name": "Janjic",
+    "surname": "Alkoholicar",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 9
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  }
+]

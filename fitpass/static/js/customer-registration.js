@@ -44,7 +44,7 @@ Vue.component("customer-registration", {
             let text = '{ "year" :' + date.getFullYear() + ', "month" : ' + month + ', "day" : ' + date.getDate() + ' }';
             const obj = JSON.parse(text);
             this.customer.birthDate = obj;
-            const promise = axios.post('/users/register-customer', this.customer);
+            const promise = axios.post('/register-customer', this.customer);
             promise.then(response => {
                 if(response.data === false) {
                     alert("Vec postoji sa tim username-om");

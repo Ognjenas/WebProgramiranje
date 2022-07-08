@@ -1,1 +1,357 @@
-[{"name":"Prva","type":"GYM","offers":["Sauna","Teretana"],"isOpen":true,"imgSource":"https://gymtown.rs/wp-content/uploads/2020/10/IMG_20200903_170709.jpg","location":{"geoLength":12.2,"geoWidth":13.2,"address":{"city":"Novi Sad","street":"Danila Kisa","strNumber":2,"postalCode":21000}},"averageGrade":4.5,"openTime":{"startWorkingDays":{"hour":8,"minute":0,"second":0,"nano":0},"endWorkingDays":{"hour":20,"minute":0,"second":0,"nano":0},"startSaturday":{"hour":8,"minute":0,"second":0,"nano":0},"endSaturday":{"hour":14,"minute":0,"second":0,"nano":0},"startSunday":{"hour":0,"minute":0,"second":0,"nano":0},"endSunday":{"hour":0,"minute":0,"second":0,"nano":0}}},{"name":"Druga","type":"DANCE_STUDIO","offers":["Disco","Cardio","Dancing"],"isOpen":true,"imgSource":"https://nyamie.com/uploads/photos/medium/Entity-X44MuaYXzII69UdW.JPG","location":{"geoLength":12.2,"geoWidth":13.2,"address":{"city":"Apatin","street":"Srpskih Vladara","strNumber":52,"postalCode":25260}},"averageGrade":3.9,"openTime":{"startWorkingDays":{"hour":8,"minute":0,"second":0,"nano":0},"endWorkingDays":{"hour":21,"minute":0,"second":0,"nano":0},"startSaturday":{"hour":8,"minute":0,"second":0,"nano":0},"endSaturday":{"hour":15,"minute":0,"second":0,"nano":0},"startSunday":{"hour":0,"minute":0,"second":0,"nano":0},"endSunday":{"hour":0,"minute":0,"second":0,"nano":0}}},{"name":"Treca","type":"SWIMMING_POOL","offers":["Shower","Swimming Pools"],"isOpen":true,"imgSource":"http://vojvodjanski.com/slike_tvbecej/23126_u-novom-sadu-uskoro-mega-gym-na-3000-kvadratnih-metara.jpg","location":{"geoLength":12.2,"geoWidth":13.2,"address":{"city":"Vojska","street":"Ustanicka","strNumber":1804,"postalCode":1389}},"averageGrade":4.9,"openTime":{"startWorkingDays":{"hour":8,"minute":0,"second":0,"nano":0},"endWorkingDays":{"hour":22,"minute":0,"second":0,"nano":0},"startSaturday":{"hour":8,"minute":0,"second":0,"nano":0},"endSaturday":{"hour":16,"minute":0,"second":0,"nano":0},"startSunday":{"hour":0,"minute":0,"second":0,"nano":0},"endSunday":{"hour":0,"minute":0,"second":0,"nano":0}}}]
+[
+  {
+    "id": 1,
+    "name": "fac",
+    "type": "GYM",
+    "offers": [
+      {
+        "id": 0
+      },
+      {
+        "id": 1
+      }
+    ],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 123.12,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "asd",
+        "street": "asd",
+        "strNumber": 123,
+        "postalCode": 12312
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 2,
+    "name": "asd",
+    "type": "DANCE_STUDIO",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 12312.123,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "asd",
+        "street": "asd",
+        "strNumber": 123,
+        "postalCode": 12312
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 3,
+    "name": "as",
+    "type": "SWIMMING_POOL",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 123.12,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "as",
+        "street": "as",
+        "strNumber": 123,
+        "postalCode": 12321
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 4,
+    "name": "asd",
+    "type": "SPORTS_CENTER",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 12312.21,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "asd",
+        "street": "ads",
+        "strNumber": 123,
+        "postalCode": 12312
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 5,
+    "name": "asd",
+    "type": "DANCE_STUDIO",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 123.12,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "asd",
+        "street": "asd",
+        "strNumber": 12,
+        "postalCode": 1231
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 6,
+    "name": "asd",
+    "type": "SWIMMING_POOL",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 123.12,
+      "geoWidth": 123.12,
+      "address": {
+        "city": "asd",
+        "street": "asd",
+        "strNumber": 123,
+        "postalCode": 12312
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  }
+]

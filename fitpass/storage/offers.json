@@ -1,0 +1,34 @@
+[
+  {
+    "id": 0,
+    "name": "offer1",
+    "type": "SAUNA",
+    "duration": {
+      "seconds": 5400,
+      "nanos": 0
+    },
+    "description": "asdasd",
+    "imageLocation": "",
+    "isDeleted": false,
+    "price": 12.0,
+    "sportFacility" : {
+      "id" : 1
+    }
+  },
+  {
+    "id": 1,
+    "name": "training1",
+    "type": "TRAINING",
+    "duration": {
+      "seconds": 4800,
+      "nanos": 0
+    },
+    "description": "asdasd",
+    "imageLocation": "",
+    "isDeleted": false,
+    "price": 123.0,
+    "sportFacility" : {
+      "id" : 1
+    }
+  }
+]

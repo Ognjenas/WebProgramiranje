@@ -1,0 +1,10 @@
+[
+  {
+    "trainingType": "PERSONAL",
+    "belongingTrainer": {
+      "id": 1
+    },
+    "id": 1,
+    "isDeleted": false
+  }
+]

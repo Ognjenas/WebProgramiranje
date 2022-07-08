@@ -1,4 +1,4 @@
-package beans;
+package beans.sportfacility;
 
 public class Location {
     private double geoLength;

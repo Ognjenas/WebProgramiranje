@@ -1,35 +1,86 @@
 package rest;
 
-import controllers.AuthController;
-import controllers.UserController;
-import controllers.SportFacilityController;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import spark.Filter;
+import controllers.*;
+import dto.sportfacility.AllFacilitiesDto;
 
 import java.io.File;
-import java.security.Key;
 
 import static spark.Spark.*;
 
 public class SparkMainApp {
 
-    public static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public static void main(String[] args) throws Exception {
         port(8080);
 
-
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
 
-        path("/facilities", () -> {
-            before("/*", AuthController::authFilter);
+
+
+        path("/", () -> {
+            get("/get-facilities",SportFacilityController::loadFacilities);
+            get("/search-facility",SportFacilityController::searchFacilities);
+            get("/sort-search-facilites",SportFacilityController::sortAndSearchFacilites);
+            get("/show-facility",SportFacilityController::showFacility);
+            post("/register-customer", UserController::registerCustomer);
+            post("/login", UserController::login);
+            get("/show-facility/offers", SportFacilityController::getOffersByFacilityId);
+            get("/show-facility/get-offer", SportFacilityController::getOfferById);
+            post("/show-facility/get-offer/get-available-appointments", CustomerController::getAvailableTimesForOfferByDate);
         });
-        UserController.registerCustomer();
-        UserController.getInfo();
-        UserController.login();
-        SportFacilityController.test();
+
+
+        path("/administrator", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authAdministrator);
+            get("/get-users", AdministratorController::getAllUsers);
+            post("/register-trainer", AdministratorController::registerTrainer);
+            post("/register-manager", AdministratorController::registerManager);
+            get("/get-free-managers",AdministratorController::getFreeManagers);
+            post("/create-facility",AdministratorController::createFacility);
+            post("/create-facility-with-manager",AdministratorController::createFacilityWithManager);
+            get("/search-users",AdministratorController::serachUsers);
+            get("/sort-search-users",AdministratorController::sortAndSearchUsers);
+            get("/get-promo-codes",AdministratorController::getValidPromoCodes);
+            post("/create-promo-code",AdministratorController::createPromoCode);
+        });
+
+        path("/manager", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authManager);
+            get("/get-facility", ManagerController::getManagersFacility);
+            get("/get-facility/get-trainings", ManagerController::getTrainingsFromFacility);
+            get("/get-facility/offer", ManagerController::getOffer);
+            post("/get-facility/offer/edit", ManagerController::editOffer);
+            get("/get-facility/trainers", ManagerController::getTrainersFromFacility);
+            get("/get-facility-offers", ManagerController::getFacilityOffers);
+            get("/create-offer/get-all-trainers", ManagerController::getAllTrainers);
+            post("/create-offer", ManagerController::makeOffer);
+        });
+
+        path("/customer", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authCustomer);
+            post("/make-appointment", CustomerController::reserveOffer);
+            get("/get-trainings", CustomerController::getTrainings);
+        });
+
+        path("/trainer", () -> {
+            before("/*", AuthController::authFilter);
+            before("/*", AuthController::authTrainer);
+            get("/get-trainings", TrainerController::getTrainings);
+            get("/get-trainings/cancel", TrainerController::cancelTraining);
+        });
+
+
+        path("/users", () -> {
+            before("/*", AuthController::authFilter);
+            post("/get-info", UserController::getInfo);
+            get("/get-user", UserController::getUser);
+            post("/edit-user", UserController::editUser);
+            post("/create-subscription",UserController::createSubscription);
+            get("/get-subscription",UserController::getCurrentSubscription);
+            get("/check-promo-code",UserController::checkPromoCode);
+        });
     }
 }

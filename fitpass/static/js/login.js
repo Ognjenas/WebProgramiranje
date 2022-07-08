@@ -24,7 +24,7 @@ Vue.component("login", {
     ,
     methods: {
         tryLogin: function () {
-            const promise = axios.post('/users/login', this.login);
+            const promise = axios.post('/login', this.login);
             promise.then(response => {
                 if (response.data === "") {
                     alert("Pogresan login");

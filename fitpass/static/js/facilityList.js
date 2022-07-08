@@ -2,29 +2,49 @@ Vue.component("facility-list", {
     data: function () {
 
         return {
-            facilitiesDto: null,
-            form:{  name: "",
-                    type:"",
-                    city:"",
-                    grade:""
-                    },
-            configHeaders : {
+            facilityList: "",
+            sortDirection: null,
+            sortIndex: null,
+            form: {
+                name: "",
+                type: "",
+                city: "",
+                grade: ""
+            },
+            configHeaders: {
                 headers: {
                     token: $cookies.get("token"),
                 }
             },
-            userInfo : {
-                username : "",
-                role : ""
+            userInfo: {
+                username: "",
+                role: ""
             }
         }
     },
     template: ` 
 <div>
-    <label>Username: {{userInfo.username}}</label>
+    <div v-if="$cookies.get('token') != null">
+        <label>Username: {{userInfo.username}}</label>
+        <button v-on:click="editProfile">Profile</button>
+    </div>
+    <div v-if="userInfo.role == 'MANAGER'">
+        <button v-on:click="myFacility">My facility</button>
+    </div>
+    <div v-if="userInfo.role == 'TRAINER'">
+        <button v-on:click="trainerTrainings">Trainings</button>
+    </div>
+    <div v-if="userInfo.role == 'CUSTOMER'">
+        <button v-on:click="customerTrainings">Trainings</button>
+    </div>
+    <div v-if="$cookies.get('token') == null">
+        <button v-on:click="login">Login</button>
+    </div>
+    
     <p>
     Search:</p>
-    <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:change="searchFacility()" > 
+    
+    <input type="text" placeholder="Search for Facility"  v-model="form.name" v-on:input="searchFacility()" > 
     <select name="type" v-model="form.type" v-on:change="searchFacility()">
       <option value="">Select Type</option>
       <option value="GYM">GYM</option>
@@ -53,17 +73,15 @@ Vue.component("facility-list", {
 	Available Facilities:
 	<table>
 	<tr>
-	    <th></th>
-		<th>Name</th>
+		<th v-on:click="sortList(0)">Name</th>
 		<th>Type</th>
-		<th>Location</th>
-		<th>Average Grade</th>
+		<th v-on:click="sortList(1)">Location</th>
+		<th v-on:click="sortList(2)">Average Grade</th>
 		<th>Working Hours</th>
 		<th>Image</th>
 	</tr>
 		
-	<tr v-for="f in facilitiesDto.allFacilities" >
-		<td></td>
+	<tr v-for="f in facilityList" v-on:click="selectedFacility(f)">
 		<td>{{f.name}}</td>
 		<td>{{f.type}}</td>
 		<td>
@@ -81,51 +99,99 @@ Vue.component("facility-list", {
         </td>
 	</tr>
 </table>
-	<p>
-		<a href="#/cnt">Contact</a>
-	</p>
-	<button class="login-button" v-on:click="logout">Odjavi se</button>
+	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
+	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription">Subscription</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode">Promo Codes</button>
+
 </div>		  
 `
     ,
-    methods :
+    methods:
         {
-            searchFacility : function () {
-                axios.get('facilities/search?name='+ this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade, this.configHeaders)
+            selectedFacility(f){
+                router.push('/facility-show/'+f.id);
+            },
+
+            searchFacility() {
+                axios.get('/search-facility?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade)
                     .then(response => {
-                        if(response.status === 401) {
-                            router.push("/");
-                        }
-                        this.facilitiesDto = response.data})
+                        this.facilityList = response.data.allFacilities;
+                    })
+                this.sortIndex=null;
+                this.sortDirection=null;
 
             },
-            logout : function () {
+
+            promoCode(){
+                router.push('/promo-code')
+            },
+            subscription(){
+                router.push('/subscription')
+            },
+            logout() {
                 $cookies.remove('token')
                 router.push('/login')
+            },
+            login() {
+                router.push('/login')
+            },
+            listUsers : function () {
+                router.push('/users-list')
+            },
+
+
+            sortList(indexCol) {
+                if(this.sortIndex===indexCol) {
+                    if (this.sortDirection === "desc") {
+                        this.sortDirection = "asc";
+                        this.sorting(indexCol);
+                    } else {
+                        this.sortDirection = "desc";
+                        this.sorting(indexCol);
+                    }
+                }else{
+                    this.sortIndex=indexCol;
+                    this.sortDirection = "asc";
+                    this.sorting(indexCol);
+                }
+            },
+            sorting(indexCol){
+                axios.get('/sort-search-facilites?name=' + this.form.name + '&type=' + this.form.type + '&city=' + this.form.city + '&grade=' + this.form.grade
+                    + '&columnIndex=' + indexCol + '&sortDir=' + this.sortDirection,this.configHeaders)
+                    .then(response => {
+                        this.facilityList = response.data.allFacilities;
+                    })
+            },
+            editProfile() {
+                router.push("/edit-profile")
+            },
+            myFacility() {
+                router.push("/open-facility")
+            },
+            trainerTrainings() {
+                router.push("/trainer-trainings")
+            },
+            customerTrainings() {
+                router.push("/customer-trainings")
             }
 
 
+        },
 
-    },
+    mounted() {
 
-    mounted () {
-        if($cookies.get("token") == null) {
-            router.push("/login")
-        }
-            axios
-                .get('/facilities/', this.configHeaders)
-                .then(response =>{
-                    if(response.status === 200) {
-                        this.facilitiesDto = response.data
-                    } else if (response.status === 401) {
-                        router.push("/");
-                    }
-
-                })
-            axios.post('users/get-info', $cookies.get("token"))
+        axios
+            .get('/get-facilities')
+            .then(response => {
+                this.facilityList = response.data.allFacilities;
+            })
+        if ($cookies.get("token") != null) {
+            axios.post('/users/get-info', $cookies.get("token"), this.configHeaders)
                 .then(response => {
                     this.userInfo = response.data
+                    $cookies.set("userInfo", response.data, 10000)
                 })
-
+        }
     },
 });
