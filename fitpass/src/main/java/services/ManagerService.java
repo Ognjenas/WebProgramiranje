@@ -2,6 +2,7 @@ package services;
 
 import beans.offer.*;
 import beans.sportfacility.SportFacility;
+import beans.users.Customer;
 import beans.users.Manager;
 import beans.users.Trainer;
 import beans.users.User;
@@ -17,6 +18,7 @@ import dto.sportfacility.WorkingHoursDto;
 import dto.users.AllTrainersToChooseDto;
 import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
+import dto.users.UserDto;
 import storage.ManagerStorage;
 import storage.SportFacilityStorage;
 import storage.TrainerStorage;
@@ -26,6 +28,7 @@ import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +142,29 @@ public class ManagerService {
             }
         }
         return new AllOrdersToShowDto(orders);
+    }
+
+    public AllUsersDto getCustomersFromFacility(String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
+        List<UserDto> customers = new ArrayList<>();
+        for(var offerHistory : offerHistoryStorage.getBySportFacilityId(sportFacility.getId())) {
+            User customer = userStorage.getById(offerHistory.getCustomer().getId());
+            addUserToDtoList(customer, customers);
+        }
+        return new AllUsersDto(customers);
+    }
+
+    private void addUserToDtoList(User user, List<UserDto> users) {
+        if(users.stream().noneMatch(userDto -> userDto.getUsername().equals(user.getUsername()))) {
+            users.add(makeUserDto(user));
+        }
+    }
+
+    private UserDto makeUserDto(User user) {
+        String birth = user.getBirthDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String gender = user.isGender() ? "MUSKO" : "ZENSKO";
+        return new UserDto(user.getName(), user.getSurname(), user.getUsername(), user.getRole().toString(), gender, birth);
     }
 
 
