@@ -31,6 +31,9 @@ Vue.component("facility-list", {
     <div v-if="userInfo.role == 'MANAGER'">
         <button v-on:click="myFacility">My facility</button>
     </div>
+    <div v-if="userInfo.role == 'TRAINER'">
+        <button v-on:click="trainerTrainings">Trainings</button>
+    </div>
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
@@ -162,6 +165,9 @@ Vue.component("facility-list", {
             },
             myFacility() {
                 router.push("/open-facility")
+            },
+            trainerTrainings() {
+                router.push("/trainer-trainings")
             }
 
 

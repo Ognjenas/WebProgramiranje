@@ -2,6 +2,10 @@ package storage.offer;
 
 import beans.offer.Offer;
 import beans.sportfacility.SportFacility;
+import beans.users.Trainer;
+import beans.users.User;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +31,7 @@ public class OfferStorage {
     }
 
     Gson gson = new GsonBuilder()
+            .setExclusionStrategies(new FacilityExcluder())
             .setPrettyPrinting()
             .serializeNulls()
             .create();
@@ -90,5 +95,22 @@ public class OfferStorage {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static class FacilityExcluder implements ExclusionStrategy {
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+            if (fieldAttributes.getDeclaringClass() == SportFacility.class && !fieldAttributes.getName().equals("id")) {
+                return true;
+            }  else {
+                return false;
+            }
+        }
+
+        @Override
+        public boolean shouldSkipClass(Class<?> aClass) {
+            return false;
+        }
     }
 }

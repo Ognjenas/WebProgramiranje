@@ -43,6 +43,10 @@ public class TrainerStorage {
         return getAll().stream().filter(trainer-> trainer.getId() == id).findFirst().orElse(null);
     }
 
+    public Trainer getByUsername(String username) {
+        return getAll().stream().filter(trainer-> trainer.getUsername().equals(username)).findFirst().orElse(null);
+    }
+
     public List<Trainer> getAll() {
         List<Trainer> allTrainers = new ArrayList<>();
 

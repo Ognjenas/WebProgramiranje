@@ -40,7 +40,8 @@
     },
     "status": false,
     "dailyEnteringNumber": 1,
-    "isDeleted": true
+    "isDeleted": true,
+    "orderedAppointments": 0
   },
   {
     "id": "RJX2G6aV@f",
@@ -61,7 +62,8 @@
     },
     "status": false,
     "dailyEnteringNumber": 10,
-    "isDeleted": true
+    "isDeleted": true,
+    "orderedAppointments": 0
   },
   {
     "id": "vOSjYpt9Tt",
@@ -82,7 +84,8 @@
     },
     "status": false,
     "dailyEnteringNumber": 3,
-    "isDeleted": true
+    "isDeleted": true,
+    "orderedAppointments": 0
   },
   {
     "id": "cGP7JZCVd#",
@@ -103,7 +106,8 @@
     },
     "status": false,
     "dailyEnteringNumber": 3,
-    "isDeleted": true
+    "isDeleted": true,
+    "orderedAppointments": 0
   },
   {
     "id": "eG%zZkSuhb",
@@ -124,7 +128,8 @@
     },
     "status": false,
     "dailyEnteringNumber": 3,
-    "isDeleted": true
+    "isDeleted": true,
+    "orderedAppointments": 0
   },
   {
     "id": "tYX%StBu@Y",
@@ -168,6 +173,6 @@
     "status": true,
     "dailyEnteringNumber": 3,
     "isDeleted": false,
-    "orderedAppointments": 11
+    "orderedAppointments": 18
   }
 ]

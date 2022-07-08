@@ -73,7 +73,7 @@ public class ManagerService {
                 makeOfferDto.getDescription(),
                 "",
                 makeOfferDto.getPrice(),
-                false);
+                false, sportFacility);
         offer = offerStorage.add(offer);
         sportFacility.addOffer(offer);
         sportFacilityStorage.update(sportFacility);

@@ -77,6 +77,12 @@ public class OfferHistoryStorage {
         return null;
     }
 
+    public List<OfferHistory> getByTrainerId(int trainerId) {
+        return getAll().stream()
+                .filter(oh -> !oh.isDeleted() && oh.getTrainer().getId() == trainerId && oh.getCheckIn().isAfter(LocalDateTime.now()))
+                .collect(Collectors.toList());
+    }
+
     public List<OfferHistory> getByDateAndOfferId(LocalDate date, int offerId) {
         return getAll().stream()
                 .filter(oh -> !oh.isDeleted() && oh.getOffer().getId() == offerId && oh.getCheckIn().toLocalDate().isEqual(date))
