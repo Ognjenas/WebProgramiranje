@@ -29,6 +29,10 @@ public class Trainer extends User{
         this.offerHistories.add(offerHistory);
     }
 
+    public boolean removeOfferHistory(OfferHistory offerHistory) {
+        return offerHistories.removeIf(oh -> offerHistory.getId() == oh.getId());
+    }
+
     @Override
     public String toString() {
         return "Trainer{" +
