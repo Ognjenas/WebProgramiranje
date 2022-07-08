@@ -22,6 +22,10 @@ public class SportFacility {
     private WorkingHours openTime; //OVDE BIH NAPRAVIO KLASU POSEBNU ZA RADNO VREME ZA SVAKI DAN
     private boolean isDeleted;
 
+    public SportFacility(int id) {
+        this.id = id;
+    }
+
     public SportFacility(int id, String name, SportFacilityType type, List<Offer> offers, boolean isOpen,
                          String imgSource, Location location, double averageGrade, WorkingHours openTime, boolean deleted) {
         this.id = id;
