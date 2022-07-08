@@ -46,6 +46,10 @@ public class OfferHistoryStorage {
         return getAll().stream().filter(oh -> !oh.isDeleted()).filter(oh -> oh.getId() == id).findFirst().orElse(null);
     }
 
+    public List<OfferHistory> getNotDeleted() {
+        return getAll().stream().filter(oh -> !oh.isDeleted()).collect(Collectors.toList());
+    }
+
     public List<OfferHistory> getAll() {
         List<OfferHistory> allOffersHistories = new ArrayList<>();
 

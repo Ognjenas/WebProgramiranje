@@ -3,7 +3,6 @@ package controllers;
 import com.google.gson.Gson;
 import dto.offer.MakeOfferDto;
 import dto.offer.OfferDto;
-import dto.users.LoginDto;
 import io.jsonwebtoken.Jwts;
 import services.ManagerService;
 import services.SecretKeyGetter;
@@ -65,5 +64,12 @@ public class ManagerController {
         String payload = req.body();
         OfferDto offerDto = gson.fromJson(payload, OfferDto.class);
         return gson.toJson(managerService.editOffer(offerDto, username));
+    }
+
+    public static String getTrainingsFromFacility(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(managerService.getTrainingsFromFacility(username));
     }
 }

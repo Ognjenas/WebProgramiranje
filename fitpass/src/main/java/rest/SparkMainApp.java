@@ -49,6 +49,7 @@ public class SparkMainApp {
             before("/*", AuthController::authFilter);
             before("/*", AuthController::authManager);
             get("/get-facility", ManagerController::getManagersFacility);
+            get("/get-facility/get-trainings", ManagerController::getTrainingsFromFacility);
             get("/get-facility/offer", ManagerController::getOffer);
             post("/get-facility/offer/edit", ManagerController::editOffer);
             get("/get-facility/trainers", ManagerController::getTrainersFromFacility);
