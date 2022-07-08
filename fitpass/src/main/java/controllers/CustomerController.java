@@ -38,6 +38,6 @@ public class CustomerController {
         if(!response) {
             res.status(400);
         }
-        return gson.toJson(customerService.reserveOffer(reserveOfferDto, username));
+        return gson.toJson(response);
     }
 }

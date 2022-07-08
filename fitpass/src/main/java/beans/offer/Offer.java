@@ -1,5 +1,6 @@
 package beans.offer;
 
+import beans.sportfacility.SportFacility;
 import beans.users.Trainer;
 
 import java.time.Duration;
@@ -11,13 +12,14 @@ public class Offer {
     private Duration duration;
     private String description;
     private String imageLocation;
+    private SportFacility sportFacility;
     private boolean isDeleted;
     private double price;
 
     public Offer() {
     }
 
-    public Offer(String name, OfferType type, Duration duration, String description, String imageLocation, double price,boolean isDeleted) {
+    public Offer(String name, OfferType type, Duration duration, String description, String imageLocation, double price,boolean isDeleted, SportFacility sportFacility) {
         this.name = name;
         this.type = type;
         this.duration = duration;
@@ -25,9 +27,10 @@ public class Offer {
         this.imageLocation = imageLocation;
         this.price = price;
         this.isDeleted = isDeleted;
+        this.sportFacility = sportFacility;
     }
 
-    public Offer(int id, String name, OfferType type, Duration duration, String description, String imageLocation, double price, boolean isDeleted) {
+    public Offer(int id, String name, OfferType type, Duration duration, String description, String imageLocation, double price, boolean isDeleted, SportFacility sportFacility) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -36,6 +39,15 @@ public class Offer {
         this.imageLocation = imageLocation;
         this.price = price;
         this.isDeleted = isDeleted;
+        this.sportFacility = sportFacility;
+    }
+
+    public SportFacility getSportFacility() {
+        return sportFacility;
+    }
+
+    public void setSportFacility(SportFacility sportFacility) {
+        this.sportFacility = sportFacility;
     }
 
     public int getId() {

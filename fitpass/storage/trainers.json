@@ -1,6 +1,9 @@
 [
   {
     "offerHistories": [
+      {
+        "id": 0
+      }
     ],
     "id": 1,
     "username": "trener",

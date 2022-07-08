@@ -10,7 +10,10 @@
     "description": "asdasd",
     "imageLocation": "",
     "isDeleted": false,
-    "price": 12.0
+    "price": 12.0,
+    "sportFacility" : {
+      "id" : 1
+    }
   },
   {
     "id": 1,
@@ -23,6 +26,9 @@
     "description": "asdasd",
     "imageLocation": "",
     "isDeleted": false,
-    "price": 123.0
+    "price": 123.0,
+    "sportFacility" : {
+      "id" : 1
+    }
   }
 ]
