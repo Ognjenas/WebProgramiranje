@@ -62,6 +62,7 @@ public class SparkMainApp {
             before("/*", AuthController::authFilter);
             before("/*", AuthController::authCustomer);
             post("/make-appointment", CustomerController::reserveOffer);
+            get("/get-trainings", CustomerController::getTrainings);
         });
 
         path("/trainer", () -> {

@@ -1,9 +1,7 @@
-Vue.component("trainer-trainings", {
+Vue.component("customer-trainings", {
     data: function () {
 
         return {
-            facilityList: "",
-            sortDirection: null,
             configHeaders: {
                 headers: {
                     token: $cookies.get("token")
@@ -13,9 +11,7 @@ Vue.component("trainer-trainings", {
                 username: "",
                 role: ""
             },
-            orders: "",
-            canCancel: true
-
+            orders: ""
         }
     },
     template: ` 
@@ -31,8 +27,6 @@ Vue.component("trainer-trainings", {
         <p>Type: {{order.type}}</p>
         <p>Facility: {{order.facilityName}}</p>
         <p>Time: {{order.time}}</p>
-        <button v-if="order.type == 'PERSONAL'" v-on:click="cancel(order.id)">Cancel</button>
-        <p v-if="!canCancel">You can't cancel in less than 2 days!</p>
     </div>
 	
 </div>		  
@@ -42,16 +36,6 @@ Vue.component("trainer-trainings", {
         {
             editProfile() {
                 router.push("/edit-profile")
-            },
-            cancel(id) {
-                axios
-                    .get('/trainer/get-trainings/cancel?id='+id, this.configHeaders)
-                    .then(response => {
-                        this.canCancel = response.data;
-                        if(this.canCancel) {
-                            location.reload();
-                        }
-                    })
             }
         },
 
@@ -63,7 +47,7 @@ Vue.component("trainer-trainings", {
                 })
         }
         axios
-            .get('/trainer/get-trainings',this.configHeaders)
+            .get('/customer/get-trainings',this.configHeaders)
             .then(response => this.orders = response.data.orders)
     },
 });

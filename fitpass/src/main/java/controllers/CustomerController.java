@@ -40,4 +40,11 @@ public class CustomerController {
         }
         return gson.toJson(response);
     }
+
+    public static String getTrainings(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(customerService.getTrainings(username));
+    }
 }

@@ -34,6 +34,9 @@ Vue.component("facility-list", {
     <div v-if="userInfo.role == 'TRAINER'">
         <button v-on:click="trainerTrainings">Trainings</button>
     </div>
+    <div v-if="userInfo.role == 'CUSTOMER'">
+        <button v-on:click="customerTrainings">Trainings</button>
+    </div>
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
@@ -168,6 +171,9 @@ Vue.component("facility-list", {
             },
             trainerTrainings() {
                 router.push("/trainer-trainings")
+            },
+            customerTrainings() {
+                router.push("/customer-trainings")
             }
 
 
