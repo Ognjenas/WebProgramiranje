@@ -16,6 +16,7 @@ import storage.TrainerStorage;
 import storage.offer.OfferHistoryStorage;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
+import utilities.ComparatorFactory;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -23,6 +24,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomerService {
@@ -118,7 +121,7 @@ public class CustomerService {
             Offer offer = offerStorage.getById(order.getOffer().getId());
             SportFacility sportFacility = sportFacilityStorage.getById(offer.getSportFacility().getId());
             orders.add(new OrderToShowDto(order.getId(), offer.getName(), sportFacility.getName(), offer.getType().toString(),
-                    order.getCheckIn().toString()));
+                    order.getCheckIn(),offer.getPrice()));
         }
         return new AllOrdersToShowDto(orders);
     }
@@ -131,5 +134,40 @@ public class CustomerService {
             }
         }
         return true;
+    }
+
+    public AllOrdersToShowDto searchTrainings(String facName, String price, String facType, String trainingType, String sortType,
+                                              String sortDir, String fromDate, String toDate, String username) {
+        Customer customer = customerStorage.getCustomerByUsername(username);
+        List<OfferHistory> offerHistories = offerHistoryStorage.getByCustomerId(customer.getId());
+        List<OrderToShowDto> orders = new ArrayList<>();
+
+        for (var order : offerHistories) {
+            if (order.isActiveDate(fromDate, toDate)) {
+                Offer offer = offerStorage.getById(order.getOffer().getId());
+                SportFacility sportFacility = sportFacilityStorage.getById(offer.getSportFacility().getId());
+                if (offer.searchedTypeAndPriceRange(trainingType,price) && sportFacility.searchedNameAndType(facName, facType)) {
+                    orders.add(new OrderToShowDto(order.getId(), offer.getName(), sportFacility.getName(), offer.getType().toString(),
+                            order.getCheckIn(),offer.getPrice()));
+                }
+
+            }
+        }
+        orders=sortList(orders,sortType,sortDir);
+        return new AllOrdersToShowDto(orders);
+    }
+
+    private List<OrderToShowDto> sortList(List<OrderToShowDto> orders,String sortType, String sortDir) {
+
+        if (sortType.equals("0")) {
+            Collections.sort(orders,new ComparatorFactory.OrderCompareName());
+        }else if(sortType.equals("1")){
+            Collections.sort(orders,new ComparatorFactory.OrderComparePrice());
+        }else if(sortType.equals("2")){
+            Collections.sort(orders,new ComparatorFactory.OrderCompareDate());
+        }
+
+         if(sortDir.equals("desc")) Collections.reverse(orders);
+        return orders;
     }
 }

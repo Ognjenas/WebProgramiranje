@@ -73,6 +73,17 @@ public class ManagerController {
         return gson.toJson(managerService.getTrainingsFromFacility(username));
     }
 
+    public static String searchTrainings(Request req, Response res) {
+        res.type("application/json");
+        String price = req.queryParams("price");
+        String trainingType = req.queryParams("trainingType");
+        String sortType = req.queryParams("sortType");
+        String sortDir = req.queryParams("sortDir");
+        String fromDate = req.queryParams("fromDate");
+        String toDate = req.queryParams("toDate");
+        String username = req.queryParams("username");
+        return gson.toJson(managerService.searchTrainings(price,trainingType,sortType,sortDir,fromDate,toDate,username));
+
     public static String getCustomersFromFacility(Request req, Response res) {
         res.type("application/json");
         String token = gson.fromJson(req.headers("token"), String.class);
