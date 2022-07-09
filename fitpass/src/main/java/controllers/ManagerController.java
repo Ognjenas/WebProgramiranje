@@ -83,5 +83,11 @@ public class ManagerController {
         String toDate = req.queryParams("toDate");
         String username = req.queryParams("username");
         return gson.toJson(managerService.searchTrainings(price,trainingType,sortType,sortDir,fromDate,toDate,username));
+
+    public static String getCustomersFromFacility(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(managerService.getCustomersFromFacility(username));
     }
 }

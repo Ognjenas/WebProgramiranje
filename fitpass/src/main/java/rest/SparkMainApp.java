@@ -53,6 +53,7 @@ public class SparkMainApp {
             get("/get-facility/offer", ManagerController::getOffer);
             post("/get-facility/offer/edit", ManagerController::editOffer);
             get("/get-facility/trainers", ManagerController::getTrainersFromFacility);
+            get("/get-facility/customers", ManagerController::getCustomersFromFacility);
             get("/get-facility-offers", ManagerController::getFacilityOffers);
             get("/create-offer/get-all-trainers", ManagerController::getAllTrainers);
             post("/create-offer", ManagerController::makeOffer);

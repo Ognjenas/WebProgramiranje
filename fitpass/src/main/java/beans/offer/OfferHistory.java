@@ -1,5 +1,6 @@
 package beans.offer;
 
+import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Trainer;
 
@@ -12,16 +13,19 @@ public class OfferHistory {
     private Customer customer;
     private Trainer trainer;
     private Offer offer;
+    private SportFacility sportFacility;
     private boolean isDeleted;
 
     public OfferHistory() {
     }
 
-    public OfferHistory(LocalDateTime checkIn, Customer customer, Trainer trainer, Offer offer, boolean isDeleted) {
+    public OfferHistory(int id, LocalDateTime checkIn, Customer customer, Trainer trainer, Offer offer, SportFacility sportFacility, boolean isDeleted) {
+        this.id = id;
         this.checkIn = checkIn;
         this.customer = customer;
         this.trainer = trainer;
         this.offer = offer;
+        this.sportFacility = sportFacility;
         this.isDeleted = isDeleted;
     }
 
@@ -86,5 +90,12 @@ public class OfferHistory {
             return false;
         }
         return from.isBefore(checkIn.toLocalDate()) && checkIn.toLocalDate().isBefore(to);
+        
+    public SportFacility getSportFacility() {
+        return sportFacility;
+    }
+
+    public void setSportFacility(SportFacility sportFacility) {
+        this.sportFacility = sportFacility;
     }
 }

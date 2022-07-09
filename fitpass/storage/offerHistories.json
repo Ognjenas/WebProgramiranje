@@ -23,7 +23,10 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": false
+    "sportFacility" : {
+      "id" : 1
+    },
+    "isDeleted": true
   },
   {
     "id": 1,
@@ -49,7 +52,10 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": false
+    "sportFacility" : {
+      "id" : 1
+    },
+    "isDeleted": true
   },
   {
     "id": 2,
@@ -75,7 +81,10 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": false
+    "sportFacility" : {
+      "id" : 1
+    },
+    "isDeleted": true
   },
   {
     "id": 3,
@@ -100,6 +109,9 @@
     },
     "offer": {
       "id": 0
+    },
+    "sportFacility" : {
+      "id" : 1
     },
     "isDeleted": false
   },
@@ -126,6 +138,9 @@
     },
     "offer": {
       "id": 1
+    },
+    "sportFacility" : {
+      "id" : 1
     },
     "isDeleted": false
   }

@@ -64,6 +64,7 @@ public class CustomerService {
             offerHistory.setOffer(offer);
             offerHistory.setCustomer(customer);
             offerHistory.setCheckIn(LocalDateTime.of(reserveOfferDto.getDate(), LocalTime.parse(reserveOfferDto.getTime())));
+            offerHistory.setSportFacility(new SportFacility(offer.getSportFacility().getId()));
             offerHistory.setDeleted(false);
             Trainer trainer;
             if(!offer.getType().equals(OfferType.TRAINING)) {

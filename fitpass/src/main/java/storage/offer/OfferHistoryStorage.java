@@ -85,6 +85,12 @@ public class OfferHistoryStorage {
         return null;
     }
 
+    public List<OfferHistory> getBySportFacilityId(int sportFacilityId) {
+        return getAll().stream()
+                .filter(oh -> !oh.isDeleted() && oh.getSportFacility().getId() == sportFacilityId)
+                .collect(Collectors.toList());
+    }
+
     public List<OfferHistory> getByCustomerId(int customerId) {
         return getAll().stream()
                 .filter(oh -> !oh.isDeleted() && oh.getCustomer().getId() == customerId && oh.getCheckIn().isAfter(LocalDateTime.now()))
