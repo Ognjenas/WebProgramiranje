@@ -149,5 +149,9 @@ public class SportFacility {
         this.offers.add(offer);
     }
 
+    public boolean searchedNameAndType(String facName, String facType){
+        return this.type.toString().toLowerCase().contains(facType.toLowerCase()) && this.name.toLowerCase().contains(facName.toLowerCase());
+    }
+
 
 }

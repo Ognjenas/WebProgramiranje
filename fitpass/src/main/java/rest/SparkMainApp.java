@@ -56,6 +56,7 @@ public class SparkMainApp {
             get("/get-facility-offers", ManagerController::getFacilityOffers);
             get("/create-offer/get-all-trainers", ManagerController::getAllTrainers);
             post("/create-offer", ManagerController::makeOffer);
+            get("/get-facility/search-trainings",ManagerController::searchTrainings);
         });
 
         path("/customer", () -> {
@@ -63,6 +64,7 @@ public class SparkMainApp {
             before("/*", AuthController::authCustomer);
             post("/make-appointment", CustomerController::reserveOffer);
             get("/get-trainings", CustomerController::getTrainings);
+            get("/search-trainings",CustomerController::searchTrainings);
         });
 
         path("/trainer", () -> {
@@ -70,6 +72,7 @@ public class SparkMainApp {
             before("/*", AuthController::authTrainer);
             get("/get-trainings", TrainerController::getTrainings);
             get("/get-trainings/cancel", TrainerController::cancelTraining);
+            get("/search-trainings",TrainerController::searchTrainings);
         });
 
 

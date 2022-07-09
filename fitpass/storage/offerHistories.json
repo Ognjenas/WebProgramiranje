@@ -23,7 +23,7 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": true
+    "isDeleted": false
   },
   {
     "id": 1,
@@ -49,7 +49,7 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": true
+    "isDeleted": false
   },
   {
     "id": 2,
@@ -75,7 +75,7 @@
     "offer": {
       "id": 1
     },
-    "isDeleted": true
+    "isDeleted": false
   },
   {
     "id": 3,

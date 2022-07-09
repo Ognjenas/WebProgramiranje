@@ -47,4 +47,18 @@ public class CustomerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(customerService.getTrainings(username));
     }
+
+    public static String searchTrainings(Request req, Response res) {
+        res.type("application/json");
+        String facName = req.queryParams("facName");
+        String price = req.queryParams("price");
+        String facType = req.queryParams("facType");
+        String trainingType = req.queryParams("trainingType");
+        String sortType = req.queryParams("sortType");
+        String sortDir = req.queryParams("sortDir");
+        String fromDate = req.queryParams("fromDate");
+        String toDate = req.queryParams("toDate");
+        String username = req.queryParams("username");
+        return gson.toJson(customerService.searchTrainings(facName,price,facType,trainingType,sortType,sortDir,fromDate,toDate,username));
+    }
 }

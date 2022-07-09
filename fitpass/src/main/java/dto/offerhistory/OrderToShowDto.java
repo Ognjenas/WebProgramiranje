@@ -1,18 +1,24 @@
 package dto.offerhistory;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class OrderToShowDto {
     private int id;
     private String name;
     private String facilityName;
     private String type;
-    private String time;
+    private LocalDateTime time;
+    private double price;
 
-    public OrderToShowDto(int id, String name, String facilityName, String type, String time) {
+
+    public OrderToShowDto(int id, String name, String facilityName, String type, LocalDateTime time,double price) {
         this.id = id;
         this.name = name;
         this.facilityName = facilityName;
         this.type = type;
         this.time = time;
+        this.price=price;
     }
 
     public String getType() {
@@ -47,11 +53,19 @@ public class OrderToShowDto {
         this.facilityName = facilityName;
     }
 
-    public String getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

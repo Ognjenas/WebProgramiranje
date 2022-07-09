@@ -1,7 +1,6 @@
 package beans.offer;
 
 import beans.sportfacility.SportFacility;
-import beans.users.Trainer;
 
 import java.time.Duration;
 
@@ -112,5 +111,30 @@ public class Offer {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+
+    public boolean searchedTypeAndPriceRange(String trainingType, String price) {
+
+        double bottomPrice;
+        double topPrice;
+        if (price.equals("0")) {
+            bottomPrice = 0;
+            topPrice = 1000;
+        } else if (price.equals("1")) {
+            bottomPrice = 1000;
+            topPrice = 5000;
+        } else if (price.equals("2")) {
+            bottomPrice = 5000;
+            topPrice = 10000;
+        } else if (price.equals("3")) {
+            bottomPrice = 10000;
+            topPrice = Double.POSITIVE_INFINITY;
+        } else {
+            bottomPrice = 0;
+            topPrice = Double.POSITIVE_INFINITY;
+        }
+
+        return this.type.toString().toLowerCase().contains(trainingType.toLowerCase()) && bottomPrice<this.price && topPrice>this.price;
     }
 }
