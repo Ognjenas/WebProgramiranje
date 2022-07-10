@@ -24,7 +24,8 @@ Vue.component("open-facility", {
                 username: "",
                 role: ""
             },
-            offers: {}
+            offers: {},
+            loadedComments:"",
         }
     },
     template: ` 
@@ -101,7 +102,27 @@ Vue.component("open-facility", {
 	</tr>
 </table>
 </div>
-<div id="map2" class="map"></div>
+COMMENTS:
+    <div v-if="loadedComments!== '' " >
+    <table>
+    <tr>
+        <th>Username</th>
+        <th>Comment</th>
+        <th>Grade</th>
+        <th>Id</th>
+        <th>Status</th>
+    </tr>
+    <tr v-for="c in loadedComments">
+        <td>{{c.customerUsername}}</td>
+        <td>{{c.text}}</td>
+        <td>{{c.grade}}</td>
+        <td>{{c.id}}</td>
+        <td>{{c.status}}</td>
+    </tr>
+    </table>
+    </div>
+    <p v-if="loadedComments==='' "> No available comments!</p>
+
 </div>		  
 `
     ,
@@ -158,7 +179,10 @@ Vue.component("open-facility", {
 
                 });
             });
-
+        axios.get('/manager/get-facility-comments',this.configHeaders)
+            .then(response=>{
+                this.loadedComments=response.data.allComments;
+            })
         axios.get('/manager/get-facility-offers', this.configHeaders)
             .then(response => {
                 this.offers = response.data.offers;

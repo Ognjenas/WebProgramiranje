@@ -3,7 +3,14 @@
     "subscription": {
       "id": "pBGotEB3PE"
     },
-    "visitedFacilities": null,
+    "visitedFacilities": [
+      {
+        "id": 1
+      },
+      {
+        "id": 2
+      }
+    ],
     "type": {
       "rankType": "NONE",
       "discount": 0.0,
