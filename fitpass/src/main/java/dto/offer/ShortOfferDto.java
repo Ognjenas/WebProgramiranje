@@ -4,14 +4,24 @@ public class ShortOfferDto {
     private int id;
     private String name;
     private String type;
+    private String imgSource;
 
     public ShortOfferDto() {
     }
 
-    public ShortOfferDto(int id, String name, String type) {
+    public ShortOfferDto(int id, String name, String type, String imgSource) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.imgSource = imgSource;
+    }
+
+    public String getImgSource() {
+        return imgSource;
+    }
+
+    public void setImgSource(String imgSource) {
+        this.imgSource = imgSource;
     }
 
     public int getId() {

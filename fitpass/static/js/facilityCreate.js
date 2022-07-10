@@ -11,6 +11,7 @@ Vue.component("facility-create", {
                 geoWidth: "",
                 geoLength: "",
                 managerId: "",
+                imgSource: ""
             },
             manager: {
                 managerName: "",
@@ -102,8 +103,13 @@ Vue.component("facility-create", {
         
         <tr>
         <td><label>Select Image</label></td>
-        <td colspan="2"><input type="file" v-on:change="fileSelected()" accept="image/*"></td>
+        
+        <td colspan="2"><input id="fileFacility" type="file" onchange="encodeImageFileAsURL2()" accept="image/*">
+       
+        <input type="hidden" id="pictureFacility" style="visibility: hidden"></td>
         </tr>
+        
+        
             
         <tr>
         <td><label>Manager</label></td>
@@ -193,6 +199,7 @@ Vue.component("facility-create", {
         },
 
         createFacility() {
+            this.form.imgSource = document.getElementById("pictureFacility").value;
             if (this.managerCreationSection) {
                 this.manager.managerBirthDate = this.fillDate();
                 this.fillManagerFields();
@@ -285,9 +292,19 @@ Vue.component("facility-create", {
     },
 
     mounted() {
+
+
         if ($cookies.get("token") == null) {
             router.push("/login")
         } else {
+            axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
+                .then(response => {
+                    this.userInfo = response.data
+                    if(this.userInfo.role !== 'ADMINISTRATOR') {
+                        router.push("/")
+                    }
+                })
+
             axios.get("/administrator/get-free-managers", this.configHeaders)
                 .then(response => {
                     this.managerList = response.data.freeManagers;

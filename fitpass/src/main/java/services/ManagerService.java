@@ -77,7 +77,7 @@ public class ManagerService {
                 OfferType.valueOf(makeOfferDto.getType()),
                 Duration.ofHours(makeOfferDto.getHourDuration()).plus(Duration.ofMinutes(makeOfferDto.getMinuteDuration())),
                 makeOfferDto.getDescription(),
-                "",
+                makeOfferDto.getImgSource(),
                 makeOfferDto.getPrice(),
                 false, sportFacility);
         offer = offerStorage.add(offer);
@@ -96,7 +96,7 @@ public class ManagerService {
         List<ShortOfferDto> shortOfferDtos = new ArrayList<>();
         for(var offer : sportFacility.getOffers()){
             offer = offerStorage.getById(offer.getId());
-            shortOfferDtos.add(new ShortOfferDto(offer.getId(), offer.getName(), offer.getType().toString()));
+            shortOfferDtos.add(new ShortOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getImageLocation()));
         }
 
         return new OffersToShowDto(shortOfferDtos);
@@ -104,7 +104,7 @@ public class ManagerService {
 
     public OfferDto getOffer(int id, String username) {
         Manager manager = managerStorage.getByUsername(username);
-        SportFacility sportFacility = sportFacilityStorage.getById(manager.getId());
+        SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
         if(sportFacility.getOffers().stream().noneMatch(offer -> offer.getId() == id)) {
             return null;
         }
