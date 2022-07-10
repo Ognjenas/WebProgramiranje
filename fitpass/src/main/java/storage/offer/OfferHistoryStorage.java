@@ -2,6 +2,7 @@ package storage.offer;
 
 import beans.offer.Offer;
 import beans.offer.OfferHistory;
+import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Trainer;
 import beans.users.User;
@@ -152,7 +153,9 @@ public class OfferHistoryStorage {
                 return true;
             } else if (fieldAttributes.getDeclaringClass() == User.class && !fieldAttributes.getName().equals("id")) {
                 return true;
-            } else {
+            }else if(fieldAttributes.getDeclaringClass() == SportFacility.class && !fieldAttributes.getName().equals("id")){
+                return true;
+            }else {
                 return false;
             }
         }

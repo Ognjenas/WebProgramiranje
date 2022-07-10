@@ -91,4 +91,13 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(managerService.getCustomersFromFacility(username));
     }
+
+    public static String getFacilityComments(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        System.out.println(username);
+        return gson.toJson(managerService.getComments(username));
+    }
 }
+

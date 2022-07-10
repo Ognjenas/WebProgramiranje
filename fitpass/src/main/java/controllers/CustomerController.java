@@ -3,6 +3,7 @@ package controllers;
 import com.google.gson.Gson;
 import dto.offer.MakeOfferDto;
 import dto.offer.ReserveOfferDto;
+import dto.sportfacility.CreateCommentDto;
 import io.jsonwebtoken.Jwts;
 import services.CustomerService;
 import services.SecretKeyGetter;
@@ -60,5 +61,12 @@ public class CustomerController {
         String toDate = req.queryParams("toDate");
         String username = req.queryParams("username");
         return gson.toJson(customerService.searchTrainings(facName,price,facType,trainingType,sortType,sortDir,fromDate,toDate,username));
+    }
+
+    public static String createComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        CreateCommentDto commentDto = gson.fromJson(payload, CreateCommentDto.class);
+        return gson.toJson(customerService.createComment(commentDto));
     }
 }

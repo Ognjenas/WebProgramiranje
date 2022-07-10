@@ -60,4 +60,19 @@ public class SportFacilityController {
         int id = Integer.parseInt(req.queryParams("id"));
         return g.toJson(facilityService.getOffer(id));
     }
+
+
+
+    public static String canComment(Request req, Response res) {
+        res.type("application/json");
+        String username = req.queryParams("username");
+        String id = req.queryParams("id");
+        return g.toJson(facilityService.canComment(username,id));
+    }
+
+    public static String loadConfirmedComments(Request req, Response res) {
+        res.type("application/json");
+        String id = req.queryParams("id");
+        return g.toJson(facilityService.getConfirmedCommentsForFacility(id));
+    }
 }

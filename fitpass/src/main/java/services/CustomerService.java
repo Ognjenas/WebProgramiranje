@@ -1,6 +1,8 @@
 package services;
 
 import beans.offer.*;
+import beans.sportfacility.Comment;
+import beans.sportfacility.CommentStatus;
 import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Subscription;
@@ -9,10 +11,8 @@ import dto.offer.AvailableTimesDto;
 import dto.offer.ReserveOfferDto;
 import dto.offerhistory.AllOrdersToShowDto;
 import dto.offerhistory.OrderToShowDto;
-import storage.CustomerStorage;
-import storage.SportFacilityStorage;
-import storage.SubscriptionStorage;
-import storage.TrainerStorage;
+import dto.sportfacility.CreateCommentDto;
+import storage.*;
 import storage.offer.OfferHistoryStorage;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
@@ -38,7 +38,7 @@ public class CustomerService {
     private final TrainerStorage trainerStorage = TrainerStorage.getInstance();
     private final OfferHistoryStorage offerHistoryStorage = OfferHistoryStorage.getInstance();
     private final SportFacilityStorage sportFacilityStorage = SportFacilityStorage.getInstance();
-
+    private final CommentStorage commentStorage = CommentStorage.getInstance();
     public static CustomerService getInstance() {
         if (instance == null) {
             instance = new CustomerService();
@@ -80,11 +80,29 @@ public class CustomerService {
                 trainer.addOfferHistory(offerHistory);
                 trainerStorage.editTrainer(trainer);
             }
+            addVisitedFacilityToCustomer(customer,new SportFacility(offer.getSportFacility().getId()));
             subscription.setOrderedAppointments(subscription.getOrderedAppointments()+1);
             subscriptionStorage.edit(subscription);
             return true;
         }
         return false;
+    }
+
+    private void addVisitedFacilityToCustomer(Customer customer,SportFacility sportFacility) {
+        List<SportFacility> visitedFacilities=customer.getVisitedFacilities();
+        if(visitedFacilities!=null) {
+            for (SportFacility visited : visitedFacilities) {
+                if (visited.getId() == sportFacility.getId()) return;
+            }
+            visitedFacilities.add(sportFacility);
+            customer.setVisitedFacilities(visitedFacilities);
+            customerStorage.editCustomer(customer);
+            return;
+        }
+        List<SportFacility> newList=new ArrayList<>();
+        newList.add(sportFacility);
+        customer.setVisitedFacilities(newList);
+        customerStorage.editCustomer(customer);
     }
 
     private boolean checkIfCustomerCanOrderAppointment(LocalDate date, Customer customer, Subscription subscription) {
@@ -169,5 +187,13 @@ public class CustomerService {
 
          if(sortDir.equals("desc")) Collections.reverse(orders);
         return orders;
+    }
+
+    public boolean createComment(CreateCommentDto commentDto) {
+        SportFacility sportFacility=sportFacilityStorage.getById(commentDto.getFacId());
+        Customer customer=customerStorage.getCustomerByUsername(commentDto.getUsername());
+        Comment comment=new Comment(-1, CommentStatus.SUBMITTED,sportFacility,customer,commentDto.getText(),commentDto.getGrade());
+        commentStorage.add(comment);
+        return true;
     }
 }

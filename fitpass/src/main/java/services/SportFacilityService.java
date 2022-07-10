@@ -5,21 +5,16 @@ import beans.offer.OfferType;
 import beans.offer.Training;
 import beans.offer.TrainingType;
 import beans.sportfacility.Address;
+import beans.sportfacility.Comment;
 import beans.sportfacility.Location;
 import beans.sportfacility.SportFacility;
-import beans.users.Manager;
-import beans.users.Role;
-import beans.users.Trainer;
-import beans.users.User;
+import beans.users.*;
 import dto.offer.*;
 import dto.sportfacility.*;
 import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
 import dto.users.UserDto;
-import storage.ManagerStorage;
-import storage.SportFacilityStorage;
-import storage.TrainerStorage;
-import storage.UserStorage;
+import storage.*;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
@@ -36,6 +31,9 @@ public class SportFacilityService {
     private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private static final UserStorage userStorage = UserStorage.getInstance();
     private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
+    private static final CustomerStorage customerStorage= CustomerStorage.getInstance();
+    private static final CommentStorage commentStorage = CommentStorage.getInstance();
+
 
     public static SportFacilityService getInstance() {
         if (instance == null) {
@@ -241,5 +239,26 @@ public class SportFacilityService {
         String birth = user.getBirthDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         String gender = user.isGender() ? "MUSKO" : "ZENSKO";
         return new UserDto(user.getName(), user.getSurname(), user.getUsername(), user.getRole().toString(), gender, birth);
+    }
+
+    public boolean canComment(String username, String id) {
+        Customer customer= customerStorage.getCustomerByUsername(username);
+        int facID=Integer.parseInt(id);
+        for(SportFacility facility:customer.getVisitedFacilities()){
+            if(facility.getId()==facID) return true;
+        }
+        return false;
+    }
+
+    public AllConfirmedShowCommentDto getConfirmedCommentsForFacility(String id) {
+        int facId=Integer.parseInt(id);
+        List<Comment> confirmedComments=commentStorage.getAllConfirmed(facId);
+        List<ShowCommentDto> showComments=new ArrayList<>();
+        for(Comment comment:confirmedComments){
+            Customer customer=customerStorage.getById(comment.getCustomer().getId());
+            showComments.add(new ShowCommentDto(comment.getId(),customer.getUsername(),comment.getText(),comment.getGrade()));
+        }
+        if(confirmedComments.isEmpty()) return null;
+        return new AllConfirmedShowCommentDto(showComments);
     }
 }

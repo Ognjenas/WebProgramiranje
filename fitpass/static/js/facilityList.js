@@ -103,12 +103,17 @@ Vue.component("facility-list", {
 	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
 	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription">Subscription</button>
 	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode">Promo Codes</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="comments">COMMENTS</button>
 
 </div>		  
 `
     ,
     methods:
         {
+            comments(){
+                router.push('/comment-panel');
+            },
+
             selectedFacility(f){
                 router.push('/facility-show/'+f.id);
             },
