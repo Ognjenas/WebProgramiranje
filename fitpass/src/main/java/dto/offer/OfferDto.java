@@ -13,8 +13,9 @@ public class OfferDto {
     private int hourDuration;
     private int minuteDuration;
     private int price;
+    private String imgSource;
 
-    public OfferDto(int id, String name, String type, String description, int hourDuration, int minuteDuration, int price) {
+    public OfferDto(int id, String name, String type, String description, int hourDuration, int minuteDuration, int price, String imgSource) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -22,6 +23,15 @@ public class OfferDto {
         this.hourDuration = hourDuration;
         this.minuteDuration = minuteDuration;
         this.price = price;
+        this.imgSource = imgSource;
+    }
+
+    public String getImgSource() {
+        return imgSource;
+    }
+
+    public void setImgSource(String imgSource) {
+        this.imgSource = imgSource;
     }
 
     public int getTrainerId() {
