@@ -86,6 +86,7 @@ Vue.component("facility-show", {
         <p>Name: {{offer.name}}</p>
         <p>Type: {{offer.type}}</p>
         <p>Duration: {{offer.duration}}</p>
+        <p>Image: <img :src="offer.imgSource" width="100" height="100"></p>
         <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton(offer.id)">Reserve</button>
     </div>
     

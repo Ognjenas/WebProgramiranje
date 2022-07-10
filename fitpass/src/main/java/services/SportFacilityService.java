@@ -74,7 +74,7 @@ public class SportFacilityService {
         Address adr=new Address(facilityDto.getCity(),facilityDto.getStreet(),facilityDto.getStrNum(),facilityDto.getPostCode());
         Location loc= new Location(facilityDto.getGeoLength(),facilityDto.getGeoWidth(),adr);
         SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc);
-
+        facility.setImgSource(facilityDto.getImgSource());
         Manager manager= ManagerStorage.getInstance().getById(facilityDto.getManagerId());
         manager.setSportFacility(SportFacilityStorage.getInstance().create(facility));
         ManagerStorage.getInstance().update(manager);
@@ -168,7 +168,7 @@ public class SportFacilityService {
                 offer.getDescription(),
                 ((int) offer.getDuration().toHours()),
                 offer.getDuration().toMinutesPart(),
-                ((int) offer.getPrice()));
+                ((int) offer.getPrice()), offer.getImageLocation());
         if(offer.getType().equals(OfferType.TRAINING)) {
             Training training = trainingStorage.getById(offer.getId());
             User trainer = userStorage.getById(training.getBelongingTrainer().getId());
@@ -191,6 +191,7 @@ public class SportFacilityService {
         offer.setDescription(offerDto.getDescription());
         offer.setPrice(offerDto.getPrice());
         offer.setDuration(Duration.ofHours(offerDto.getHourDuration()).plusMinutes(offerDto.getMinuteDuration()));
+        offer.setImageLocation(offerDto.getImgSource());
 
         if(offer.getType().equals(OfferType.TRAINING) && !OfferType.valueOf(offerDto.getType()).equals(OfferType.TRAINING)) {
             trainingStorage.deleteById(offer.getId());
@@ -218,14 +219,14 @@ public class SportFacilityService {
         List<ChooseOfferDto> chooseOfferDtos = new ArrayList<>();
         for(var offer : sportFacility.getOffers()) {
             offer = offerStorage.getById(offer.getId());
-            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString()));
+            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation()));
         }
         return new OffersToChooseDto(chooseOfferDtos);
     }
 
     public ChooseOfferDto getOffer(int offerId) {
         Offer offer = offerStorage.getById(offerId);
-        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString());
+        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation());
     }
 
     private void addUserToDtoList(User user, List<UserDto> users) {

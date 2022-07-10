@@ -64,6 +64,10 @@ Vue.component("create-offer", {
 <tr>
     <td>Price: </td>
     <td><input type="text" v-model = "offer.price"></td>
+    <td>Image: </td>
+    <td><input id="fileOffer" type="file" onchange="encodeImageFileAsURLOffer()" accept="image/*">
+       
+        <input type="hidden" id="pictureOffer"></td>
 </tr>
 </table>
     <button v-on:click="create">Create</button>
@@ -115,6 +119,7 @@ Vue.component("create-offer", {
             }
 
             if(this.validName === true && this.validType === true && this.validTrainingType === true && this.validTrainer === true){
+                this.offer.imgSource = document.getElementById("pictureOffer").value;
                 axios.post('/manager/create-offer', this.offer, this.configHeaders)
                     .then(response => {
                         if(response.data === false) {

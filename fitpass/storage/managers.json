@@ -34,5 +34,23 @@
     },
     "role": "MANAGER",
     "isDeleted": false
+  },
+  {
+    "sportFacility": {
+      "id": 3
+    },
+    "id": 7,
+    "username": "mango",
+    "password": "mango",
+    "name": "Meni",
+    "surname": "Dzeric",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 27
+    },
+    "role": "MANAGER",
+    "isDeleted": false
   }
 ]

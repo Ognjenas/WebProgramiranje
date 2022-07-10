@@ -73,6 +73,10 @@ Vue.component("edit-offer", {
 <tr>
     <td>Price: </td>
     <td><input type="text" v-model = "offer.price"></td>
+    <td>Image: </td>
+    <td><img :src="offer.imgSource" width="100" height="100"><input id="fileOfferEdit" type="file" onchange="encodeImageFileAsURLOfferEdit()" accept="image/*">
+       
+        <input type="hidden" id="pictureOfferEdit"></td>
 </tr>
 </table>
     <button v-on:click="edit">Edit</button>
@@ -124,6 +128,7 @@ Vue.component("edit-offer", {
             }
 
             if(this.validName === true && this.validType === true && this.validTrainingType === true && this.validTrainer === true){
+                this.offer.imgSource = document.getElementById("pictureOfferEdit").value;
                 axios.post('/manager/get-facility/offer/edit', this.offer, this.configHeaders)
                     .then(response => {
                         if(response.data === false) {

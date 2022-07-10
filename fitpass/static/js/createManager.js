@@ -102,7 +102,7 @@ Vue.component("create-manager", {
         if($cookies.get("token") == null) {
             router.push("/login")
         }
-        axios.post('users/get-info', $cookies.get("token"))
+        axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
             .then(response => {
                 this.userInfo = response.data
                 if(this.userInfo.role !== 'ADMINISTRATOR') {
