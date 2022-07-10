@@ -80,4 +80,30 @@ public class AdministratorController {
         PromoCodeCreateDto dto= new Gson().fromJson(payload, PromoCodeCreateDto.class);
         return new Gson().toJson(AdministratorService.getInstance().createPromoCode(dto));
     }
+
+    public static String getUnapprovedComments(Request req, Response res) {
+        res.type("application/json");
+        return new Gson().toJson(AdministratorService.getInstance().getUnapprovedComments());
+    }
+
+    public static String getFinishedComments(Request req, Response res) {
+        res.type("application/json");
+        return new Gson().toJson(AdministratorService.getInstance().getFinishedComments());
+    }
+
+    public static String confirmComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        int id= new Gson().fromJson(payload, Integer.class);
+        AdministratorService.getInstance().confirmComment(id);
+        return new Gson().toJson("");
+    }
+
+    public static String rejectComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        int id= new Gson().fromJson(payload, Integer.class);
+        AdministratorService.getInstance().rejectComment(id);
+        return new Gson().toJson("");
+    }
 }

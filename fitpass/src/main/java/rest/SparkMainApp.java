@@ -27,6 +27,8 @@ public class SparkMainApp {
             get("/show-facility/offers", SportFacilityController::getOffersByFacilityId);
             get("/show-facility/get-offer", SportFacilityController::getOfferById);
             post("/show-facility/get-offer/get-available-appointments", CustomerController::getAvailableTimesForOfferByDate);
+            get("/show-facility/get-confirmed-comments",SportFacilityController::loadConfirmedComments);
+            get("/show-facility/can-comment",SportFacilityController::canComment);
         });
 
 
@@ -43,6 +45,10 @@ public class SparkMainApp {
             get("/sort-search-users",AdministratorController::sortAndSearchUsers);
             get("/get-promo-codes",AdministratorController::getValidPromoCodes);
             post("/create-promo-code",AdministratorController::createPromoCode);
+            get("/get-unapproved-comments",AdministratorController::getUnapprovedComments);
+            get("/get-finished-comments",AdministratorController::getFinishedComments);
+            post("/confirm-comment",AdministratorController::confirmComment);
+            post("/reject-comment",AdministratorController::rejectComment);
         });
 
         path("/manager", () -> {
@@ -58,6 +64,7 @@ public class SparkMainApp {
             get("/create-offer/get-all-trainers", ManagerController::getAllTrainers);
             post("/create-offer", ManagerController::makeOffer);
             get("/get-facility/search-trainings",ManagerController::searchTrainings);
+            get("/get-facility-comments",ManagerController::getFacilityComments);
         });
 
         path("/customer", () -> {
@@ -66,6 +73,7 @@ public class SparkMainApp {
             post("/make-appointment", CustomerController::reserveOffer);
             get("/get-trainings", CustomerController::getTrainings);
             get("/search-trainings",CustomerController::searchTrainings);
+            post("/create-comment",CustomerController::createComment);
         });
 
         path("/trainer", () -> {

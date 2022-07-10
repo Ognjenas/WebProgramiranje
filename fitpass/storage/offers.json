@@ -9,11 +9,11 @@
     },
     "description": "asdasd",
     "imageLocation": "",
+    "sportFacility": {
+      "id": 1
+    },
     "isDeleted": false,
-    "price": 12.0,
-    "sportFacility" : {
-      "id" : 1
-    }
+    "price": 12.0
   },
   {
     "id": 1,
@@ -25,10 +25,26 @@
     },
     "description": "asdasd",
     "imageLocation": "",
+    "sportFacility": {
+      "id": 1
+    },
     "isDeleted": false,
-    "price": 123.0,
-    "sportFacility" : {
-      "id" : 1
-    }
+    "price": 123.0
+  },
+  {
+    "id": 2,
+    "name": "Plivanjejo",
+    "type": "SWIMMING_POOL",
+    "duration": {
+      "seconds": 5400,
+      "nanos": 0
+    },
+    "description": "Glavonja Pluta",
+    "imageLocation": "",
+    "sportFacility": {
+      "id": 2
+    },
+    "isDeleted": false,
+    "price": 20.0
   }
 ]

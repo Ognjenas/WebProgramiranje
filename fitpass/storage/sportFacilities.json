@@ -68,7 +68,11 @@
     "id": 2,
     "name": "asd",
     "type": "DANCE_STUDIO",
-    "offers": [],
+    "offers": [
+      {
+        "id": 2
+      }
+    ],
     "isOpen": false,
     "imgSource": "",
     "location": {

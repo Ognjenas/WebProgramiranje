@@ -1,6 +1,7 @@
 package services;
 
 import beans.offer.*;
+import beans.sportfacility.Comment;
 import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Manager;
@@ -12,17 +13,12 @@ import dto.offer.OffersToShowDto;
 import dto.offer.ShortOfferDto;
 import dto.offerhistory.AllOrdersToShowDto;
 import dto.offerhistory.OrderToShowDto;
-import dto.sportfacility.LocationDto;
-import dto.sportfacility.SportFacilityDto;
-import dto.sportfacility.WorkingHoursDto;
+import dto.sportfacility.*;
 import dto.users.AllTrainersToChooseDto;
 import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
 import dto.users.UserDto;
-import storage.ManagerStorage;
-import storage.SportFacilityStorage;
-import storage.TrainerStorage;
-import storage.UserStorage;
+import storage.*;
 import storage.offer.OfferHistoryStorage;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
@@ -45,7 +41,8 @@ public class ManagerService {
     private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
     private static final OfferHistoryStorage offerHistoryStorage = OfferHistoryStorage.getInstance();
-
+    private static final CommentStorage commentStorage= CommentStorage.getInstance();
+    private static final CustomerStorage customerStorage=CustomerStorage.getInstance();
     public static ManagerService getInstance() {
         if (instance == null) {
             instance = new ManagerService();
@@ -208,5 +205,17 @@ public class ManagerService {
 
         if(sortDir.equals("desc")) Collections.reverse(orders);
         return orders;
+    }
+
+    public AllCommentsManagerDto getComments(String username) {
+        Manager manager = managerStorage.getByUsername(username);
+        List<Comment> allComments= commentStorage.getAllConfirmedAndRejectedManager(manager.getSportFacility().getId());
+        List<ShowCommentManagerDto> list=new ArrayList<>();
+        for(Comment comment:allComments){
+            Customer customer=customerStorage.getById(comment.getCustomer().getId());
+            list.add(new ShowCommentManagerDto(comment.getId(),customer.getUsername(),comment.getText(),comment.getStatus(),comment.getGrade()));
+        }
+        if (list.isEmpty()) return null;
+        return new AllCommentsManagerDto(list);
     }
 }

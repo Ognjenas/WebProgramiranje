@@ -18,7 +18,9 @@
     "isDeleted": false
   },
   {
-    "sportFacility": null,
+    "sportFacility": {
+      "id": 2
+    },
     "id": 4,
     "username": "kraljina",
     "password": "glavata",

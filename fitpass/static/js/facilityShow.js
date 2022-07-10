@@ -8,7 +8,7 @@ Vue.component("facility-show", {
                 }
 
             },
-            currentFacility: null,
+            currentFacility: {location:""},
             id: "",
             userInfo: {
                 username: "",
@@ -16,8 +16,17 @@ Vue.component("facility-show", {
             },
             offers : "",
             reserveOffer: {date: {}, time: "", id: ""},
-            dateValue: ""
-
+            dateValue: "",
+            canWriteComment:false,
+            loadedComments:"",
+            comment:{
+                text:"",
+                grade:"",
+                username:"",
+                facId:"",
+            },
+            CommentSubmitted:false,
+            checkCommentValid:true,
         }
     },
     template: ` 
@@ -79,11 +88,70 @@ Vue.component("facility-show", {
         <p>Duration: {{offer.duration}}</p>
         <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton(offer.id)">Reserve</button>
     </div>
+    
+    COMMENTS:
+    <div v-if="loadedComments!== '' " >
+    <table>
+    <tr>
+        <th>Username</th>
+        <th>Comment</th>
+        <th>Grade</th>
+    </tr>
+    <tr v-for="c in loadedComments">
+        <td>{{c.customerUsername}}</td>
+        <td>{{c.text}}</td>
+        <td>{{c.grade}}</td>
+    </tr>
+    </table>
+    </div>
+    <p v-if="loadedComments==='' "> No available comments!</p>
+
+    
+    <div v-if="canWriteComment">
+    Write Comment:
+    (Please Input both fields to submit comment)
+    <input type="text" v-model="comment.text" v-on:input="checkComment">
+    Give grade:
+    <select name="type" v-model="comment.grade" v-on:change="checkComment">
+      <option value="">Select Grade</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      </select>
+      <button :disabled="checkCommentValid"  v-on:click="createComment">Submit Comment</button>
+    </div>
+    <p v-if="CommentSubmitted"><b>Comment sent for review by admin!</b></p>
+    <button v-on:click="log">LOG</button>
 </div>		  
 `
     ,
     methods:
         {
+            log(){
+              console.log(this.loadedComments);
+            },
+            checkComment(){
+              if(this.comment.text=="" || this.comment.grade==""){
+                  this.checkCommentValid=true;
+              }else{
+                  this.checkCommentValid=false;
+              }
+            },
+
+            createComment(){
+                this.comment.username=this.userInfo.username;
+                this.comment.facId=this.id;
+                axios.post('customer/create-comment',this.comment,this.configHeaders);
+                this.CommentSubmitted=true;
+                this.canWriteComment=false;
+            },
             login() {
                 router.push('/login')
             },
@@ -96,25 +164,38 @@ Vue.component("facility-show", {
         },
 
     mounted() {
-
+        this.id=this.$route.params.id;
         axios
             .get('/show-facility?id=' + this.$route.params.id)
             .then(response => {
                 this.currentFacility = response.data;
+
         });
 
         if ($cookies.get("token") != null) {
             axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
                 .then(response => {
                     this.userInfo = response.data
+                    axios.get('/show-facility/can-comment?id='+this.$route.params.id+'&username='+this.userInfo.username,this.configHeaders)
+                        .then(response => {
+                            this.canWriteComment=response.data;
+                        })
                 })
         }
 
+
+        axios.get('/show-facility/get-confirmed-comments?id='+this.id,this.configHeaders)
+            .then(response=>{
+                this.loadedComments=response.data.allComments;
+                console.log("Dobavlja komentare");
+            })
+
         axios
-            .get('/show-facility/offers?id=' + this.$route.params.id)
+            .get('/show-facility/offers?id=' + this.$route.params.id,this.configHeaders)
             .then(response => {
                 this.offers = response.data.offers;
             })
+
 
     },
 });
