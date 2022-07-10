@@ -77,20 +77,21 @@ public class OfferHistory {
         isDeleted = deleted;
     }
 
-    public boolean isActiveDate(String fromDate, String toDate){
-        LocalDate from,to;
+    public boolean isActiveDate(String fromDate, String toDate) {
+        LocalDate from, to;
 
-        try{
-            String[] fromDates=fromDate.split("-");
-            String[] toDates=toDate.split("-");
-            from=LocalDate.of(Integer.parseInt(fromDates[0]),Integer.parseInt(fromDates[1]),Integer.parseInt(fromDates[2]));
-            to=LocalDate.of(Integer.parseInt(toDates[0]),Integer.parseInt(toDates[1]),Integer.parseInt(toDates[2]));
-        }catch (NumberFormatException e){
-            if(fromDate.equals("") || toDate.equals("")) return true;
+        try {
+            String[] fromDates = fromDate.split("-");
+            String[] toDates = toDate.split("-");
+            from = LocalDate.of(Integer.parseInt(fromDates[0]), Integer.parseInt(fromDates[1]), Integer.parseInt(fromDates[2]));
+            to = LocalDate.of(Integer.parseInt(toDates[0]), Integer.parseInt(toDates[1]), Integer.parseInt(toDates[2]));
+        } catch (NumberFormatException e) {
+            if (fromDate.equals("") || toDate.equals("")) return true;
             return false;
         }
         return from.isBefore(checkIn.toLocalDate()) && checkIn.toLocalDate().isBefore(to);
-        
+
+    }
     public SportFacility getSportFacility() {
         return sportFacility;
     }
