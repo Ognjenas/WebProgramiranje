@@ -16,6 +16,11 @@
 
 }
 
+.map {
+    height: 250px;
+    width: 100%;
+}
+
 header{
     background: #55d6aa;
 }
@@ -55,4 +60,8 @@ nav li{
 
 .td-content {
     display: flex;
+}
+
+.createFacilityTable td{
+
 }
