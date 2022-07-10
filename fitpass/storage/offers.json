@@ -78,5 +78,21 @@
     },
     "isDeleted": false,
     "price": 12.0
+  },
+  {
+    "id": 5,
+    "name": "trt2",
+    "type": "TRAINING",
+    "duration": {
+      "seconds": 3720,
+      "nanos": 0
+    },
+    "description": "asd",
+    "imageLocation": "",
+    "sportFacility": {
+      "id": 4
+    },
+    "isDeleted": false,
+    "price": 2.0
   }
 ]

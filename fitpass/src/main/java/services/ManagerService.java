@@ -182,7 +182,7 @@ public class ManagerService {
         SportFacility sportFacility = sportFacilityStorage.getById(manager.getSportFacility().getId());
         List<OrderToShowDto> orders = new ArrayList<>();
 
-        for (var order : offerHistoryStorage.getNotDeleted()) {
+        for (var order : offerHistoryStorage.getBySportFacilityId(sportFacility.getId())) {
             if (order.isActiveDate(fromDate, toDate)) {
                 Offer offer = offerStorage.getById(order.getOffer().getId());
                 if (offer.searchedTypeAndPriceRange(trainingType,price)) {

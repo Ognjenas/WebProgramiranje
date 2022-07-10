@@ -46,5 +46,17 @@
     },
     "text": "Bombonaaa",
     "grade": 9
+  },
+  {
+    "id": 5,
+    "status": "CONFIRMED",
+    "facility": {
+      "id": 4
+    },
+    "customer": {
+      "id": 5
+    },
+    "text": "asdasd",
+    "grade": 8
   }
 ]

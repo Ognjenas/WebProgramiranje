@@ -1,7 +1,7 @@
 [
   {
     "subscription": {
-      "id": "pBGotEB3PE"
+      "id": "p@WpwD\u0026NZo"
     },
     "visitedFacilities": [
       {
@@ -9,12 +9,15 @@
       },
       {
         "id": 2
+      },
+      {
+        "id": 4
       }
     ],
     "type": {
       "rankType": "NONE",
       "discount": 0.0,
-      "points": 0.0
+      "points": -334.0
     },
     "id": 5,
     "username": "korisnik",
@@ -31,9 +34,7 @@
     "isDeleted": false
   },
   {
-    "subscription": {
-      "id": "nL0pM3f@um"
-    },
+    "subscription": null,
     "visitedFacilities": null,
     "type": {
       "rankType": "BRONZE",
@@ -50,6 +51,28 @@
       "year": 2022,
       "month": 7,
       "day": 9
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "subscription": null,
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 8,
+    "username": "koni2",
+    "password": "koni2",
+    "name": "koni",
+    "surname": "koni",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
     },
     "role": "CUSTOMER",
     "isDeleted": false

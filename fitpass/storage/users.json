@@ -118,5 +118,20 @@
     },
     "role": "MANAGER",
     "isDeleted": false
+  },
+  {
+    "id": 8,
+    "username": "koni2",
+    "password": "koni2",
+    "name": "koni",
+    "surname": "koni",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
   }
 ]

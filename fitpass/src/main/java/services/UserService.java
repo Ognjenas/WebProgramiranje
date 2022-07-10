@@ -155,7 +155,7 @@ public class UserService {
         }
 
         Subscription subscription=makeSubscriptionInstance(dto,customer);
-        subPromoCode(dto.getPromoCode());
+        if(!dto.getPromoCode().equals("")) subPromoCode(dto.getPromoCode());
         customer.setSubscription(subscription);
         customerStorage.editCustomer(customer);
 

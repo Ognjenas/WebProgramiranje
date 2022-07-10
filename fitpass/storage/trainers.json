@@ -23,7 +23,11 @@
     "isDeleted": false
   },
   {
-    "offerHistories": [],
+    "offerHistories": [
+      {
+        "id": 11
+      }
+    ],
     "id": 2,
     "username": "trener1",
     "password": "trener1",

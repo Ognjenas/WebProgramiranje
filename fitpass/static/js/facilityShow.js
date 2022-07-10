@@ -201,8 +201,6 @@ Vue.component("facility-show", {
                 });
             });
 
-        });
-
         if ($cookies.get("token") != null) {
             axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
                 .then(response => {
@@ -215,14 +213,14 @@ Vue.component("facility-show", {
         }
 
 
-        axios.get('/show-facility/get-confirmed-comments?id='+this.id,this.configHeaders)
+        axios.get('/show-facility/get-confirmed-comments?id='+this.id, this.configHeaders)
             .then(response=>{
                 this.loadedComments=response.data.allComments;
                 console.log("Dobavlja komentare");
             })
 
         axios
-            .get('/show-facility/offers?id=' + this.$route.params.id,this.configHeaders)
+            .get('/show-facility/offers?id=' + this.$route.params.id, this.configHeaders)
             .then(response => {
                 this.offers = response.data.offers;
             })
