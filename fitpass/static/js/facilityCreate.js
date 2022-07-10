@@ -46,7 +46,7 @@ Vue.component("facility-create", {
     <h1>OVO JE FACILITY CREATE</h1>
     <form method="post">
     
-    <table>
+    <table class="createFacilityTable">
     <td>
         <table>
         <tr>
@@ -91,15 +91,7 @@ Vue.component("facility-create", {
         <td><input id="postCode" name="postCode" v-model="form.postCode" v-on:input="validate()" placeholder="Enter Postal Code"></td>
         </tr>
         
-        <tr>
-        <td><label>Geographical Width</label></td>
-        <td><input id="geoWidth" name="geoWidth" v-model="form.geoWidth" v-on:input="validate()" placeholder="Enter Geographical Width"></td>
-        </tr>
         
-        <tr>
-        <td><label>Geographical Length</label></td>
-        <td><input id="geoLength" name="geoLength" v-model="form.geoLength" v-on:input="validate()" placeholder="Enter Geographical Length"></td>
-        </tr>  
         
         <tr>
         <td><label>Select Image</label></td>
@@ -108,6 +100,23 @@ Vue.component("facility-create", {
        
         <input type="hidden" id="pictureFacility" style="visibility: hidden"></td>
         </tr>
+        
+        
+        <tr>
+        <td>Choose from map</td>
+        <td><div id="map23" class="map"></div>  </td>
+        </tr>
+        
+        <tr>
+        <td><label>Geographical Length</label></td>
+        <td><input id="geoLength" name="geoLength" v-model="form.geoLength" v-on:input="validate()" placeholder="Enter Geographical Length"></td>
+        </tr>
+        <tr>
+        <td><label>Geographical Width</label></td>
+        <td><input id="geoWidth" name="geoWidth" v-model="form.geoWidth" v-on:input="validate()" placeholder="Enter Geographical Width"></td>
+        </tr>
+        
+        
         
         
             
@@ -172,6 +181,7 @@ Vue.component("facility-create", {
     </form>
     <p>create-form:  |{{form.name}}|,|{{form.type}}|,|{{form.city}}|,|{{form.street}}| , | {{form.managerId}}| </p>
     <button v-on:click="consoleWrite()">WRITE CONSOLE</button>
+    
  </div>	   
     
     
@@ -179,10 +189,6 @@ Vue.component("facility-create", {
     ,
     methods: {
         consoleWrite() {
-            console.log(this.selectedBirthDate + "\n DATE AFTER UPDATE \n");
-            console.log(this.fillDate());
-            console.log(this.form);
-            console.log(this.manager);
             this.fillManagerFields();
             console.log(this.form);
             console.log(this.manager);
@@ -235,6 +241,9 @@ Vue.component("facility-create", {
         ,
 
         validate() {
+            this.form.imgSource = document.getElementById("pictureFacility").value;
+            this.form.geoWidth = document.getElementById("geoWidth").value;
+            this.form.geoLength = document.getElementById("geoLength").value;
             if (this.managerCreationSection) {
                 if (this.form.name === "" || this.form.type === "" || this.form.city === "" || this.form.street === ""
                     || this.form.strNum === "" || this.form.postCode === "" || this.form.geoWidth === "" || this.form.geoLength === ""
@@ -311,6 +320,26 @@ Vue.component("facility-create", {
                 })
 
         }
+        const map = new ol.Map({
+            target: 'map23',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([20.028906272453145,44.953121262634596]),
+                zoom: 10
+            })
+
+        });
+        map.on('click', function (evt) {
+
+            var coords = ol.proj.toLonLat(evt.coordinate);
+            document.getElementById("geoLength").value = coords[0]
+            document.getElementById("geoWidth").value = coords[1]
+        })
+
 
     },
 });

@@ -61,3 +61,4 @@ function encodeImageFileAsURLOfferEdit() {
         fileReader.readAsDataURL(fileToLoad);
     }
 }
+
