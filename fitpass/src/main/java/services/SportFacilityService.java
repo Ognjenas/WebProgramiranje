@@ -5,26 +5,24 @@ import beans.offer.OfferType;
 import beans.offer.Training;
 import beans.offer.TrainingType;
 import beans.sportfacility.Address;
+import beans.sportfacility.Comment;
 import beans.sportfacility.Location;
 import beans.sportfacility.SportFacility;
-import beans.users.Manager;
-import beans.users.Role;
-import beans.users.Trainer;
-import beans.users.User;
+import beans.users.*;
 import dto.offer.*;
 import dto.sportfacility.*;
 import dto.users.AllUsersDto;
 import dto.users.TrainerToChooseDto;
 import dto.users.UserDto;
-import storage.ManagerStorage;
-import storage.SportFacilityStorage;
-import storage.TrainerStorage;
-import storage.UserStorage;
+import storage.*;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
+import utilities.WorkingHours;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,6 +34,9 @@ public class SportFacilityService {
     private static final TrainingStorage trainingStorage = TrainingStorage.getInstance();
     private static final UserStorage userStorage = UserStorage.getInstance();
     private static final TrainerStorage trainerStorage = TrainerStorage.getInstance();
+    private static final CustomerStorage customerStorage= CustomerStorage.getInstance();
+    private static final CommentStorage commentStorage = CommentStorage.getInstance();
+
 
     public static SportFacilityService getInstance() {
         if (instance == null) {
@@ -55,9 +56,17 @@ public class SportFacilityService {
 
     public static AllFacilitiesDto getAllFacilitiesDto() {
         List<SportFacilityDto> list = new ArrayList<>();
+        LocalDateTime now=LocalDateTime.now();
         for (SportFacility facility : getAllFacilities()) {
+            if(facility.hasOpen(now)) {
+                facility.setOpen(true);
+            }else{
+                facility.setOpen(false);
+            }
             list.add(makeFacilityDto(facility));
         }
+        Collections.sort(list,new ComparatorFactory.FacilityCompareOpen());
+        Collections.reverse(list);
         return new AllFacilitiesDto(list);
     }
     
@@ -75,13 +84,33 @@ public class SportFacilityService {
     public boolean createFacility(CreateSportFacilityDto facilityDto) {
         Address adr=new Address(facilityDto.getCity(),facilityDto.getStreet(),facilityDto.getStrNum(),facilityDto.getPostCode());
         Location loc= new Location(facilityDto.getGeoLength(),facilityDto.getGeoWidth(),adr);
-        SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc);
-
+        WorkingHours hours = createFacilityWorkingHours(facilityDto.getWorkdayHours(),facilityDto.getSaturdayHours(),facilityDto.getSundayHours());
+        SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc,hours);
+        facility.setImgSource(facilityDto.getImgSource());
         Manager manager= ManagerStorage.getInstance().getById(facilityDto.getManagerId());
         manager.setSportFacility(SportFacilityStorage.getInstance().create(facility));
         ManagerStorage.getInstance().update(manager);
 
         return true;
+    }
+
+    private WorkingHours createFacilityWorkingHours(String workdayHours, String saturdayHours, String sundayHours) {
+        String[] work=workdayHours.split("-");
+        String[] fromWork=work[0].split(":");
+        String[] toWork=work[1].split(":");
+        LocalTime workdayFrom= LocalTime.of(Integer.parseInt(fromWork[0]),Integer.parseInt(fromWork[1]),0);
+        LocalTime workdayTo= LocalTime.of(Integer.parseInt(toWork[0]),Integer.parseInt(toWork[1]),0);
+        String[] saturday=saturdayHours.split("-");
+        String[] fromSaturday=saturday[0].split(":");
+        String[] toSaturday=saturday[1].split(":");
+        LocalTime saturdayFrom= LocalTime.of(Integer.parseInt(fromSaturday[0]),Integer.parseInt(fromSaturday[1]),0);
+        LocalTime saturdayTo= LocalTime.of(Integer.parseInt(toSaturday[0]),Integer.parseInt(toSaturday[1]),0);
+        String[] sunday=sundayHours.split("-");
+        String[] fromSunday=sunday[0].split(":");
+        String[] toSunday=sunday[1].split(":");
+        LocalTime sundayFrom= LocalTime.of(Integer.parseInt(fromSunday[0]),Integer.parseInt(fromSunday[1]),0);
+        LocalTime sundayTo= LocalTime.of(Integer.parseInt(toSunday[0]),Integer.parseInt(toSunday[1]),0);
+        return new WorkingHours(workdayFrom,workdayTo,saturdayFrom,saturdayTo,sundayFrom,sundayTo);
     }
 
     private static SportFacilityDto makeFacilityDto(SportFacility facility){
@@ -122,7 +151,9 @@ public class SportFacilityService {
                 Role.MANAGER));
         ManagerStorage.getInstance().add(new Manager(user, null));
 
-        return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId()));
+        return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),
+                dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId(),dto.getWorkdayHours(),dto.getSaturdayHours(),
+                dto.getSundayHours()));
     }
 
     public SportFacilityDto getFacilityToShow(int facilityId){
@@ -170,7 +201,7 @@ public class SportFacilityService {
                 offer.getDescription(),
                 ((int) offer.getDuration().toHours()),
                 offer.getDuration().toMinutesPart(),
-                ((int) offer.getPrice()));
+                ((int) offer.getPrice()), offer.getImageLocation());
         if(offer.getType().equals(OfferType.TRAINING)) {
             Training training = trainingStorage.getById(offer.getId());
             User trainer = userStorage.getById(training.getBelongingTrainer().getId());
@@ -193,6 +224,7 @@ public class SportFacilityService {
         offer.setDescription(offerDto.getDescription());
         offer.setPrice(offerDto.getPrice());
         offer.setDuration(Duration.ofHours(offerDto.getHourDuration()).plusMinutes(offerDto.getMinuteDuration()));
+        offer.setImageLocation(offerDto.getImgSource());
 
         if(offer.getType().equals(OfferType.TRAINING) && !OfferType.valueOf(offerDto.getType()).equals(OfferType.TRAINING)) {
             trainingStorage.deleteById(offer.getId());
@@ -220,14 +252,14 @@ public class SportFacilityService {
         List<ChooseOfferDto> chooseOfferDtos = new ArrayList<>();
         for(var offer : sportFacility.getOffers()) {
             offer = offerStorage.getById(offer.getId());
-            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString()));
+            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation()));
         }
         return new OffersToChooseDto(chooseOfferDtos);
     }
 
     public ChooseOfferDto getOffer(int offerId) {
         Offer offer = offerStorage.getById(offerId);
-        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString());
+        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation());
     }
 
     private void addUserToDtoList(User user, List<UserDto> users) {
@@ -240,5 +272,26 @@ public class SportFacilityService {
         String birth = user.getBirthDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         String gender = user.isGender() ? "MUSKO" : "ZENSKO";
         return new UserDto(user.getName(), user.getSurname(), user.getUsername(), user.getRole().toString(), gender, birth);
+    }
+
+    public boolean canComment(String username, String id) {
+        Customer customer= customerStorage.getCustomerByUsername(username);
+        int facID=Integer.parseInt(id);
+        for(SportFacility facility:customer.getVisitedFacilities()){
+            if(facility.getId()==facID) return true;
+        }
+        return false;
+    }
+
+    public AllConfirmedShowCommentDto getConfirmedCommentsForFacility(String id) {
+        int facId=Integer.parseInt(id);
+        List<Comment> confirmedComments=commentStorage.getAllConfirmed(facId);
+        List<ShowCommentDto> showComments=new ArrayList<>();
+        for(Comment comment:confirmedComments){
+            Customer customer=customerStorage.getById(comment.getCustomer().getId());
+            showComments.add(new ShowCommentDto(comment.getId(),customer.getUsername(),comment.getText(),comment.getGrade()));
+        }
+        if(confirmedComments.isEmpty()) return null;
+        return new AllConfirmedShowCommentDto(showComments);
     }
 }

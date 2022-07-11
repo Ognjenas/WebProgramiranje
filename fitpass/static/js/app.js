@@ -18,6 +18,9 @@ const PromoCode= {template: '<promo-code></promo-code>'}
 const TrainerTrainings= {template: '<trainer-trainings></trainer-trainings>'}
 const ManagerTrainings= {template: '<manager-trainings></manager-trainings>'}
 const CustomerTrainings= {template: '<customer-trainings></customer-trainings>'}
+const CustomersList= {template: '<customers-list></customers-list>'}
+const CommentPanel={template:'<comment-panel></comment-panel>'}
+
 
 const router = new VueRouter({
     mode: 'hash',
@@ -41,7 +44,9 @@ const router = new VueRouter({
         {path: '/promo-code',component: PromoCode},
         {path: '/trainer-trainings',component: TrainerTrainings},
         {path: '/customer-trainings',component: CustomerTrainings},
-        {path: '/open-facility/trainings',component: ManagerTrainings}
+        {path: '/open-facility/trainings',component: ManagerTrainings},
+        {path: '/open-facility/customers',component: CustomersList},
+        {path: '/comment-panel',component: CommentPanel},
     ]
 });
 

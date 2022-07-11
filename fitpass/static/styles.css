@@ -16,6 +16,11 @@
 
 }
 
+.map {
+    height: 250px;
+    width: 100%;
+}
+
 header{
     background: #55d6aa;
 }
@@ -55,4 +60,43 @@ nav li{
 
 .td-content {
     display: flex;
+}
+
+.show-facilities-table tr td {
+    border: 1px solid black;
+    padding: 5px;
+}
+.first-row-list-facility {
+    border: 1px solid black;
+    width: 40%;
+    padding: 20px;
+    border-radius: 50px;
+    background-color: #55d6aa;
+}
+.show-facilities-table {
+    background-color: #55d6aa;
+    padding: 25px;
+    display: inline-block;
+    border-radius: 50px;
+    text-align: center;
+    margin: auto;
+}
+.facility-list-container {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.nav-buttons{
+    float: right;
+    overflow: auto;
+}
+.subNav{
+    overflow: auto;
+}
+.nav-commands{
+    width: 30%;
 }

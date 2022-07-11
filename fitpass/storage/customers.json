@@ -1,13 +1,23 @@
 [
   {
     "subscription": {
-      "id": "pBGotEB3PE"
+      "id": "p@WpwD\u0026NZo"
     },
-    "visitedFacilities": null,
+    "visitedFacilities": [
+      {
+        "id": 1
+      },
+      {
+        "id": 2
+      },
+      {
+        "id": 4
+      }
+    ],
     "type": {
       "rankType": "NONE",
       "discount": 0.0,
-      "points": 0.0
+      "points": -334.0
     },
     "id": 5,
     "username": "korisnik",
@@ -24,14 +34,12 @@
     "isDeleted": false
   },
   {
-    "subscription": {
-      "id": "tYX%StBu@Y"
-    },
+    "subscription": null,
     "visitedFacilities": null,
     "type": {
-      "rankType": "NONE",
+      "rankType": "BRONZE",
       "discount": 0.0,
-      "points": 0.0
+      "points": 2100.0
     },
     "id": 6,
     "username": "123123",
@@ -43,6 +51,50 @@
       "year": 2022,
       "month": 7,
       "day": 9
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "subscription": null,
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 8,
+    "username": "koni2",
+    "password": "koni2",
+    "name": "koni",
+    "surname": "koni",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
+  },
+  {
+    "subscription": null,
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 10,
+    "username": "korisnik2",
+    "password": "korisnik",
+    "name": "korisnik",
+    "surname": "koris",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 4
     },
     "role": "CUSTOMER",
     "isDeleted": false

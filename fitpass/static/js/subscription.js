@@ -116,7 +116,6 @@ Vue.component("subscription", {
             },
 
             calculateDiscountedPrice() {
-                console.log("Uso u calculate price")
                 var price = this.subOffer.price;
                 price = price - price * this.validPromoCode.discount / 100;
                 this.discountedPrice = price;
@@ -127,8 +126,10 @@ Vue.component("subscription", {
                 if(this.validPromoCode){
                     this.subOffer.promoCode = this.validPromoCode.code
                 }
-                axios.post('/users/create-subscription', this.subOffer, this.configHeaders);
-                router.push('/');
+                axios.post('/users/create-subscription', this.subOffer, this.configHeaders)
+                    .then(response=>{
+                        router.push('/');
+                    })
             },
 
             reset() {

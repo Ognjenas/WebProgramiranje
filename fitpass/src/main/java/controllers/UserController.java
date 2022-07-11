@@ -24,7 +24,11 @@ public class UserController {
     public static String registerCustomer(Request req, Response res) {
         String payload = req.body();
         RegisterCustomerDto customerDto = gson.fromJson(payload, RegisterCustomerDto.class);
-        return gson.toJson(userService.registerCustomer(customerDto));
+        boolean returnValue = userService.registerCustomer(customerDto);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return gson.toJson(returnValue);
 
     }
 
@@ -49,6 +53,7 @@ public class UserController {
 
             return gson.toJson(jws);
         }
+        res.status(403);
         return gson.toJson("");
 
     }
@@ -103,5 +108,13 @@ public class UserController {
         res.type("application/json");
         String searchedCode =req.queryParams("src");
         return gson.toJson(userService.checkPromoCode(searchedCode));
+    }
+
+    public static Object checkSubscriptionValid(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        UserInfoDto dto = gson.fromJson(payload, UserInfoDto.class);
+        userService.checkSubscriptionValid(dto.getUsername());
+        return gson.toJson("");
     }
 }

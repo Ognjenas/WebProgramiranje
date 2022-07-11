@@ -3,6 +3,7 @@ package controllers;
 import com.google.gson.Gson;
 import dto.offer.MakeOfferDto;
 import dto.offer.ReserveOfferDto;
+import dto.sportfacility.CreateCommentDto;
 import io.jsonwebtoken.Jwts;
 import services.CustomerService;
 import services.SecretKeyGetter;
@@ -46,5 +47,26 @@ public class CustomerController {
         String token = gson.fromJson(req.headers("token"), String.class);
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(customerService.getTrainings(username));
+    }
+
+    public static String searchTrainings(Request req, Response res) {
+        res.type("application/json");
+        String facName = req.queryParams("facName");
+        String price = req.queryParams("price");
+        String facType = req.queryParams("facType");
+        String trainingType = req.queryParams("trainingType");
+        String sortType = req.queryParams("sortType");
+        String sortDir = req.queryParams("sortDir");
+        String fromDate = req.queryParams("fromDate");
+        String toDate = req.queryParams("toDate");
+        String username = req.queryParams("username");
+        return gson.toJson(customerService.searchTrainings(facName,price,facType,trainingType,sortType,sortDir,fromDate,toDate,username));
+    }
+
+    public static String createComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        CreateCommentDto commentDto = gson.fromJson(payload, CreateCommentDto.class);
+        return gson.toJson(customerService.createComment(commentDto));
     }
 }

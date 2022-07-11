@@ -22,13 +22,21 @@ public class AdministratorController {
     public static String registerTrainer(Request req, Response res) {
         String payload = req.body();
         MakeUserDto makeUserDto = new Gson().fromJson(payload, MakeUserDto.class);
-        return new Gson().toJson(AdministratorService.getInstance().makeTrainer(makeUserDto));
+        boolean returnValue = AdministratorService.getInstance().makeTrainer(makeUserDto);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return new Gson().toJson(returnValue);
     }
 
     public static String registerManager(Request req, Response res) {
         String payload = req.body();
         MakeUserDto makeUserDto = new Gson().fromJson(payload, MakeUserDto.class);
-        return new Gson().toJson(AdministratorService.getInstance().makeManager(makeUserDto));
+        boolean returnValue = AdministratorService.getInstance().makeManager(makeUserDto);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return new Gson().toJson(returnValue);
     }
 
     public static String getFreeManagers(Request req, Response res){
@@ -39,6 +47,9 @@ public class AdministratorController {
         String payload = req.body();
         CreateSportFacilityDto facilityDto = new Gson().fromJson(payload, CreateSportFacilityDto.class);
         boolean created = SportFacilityService.getInstance().createFacility(facilityDto);
+        if(!created) {
+            res.status(403);
+        }
         return new Gson().toJson(created);
     }
 
@@ -79,5 +90,31 @@ public class AdministratorController {
         String payload = req.body();
         PromoCodeCreateDto dto= new Gson().fromJson(payload, PromoCodeCreateDto.class);
         return new Gson().toJson(AdministratorService.getInstance().createPromoCode(dto));
+    }
+
+    public static String getUnapprovedComments(Request req, Response res) {
+        res.type("application/json");
+        return new Gson().toJson(AdministratorService.getInstance().getUnapprovedComments());
+    }
+
+    public static String getFinishedComments(Request req, Response res) {
+        res.type("application/json");
+        return new Gson().toJson(AdministratorService.getInstance().getFinishedComments());
+    }
+
+    public static String confirmComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        int id= new Gson().fromJson(payload, Integer.class);
+        AdministratorService.getInstance().confirmComment(id);
+        return new Gson().toJson("");
+    }
+
+    public static String rejectComment(Request req, Response res) {
+        res.type("application/json");
+        String payload = req.body();
+        int id= new Gson().fromJson(payload, Integer.class);
+        AdministratorService.getInstance().rejectComment(id);
+        return new Gson().toJson("");
     }
 }

@@ -32,6 +32,8 @@ Vue.component("login", {
                     $cookies.set("token", response.data, 10000)
                     router.push(`/`)
                 }
+            }).catch(function (error) {
+                alert('Pogresan login')
             })
         },
         registration: function () {

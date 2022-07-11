@@ -5,6 +5,9 @@ import beans.offer.OfferType;
 import beans.offer.Training;
 import utilities.WorkingHours;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,10 @@ public class SportFacility {
     private WorkingHours openTime; //OVDE BIH NAPRAVIO KLASU POSEBNU ZA RADNO VREME ZA SVAKI DAN
     private boolean isDeleted;
 
+    public SportFacility(int id) {
+        this.id = id;
+    }
+
     public SportFacility(int id, String name, SportFacilityType type, List<Offer> offers, boolean isOpen,
                          String imgSource, Location location, double averageGrade, WorkingHours openTime, boolean deleted) {
         this.id = id;
@@ -36,7 +43,7 @@ public class SportFacility {
         this.isDeleted = deleted;
     }
 
-    public SportFacility(int id, String name, SportFacilityType facType, Location loc) {
+    public SportFacility(int id, String name, SportFacilityType facType, Location loc,WorkingHours hours) {
         this.id = id;
         this.name = name;
         this.type = facType;
@@ -46,8 +53,7 @@ public class SportFacility {
         this.offers = new ArrayList<>();
         this.isOpen = false;
         this.averageGrade = 0.0;
-        LocalTime zeroTime = LocalTime.of(0, 0, 0, 0);
-        this.openTime = new WorkingHours(zeroTime, zeroTime, zeroTime, zeroTime, zeroTime, zeroTime);
+        this.openTime = hours;
         this.isDeleted = false;
     }
 
@@ -133,7 +139,7 @@ public class SportFacility {
         double maxGrade;
         if(grade.equals("")) {
             minGrade=0;
-            maxGrade=5;
+            maxGrade=10;
         }else{
             String[] grades = grade.split("-");
             minGrade = Double.parseDouble(grades[0]);
@@ -149,5 +155,24 @@ public class SportFacility {
         this.offers.add(offer);
     }
 
+    public boolean searchedNameAndType(String facName, String facType){
+        return this.type.toString().toLowerCase().contains(facType.toLowerCase()) && this.name.toLowerCase().contains(facName.toLowerCase());
+    }
 
+
+    public boolean hasOpen(LocalDateTime now) {
+        if(now.getDayOfWeek()== DayOfWeek.SATURDAY){
+            if(openTime.getStartSaturday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSaturday())) return true;
+            return false;
+        }else if(now.getDayOfWeek()==DayOfWeek.SUNDAY){
+            if(openTime.getStartSunday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSunday())) return true;
+            return false;
+        }else{
+            if(openTime.getStartWorkingDays().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndWorkingDays())) return true;
+            return false;
+        }
+    }
 }

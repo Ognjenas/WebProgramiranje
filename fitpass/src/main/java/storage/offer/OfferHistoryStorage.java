@@ -2,6 +2,7 @@ package storage.offer;
 
 import beans.offer.Offer;
 import beans.offer.OfferHistory;
+import beans.sportfacility.SportFacility;
 import beans.users.Customer;
 import beans.users.Trainer;
 import beans.users.User;
@@ -85,6 +86,12 @@ public class OfferHistoryStorage {
         return null;
     }
 
+    public List<OfferHistory> getBySportFacilityId(int sportFacilityId) {
+        return getAll().stream()
+                .filter(oh -> !oh.isDeleted() && oh.getSportFacility().getId() == sportFacilityId)
+                .collect(Collectors.toList());
+    }
+
     public List<OfferHistory> getByCustomerId(int customerId) {
         return getAll().stream()
                 .filter(oh -> !oh.isDeleted() && oh.getCustomer().getId() == customerId && oh.getCheckIn().isAfter(LocalDateTime.now()))
@@ -146,7 +153,9 @@ public class OfferHistoryStorage {
                 return true;
             } else if (fieldAttributes.getDeclaringClass() == User.class && !fieldAttributes.getName().equals("id")) {
                 return true;
-            } else {
+            }else if(fieldAttributes.getDeclaringClass() == SportFacility.class && !fieldAttributes.getName().equals("id")){
+                return true;
+            }else {
                 return false;
             }
         }

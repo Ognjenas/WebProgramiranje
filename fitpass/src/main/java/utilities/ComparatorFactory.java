@@ -1,6 +1,7 @@
 package utilities;
 
 import beans.sportfacility.SportFacility;
+import dto.offerhistory.OrderToShowDto;
 import dto.sportfacility.SportFacilityDto;
 import dto.users.UserDto;
 
@@ -29,6 +30,12 @@ public class ComparatorFactory{
         }
     }
 
+    public static class FacilityCompareOpen implements Comparator<SportFacilityDto>{
+        @Override
+        public int compare(SportFacilityDto o1, SportFacilityDto o2) {
+            return Boolean.compare(o1.isOpen(),o2.isOpen());
+        }
+    }
 
     public static class UserCompareName implements Comparator<UserDto>{
         @Override
@@ -51,4 +58,26 @@ public class ComparatorFactory{
         }
     }
 
+    public static class OrderComparePrice implements  Comparator<OrderToShowDto>{
+        @Override
+        public int compare(OrderToShowDto o1, OrderToShowDto o2) {
+            return Double.compare(o1.getPrice(),o2.getPrice());
+        }
+    }
+
+    public static class OrderCompareName implements Comparator<OrderToShowDto> {
+
+        @Override
+        public int compare(OrderToShowDto o1, OrderToShowDto o2) {
+            return o1.getFacilityName().toLowerCase().compareTo(o2.getFacilityName().toLowerCase());
+        }
+    }
+
+    public static class OrderCompareDate implements Comparator<OrderToShowDto> {
+
+        @Override
+        public int compare(OrderToShowDto o1, OrderToShowDto o2) {
+            return o1.getTime().compareTo(o2.getTime());
+        }
+    }
 }

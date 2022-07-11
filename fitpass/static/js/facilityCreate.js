@@ -11,6 +11,10 @@ Vue.component("facility-create", {
                 geoWidth: "",
                 geoLength: "",
                 managerId: "",
+                imgSource: "",
+                workdayHours:"",
+                saturdayHours:"",
+                sundayHours:"",
             },
             manager: {
                 managerName: "",
@@ -26,8 +30,18 @@ Vue.component("facility-create", {
                 strNum: "",
                 postCode: "",
                 geoWidth: "",
-                geoLength: ""
+                geoLength: "",
+                imgSource: "",
+                workdayHours:"",
+                saturdayHours:"",
+                sundayHours:"",
             },
+            fromWorking:"",
+            toWorking:"",
+            fromSaturday:"",
+            toSaturday:"",
+            fromSunday:"",
+            toSunday:"",
             selectedBirthDate: "",
             configHeaders: {
                 headers: {
@@ -45,7 +59,7 @@ Vue.component("facility-create", {
     <h1>OVO JE FACILITY CREATE</h1>
     <form method="post">
     
-    <table>
+    <table class="createFacilityTable">
     <td>
         <table>
         <tr>
@@ -64,6 +78,27 @@ Vue.component("facility-create", {
           <option value="DANCE_STUDIO">DANCE_STUDIO</option>
           <option value="STADIUM">STADIUM</option>
         </select></td>
+        </tr>
+        
+        <tr>
+        <td><b>Working Hours</b></td>
+        </tr>
+        <tr>
+        <td>WeekDay Open Time</td>
+        <td><input id="fromWork" v-model="fromWorking" v-on:input="validate()" placeholder="Enter From Time -> [HH:mm]"></td>
+        <td><input id="toWork" v-model="toWorking" v-on:input="validate()" placeholder="Enter To Time -> [HH:mm]"></td>
+        </tr>
+        
+        <tr>
+        <td>Saturday Open Time</td>
+        <td><input id="fromSat" v-model="fromSaturday" v-on:input="validate()" placeholder="Enter From Time -> [HH:mm]"></td>
+        <td><input id="toSat" v-model="toSaturday" v-on:input="validate()" placeholder="Enter To Time -> [HH:mm]"></td>
+        </tr>
+        
+        <tr>
+        <td>Sunday Open Time</td>
+        <td><input id="fromSun" v-model="fromSunday" v-on:input="validate()" placeholder="Enter From Time -> [HH:mm]"></td>
+        <td><input id="toSun" v-model="toSunday" v-on:input="validate()" placeholder="Enter To Time -> [HH:mm]"></td>
         </tr>
         
         <tr>
@@ -90,19 +125,29 @@ Vue.component("facility-create", {
         <td><input id="postCode" name="postCode" v-model="form.postCode" v-on:input="validate()" placeholder="Enter Postal Code"></td>
         </tr>
         
+        
+        
         <tr>
-        <td><label>Geographical Width</label></td>
-        <td><input id="geoWidth" name="geoWidth" v-model="form.geoWidth" v-on:input="validate()" placeholder="Enter Geographical Width"></td>
+        <td><label>Select Image</label></td>
+        
+        <td colspan="2"><input id="fileFacility" type="file" onchange="encodeImageFileAsURL2()" accept="image/*">
+       
+        <input type="hidden" id="pictureFacility" style="visibility: hidden"></td>
+        </tr>
+        
+        
+        <tr>
+        <td>Choose from map</td>
+        <td><div id="map23" class="map"></div>  </td>
         </tr>
         
         <tr>
         <td><label>Geographical Length</label></td>
         <td><input id="geoLength" name="geoLength" v-model="form.geoLength" v-on:input="validate()" placeholder="Enter Geographical Length"></td>
-        </tr>  
-        
+        </tr>
         <tr>
-        <td><label>Select Image</label></td>
-        <td colspan="2"><input type="file" v-on:change="fileSelected()" accept="image/*"></td>
+        <td><label>Geographical Width</label></td>
+        <td><input id="geoWidth" name="geoWidth" v-model="form.geoWidth" v-on:input="validate()" placeholder="Enter Geographical Width"></td>
         </tr>
             
         <tr>
@@ -164,8 +209,9 @@ Vue.component("facility-create", {
     </td>
     </table>
     </form>
-    <p>create-form:  |{{form.name}}|,|{{form.type}}|,|{{form.city}}|,|{{form.street}}| , | {{form.managerId}}| </p>
+    <p>create-form:  |{{form.workdayHours}}|,|{{form.saturdayHours}}|,|{{form.sundayHours}}|,|{{form.street}}| , | {{form.managerId}}| </p>
     <button v-on:click="consoleWrite()">WRITE CONSOLE</button>
+    
  </div>	   
     
     
@@ -173,10 +219,6 @@ Vue.component("facility-create", {
     ,
     methods: {
         consoleWrite() {
-            console.log(this.selectedBirthDate + "\n DATE AFTER UPDATE \n");
-            console.log(this.fillDate());
-            console.log(this.form);
-            console.log(this.manager);
             this.fillManagerFields();
             console.log(this.form);
             console.log(this.manager);
@@ -194,9 +236,7 @@ Vue.component("facility-create", {
 
         createFacility() {
             if (this.managerCreationSection) {
-                this.manager.managerBirthDate = this.fillDate();
                 this.fillManagerFields();
-                console.log("Posle parsiranja"+this.manager);
                 const promise = axios.post('/administrator/create-facility-with-manager', this.manager , this.configHeaders);
                 promise.then(response => {
                     if (response.data === false) {
@@ -228,11 +268,18 @@ Vue.component("facility-create", {
         ,
 
         validate() {
+            this.form.imgSource = document.getElementById("pictureFacility").value;
+            this.form.geoWidth = document.getElementById("geoWidth").value;
+            this.form.geoLength = document.getElementById("geoLength").value;
+            this.form.workdayHours=this.fromWorking+"-"+this.toWorking;
+            this.form.saturdayHours=this.fromSaturday+"-"+this.toSaturday;
+            this.form.sundayHours=this.fromSunday+"-"+this.toSunday;
             if (this.managerCreationSection) {
                 if (this.form.name === "" || this.form.type === "" || this.form.city === "" || this.form.street === ""
                     || this.form.strNum === "" || this.form.postCode === "" || this.form.geoWidth === "" || this.form.geoLength === ""
                     || this.manager.managerName === "" || this.manager.managerSurname === "" || this.manager.managerUsername === "" || this.manager.managerPassword === ""
-                    || this.manager.managerGender === "" || this.selectedBirthDate === "") {
+                    || this.manager.managerGender === "" || this.selectedBirthDate === "" || this.fromWorking==="" || this.toWorking===""
+                    || this.fromSaturday==="" || this.toSaturday==="" || this.fromSunday==="" || this.toSunday==="") {
                     this.isDisabled = true;
                 } else {
                     this.isDisabled = false;
@@ -240,7 +287,8 @@ Vue.component("facility-create", {
             } else {
                 if (this.form.name === "" || this.form.type === "" || this.form.city === "" || this.form.street === ""
                     || this.form.strNum === "" || this.form.postCode === "" || this.form.geoWidth === "" || this.form.geoLength === ""
-                    || this.form.managerId==="") {
+                    || this.form.managerId==="" || this.fromWorking==="" || this.toWorking===""
+                    || this.fromSaturday==="" || this.toSaturday==="" || this.fromSunday==="" || this.toSunday==="") {
                     this.isDisabled = true;
                 } else {
                     this.isDisabled = false;
@@ -260,6 +308,14 @@ Vue.component("facility-create", {
             this.form.geoWidth = "";
             this.form.geoLength = "";
             this.form.managerId = "";
+            this.form.imgSource="";
+            this.form.workdayHours="";
+            this.form.saturdayHours="";
+            this.form.sundayHours="";
+            this.manager.imgSource ="";
+            this.manager.workdayHours="";
+            this.manager.saturdayHours="";
+            this.manager.sundayHours="";
             this.manager.managerName = "";
             this.manager.managerSurname = "";
             this.manager.managerUsername = "";
@@ -267,6 +323,7 @@ Vue.component("facility-create", {
             this.manager.managerGender = "";
             this.manager.managerBirthDate = "";
             this.selectedBirthDate = "";
+
             this.validate();
         }
         ,
@@ -280,20 +337,54 @@ Vue.component("facility-create", {
                 this.manager.postCode=this.form.postCode;
                 this.manager.geoWidth=this.form.geoWidth;
                 this.manager.geoLength=this.form.geoLength;
-
+                this.manager.managerBirthDate = this.fillDate();
+                this.manager.imgSource = this.form.imgSource;
+                this.manager.workdayHours= this.form.workdayHours;
+                this.manager.saturdayHours=this.form.saturdayHours;
+                this.manager.sundayHours= this.form.sundayHours;
         }
     },
 
     mounted() {
+
+
         if ($cookies.get("token") == null) {
             router.push("/login")
         } else {
+            axios.post('users/get-info', $cookies.get("token"), this.configHeaders)
+                .then(response => {
+                    this.userInfo = response.data
+                    if(this.userInfo.role !== 'ADMINISTRATOR') {
+                        router.push("/")
+                    }
+                })
+
             axios.get("/administrator/get-free-managers", this.configHeaders)
                 .then(response => {
                     this.managerList = response.data.freeManagers;
                 })
 
         }
+        const map = new ol.Map({
+            target: 'map23',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([20.028906272453145,44.953121262634596]),
+                zoom: 10
+            })
+
+        });
+        map.on('click', function (evt) {
+
+            var coords = ol.proj.toLonLat(evt.coordinate);
+            document.getElementById("geoLength").value = coords[0]
+            document.getElementById("geoWidth").value = coords[1]
+        })
+
 
     },
 });

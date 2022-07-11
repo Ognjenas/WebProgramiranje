@@ -13,6 +13,9 @@ public class CreateFacilityWithManagerDto {
     private int postCode;
     private double geoWidth;
     private double geoLength;
+    private String workdayHours;
+    private String saturdayHours;
+    private String sundayHours;
     private String managerName;
     private String managerSurname;
     private String managerUsername;
@@ -20,7 +23,7 @@ public class CreateFacilityWithManagerDto {
     private boolean managerGender;
     private LocalDate managerBirthDate;
 
-    public CreateFacilityWithManagerDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String managerName, String managerSurname, String managerUsername, String managerPassword, boolean managerGender, LocalDate managerBirthDate) {
+    public CreateFacilityWithManagerDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String workdayHours, String saturdayHours, String sundayHours, String managerName, String managerSurname, String managerUsername, String managerPassword, boolean managerGender, LocalDate managerBirthDate) {
         this.name = name;
         this.type = type;
         this.city = city;
@@ -29,6 +32,9 @@ public class CreateFacilityWithManagerDto {
         this.postCode = postCode;
         this.geoWidth = geoWidth;
         this.geoLength = geoLength;
+        this.workdayHours = workdayHours;
+        this.saturdayHours = saturdayHours;
+        this.sundayHours = sundayHours;
         this.managerName = managerName;
         this.managerSurname = managerSurname;
         this.managerUsername = managerUsername;
@@ -147,5 +153,29 @@ public class CreateFacilityWithManagerDto {
 
     public void setManagerBirthDate(LocalDate managerBirthDate) {
         this.managerBirthDate = managerBirthDate;
+    }
+
+    public String getWorkdayHours() {
+        return workdayHours;
+    }
+
+    public void setWorkdayHours(String workdayHours) {
+        this.workdayHours = workdayHours;
+    }
+
+    public String getSaturdayHours() {
+        return saturdayHours;
+    }
+
+    public void setSaturdayHours(String saturdayHours) {
+        this.saturdayHours = saturdayHours;
+    }
+
+    public String getSundayHours() {
+        return sundayHours;
+    }
+
+    public void setSundayHours(String sundayHours) {
+        this.sundayHours = sundayHours;
     }
 }

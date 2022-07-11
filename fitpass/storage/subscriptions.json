@@ -1,20 +1,20 @@
 [
   {
-    "id": "DX3rGM2kDd",
+    "id": "dt8fKJF8GD",
     "type": "YEARLY",
     "payDate": {
       "year": 2022,
       "month": 7,
-      "day": 6
+      "day": 10
     },
     "validUntil": {
       "year": 2023,
       "month": 7,
-      "day": 6
+      "day": 10
     },
     "price": 30000.0,
     "customer": {
-      "id": 6
+      "id": 5
     },
     "status": false,
     "dailyEnteringNumber": 10,
@@ -22,21 +22,21 @@
     "orderedAppointments": 0
   },
   {
-    "id": "E866YO9y@%",
+    "id": "516s20kWy4",
     "type": "MONTHLY",
     "payDate": {
       "year": 2022,
       "month": 7,
-      "day": 6
+      "day": 10
     },
     "validUntil": {
       "year": 2022,
       "month": 8,
-      "day": 6
+      "day": 10
     },
     "price": 2000.0,
     "customer": {
-      "id": 6
+      "id": 5
     },
     "status": false,
     "dailyEnteringNumber": 1,
@@ -44,135 +44,25 @@
     "orderedAppointments": 0
   },
   {
-    "id": "RJX2G6aV@f",
+    "id": "p@WpwD\u0026NZo",
     "type": "YEARLY",
     "payDate": {
       "year": 2022,
       "month": 7,
-      "day": 7
+      "day": 10
     },
     "validUntil": {
       "year": 2023,
       "month": 7,
-      "day": 7
+      "day": 10
     },
     "price": 30000.0,
-    "customer": {
-      "id": 6
-    },
-    "status": false,
-    "dailyEnteringNumber": 10,
-    "isDeleted": true,
-    "orderedAppointments": 0
-  },
-  {
-    "id": "vOSjYpt9Tt",
-    "type": "MONTHLY",
-    "payDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 7
-    },
-    "validUntil": {
-      "year": 2022,
-      "month": 8,
-      "day": 7
-    },
-    "price": 3000.0,
-    "customer": {
-      "id": 6
-    },
-    "status": false,
-    "dailyEnteringNumber": 3,
-    "isDeleted": true,
-    "orderedAppointments": 0
-  },
-  {
-    "id": "cGP7JZCVd#",
-    "type": "MONTHLY",
-    "payDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 7
-    },
-    "validUntil": {
-      "year": 2022,
-      "month": 8,
-      "day": 7
-    },
-    "price": 3000.0,
-    "customer": {
-      "id": 6
-    },
-    "status": false,
-    "dailyEnteringNumber": 3,
-    "isDeleted": true,
-    "orderedAppointments": 0
-  },
-  {
-    "id": "eG%zZkSuhb",
-    "type": "MONTHLY",
-    "payDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 7
-    },
-    "validUntil": {
-      "year": 2022,
-      "month": 8,
-      "day": 7
-    },
-    "price": 3000.0,
-    "customer": {
-      "id": 6
-    },
-    "status": false,
-    "dailyEnteringNumber": 3,
-    "isDeleted": true,
-    "orderedAppointments": 0
-  },
-  {
-    "id": "tYX%StBu@Y",
-    "type": "MONTHLY",
-    "payDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 7
-    },
-    "validUntil": {
-      "year": 2022,
-      "month": 8,
-      "day": 7
-    },
-    "price": 2000.0,
-    "customer": {
-      "id": 6
-    },
-    "status": true,
-    "dailyEnteringNumber": 1,
-    "isDeleted": false,
-    "orderedAppointments": 0
-  },
-  {
-    "id": "pBGotEB3PE",
-    "type": "MONTHLY",
-    "payDate": {
-      "year": 2022,
-      "month": 7,
-      "day": 8
-    },
-    "validUntil": {
-      "year": 2022,
-      "month": 8,
-      "day": 8
-    },
-    "price": 3000.0,
     "customer": {
       "id": 5
     },
     "status": true,
-    "dailyEnteringNumber": 3,
+    "dailyEnteringNumber": 10,
     "isDeleted": false,
-    "orderedAppointments": 19
+    "orderedAppointments": 1
   }
 ]

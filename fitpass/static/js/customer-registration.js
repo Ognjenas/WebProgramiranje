@@ -46,10 +46,14 @@ Vue.component("customer-registration", {
             this.customer.birthDate = obj;
             const promise = axios.post('/register-customer', this.customer);
             promise.then(response => {
-                if(response.data === false) {
+                if(response.status === 403) {
                     alert("Vec postoji sa tim username-om");
                 } else {
                     router.push(`/login`)
+                }
+            }).catch(function (error) {
+                if(error.response.status === 403) {
+                    alert("Vec postoji sa tim username-om");
                 }
             })
         },

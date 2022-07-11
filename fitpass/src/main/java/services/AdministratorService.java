@@ -1,13 +1,15 @@
 package services;
 
+import beans.sportfacility.Comment;
+import beans.sportfacility.CommentStatus;
+import beans.sportfacility.SportFacility;
 import beans.users.*;
+import dto.sportfacility.AllCommentsAdminDto;
+import dto.sportfacility.ShowCommentAdminDto;
 import dto.users.MakeUserDto;
 import dto.users.PromoCodeCreateDto;
 import dto.users.PromoCodeShowDto;
-import storage.ManagerStorage;
-import storage.PromoCodeStorage;
-import storage.TrainerStorage;
-import storage.UserStorage;
+import storage.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -73,5 +75,47 @@ public class AdministratorService {
         PromoCode promoCode=new PromoCode(dto.getCode(),dto.getDiscount(),LocalDate.now(),dto.getEndDate(),dto.getUsageTimes());
         PromoCodeStorage.getInstance().add(promoCode);
         return true;
+    }
+
+    public AllCommentsAdminDto getUnapprovedComments() {
+        List<Comment> comments= CommentStorage.getInstance().getAllSubmitted();
+        List<ShowCommentAdminDto> list=new ArrayList<>();
+        for(Comment comment:comments){
+            Customer customer=CustomerStorage.getInstance().getById(comment.getCustomer().getId());
+            SportFacility sportFacility=SportFacilityStorage.getInstance().getById(comment.getFacility().getId());
+            list.add(new ShowCommentAdminDto(comment.getId(),customer.getUsername(),sportFacility.getName(),
+                    comment.getText(),comment.getStatus(),comment.getGrade()));
+        }
+        if(list.isEmpty()) return null;
+        return new AllCommentsAdminDto(list);
+
+    }
+
+    public AllCommentsAdminDto getFinishedComments() {
+        List<Comment> comments= CommentStorage.getInstance().getAllConfirmedAndRejectedAdmin();
+        List<ShowCommentAdminDto> list=new ArrayList<>();
+        for(Comment comment:comments){
+            Customer customer=CustomerStorage.getInstance().getById(comment.getCustomer().getId());
+            SportFacility sportFacility=SportFacilityStorage.getInstance().getById(comment.getFacility().getId());
+            list.add(new ShowCommentAdminDto(comment.getId(),customer.getUsername(),sportFacility.getName(),
+                    comment.getText(),comment.getStatus(),comment.getGrade()));
+        }
+        if(list.isEmpty()) return null;
+        return new AllCommentsAdminDto(list);
+    }
+
+    public void confirmComment(int id) {
+        Comment comment=CommentStorage.getInstance().getById(id);
+        SportFacility facility=SportFacilityStorage.getInstance().getById(comment.getFacility().getId());
+        comment.setStatus(CommentStatus.CONFIRMED);
+        CommentStorage.getInstance().edit(comment);
+        facility.setAverageGrade(CommentStorage.getInstance().getAverageGradeForFacility(facility.getId()));
+        SportFacilityStorage.getInstance().update(facility);
+    }
+
+    public void rejectComment(int id) {
+        Comment comment=CommentStorage.getInstance().getById(id);
+        comment.setStatus(CommentStatus.REJECTED);
+        CommentStorage.getInstance().edit(comment);
     }
 }

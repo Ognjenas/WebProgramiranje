@@ -5,15 +5,25 @@ public class ChooseOfferDto {
     private String name;
     private String type;
     private String duration;
+    private String imgSource;
 
     public ChooseOfferDto() {
     }
 
-    public ChooseOfferDto(int id, String name, String type, String duration) {
+    public ChooseOfferDto(int id, String name, String type, String duration, String imgSource) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.duration = duration;
+        this.imgSource = imgSource;
+    }
+
+    public String getImgSource() {
+        return imgSource;
+    }
+
+    public void setImgSource(String imgSource) {
+        this.imgSource = imgSource;
     }
 
     public int getId() {

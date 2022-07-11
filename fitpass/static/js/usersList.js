@@ -23,52 +23,65 @@ Vue.component("users-list", {
     },
     template: ` 
 <div>
-    <label>Username: {{userInfo.username}}</label>
+    <div class="subNav">
+    <div v-if="$cookies.get('token') != null">
+        <label>Username: {{userInfo.username}}</label>
+                <button class="login-button" v-on:click="editProfile">Profile</button>
+
+        <button class="login-button" v-on:click="logout">Odjavi se</button>
+        </div>
+        <div class="nav-buttons">
+            <button class="login-button" v-on:click="createTrainer">Create trainer</button>
+            <button class="login-button" v-on:click="createManager">Create manager</button>
+        </div>
+    </div>
+
     
-    <input type="text" placeholder="Search registered Users"  v-model="form.searchInput" v-on:input="searchUsers()" > 
-     <select name="type" v-model="form.userRole" v-on:change="searchUsers()">
-      <option value="">Select Role</option>
-      <option value="ADMINISTRATOR">ADMINISTRATOR</option>
-      <option value="MANAGER">MANAGER</option>
-      <option value="TRAINER">TRAINER</option>
-      <option value="CUSTOMER">CUSTOMER</option>
-    </select>
-    <select name="type" v-model="form.userType" v-on:change="searchUsers()">
-      <option value="">Select Type</option>
-      <option value="BRONZE">BRONZE</option>
-      <option value="SILVER">SILVER</option>
-      <option value="GOLD">GOLD</option>
-    </select>
-	<table>
-	<tr>
-	    <th></th>
-		<th v-on:click="sortList(0)">Name</th>
-		<th v-on:click="sortList(1)">Surname</th>
-		<th v-on:click="sortList(2)">Username</th>
-		<th>Role</th>
-		<th>Gender</th>
-		<th>Birth</th>
-	</tr>
-		
-	<tr v-for="u in usersDto.users" >
-		<td></td>
-		<td>{{u.name}}</td>
-		<td>{{u.surname}}</td>
-		<td>
-		    {{u.username}}
-		</td>
-		<td>{{u.role}}</td>
-		<td>
-		    {{u.gender}}
-		</td>
-		<td>
-		    {{u.birth}}
-        </td>
-	</tr>
-</table>
-	<button class="login-button" v-on:click="logout">Odjavi se</button>
-	<button class="login-button" v-on:click="createTrainer">Create trainer</button>
-	<button class="login-button" v-on:click="createManager">Creater manager</button>
+    <div class="facility-list-container">
+        <div class="first-row-list-facility">
+            <input type="text" placeholder="Search registered Users"  v-model="form.searchInput" v-on:input="searchUsers()" > 
+            <select name="type" v-model="form.userRole" v-on:change="searchUsers()">
+            <option value="">Select Role</option>
+            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+            <option value="MANAGER">MANAGER</option>
+            <option value="TRAINER">TRAINER</option>
+            <option value="CUSTOMER">CUSTOMER</option>
+            </select>
+            <select name="type" v-model="form.userType" v-on:change="searchUsers()">
+            <option value="">Select Type</option>
+            <option value="BRONZE">BRONZE</option>
+            <option value="SILVER">SILVER</option>
+            <option value="GOLD">GOLD</option>
+            </select>
+        </div>
+        <div>
+            <table class="show-facilities-table" cellspacing="0">
+            <tr>
+                <th v-on:click="sortList(0)">Name</th>
+                <th v-on:click="sortList(1)">Surname</th>
+                <th v-on:click="sortList(2)">Username</th>
+                <th>Role</th>
+                <th>Gender</th>
+                <th>Birth</th>
+            </tr>
+                
+            <tr v-for="u in usersDto.users" >
+                <td>{{u.name}}</td>
+                <td>{{u.surname}}</td>
+                <td>
+                    {{u.username}}
+                </td>
+                <td>{{u.role}}</td>
+                <td>
+                    {{u.gender}}
+                </td>
+                <td>
+                    {{u.birth}}
+                </td>
+            </tr>
+            </table>
+        </div>
+    </div>
 </div>		  
 `
     ,
@@ -118,6 +131,9 @@ Vue.component("users-list", {
                         this.usersDto = response.data;
                     })
             },
+            editProfile() {
+                router.push("/edit-profile")
+            }
         },
 
     mounted() {

@@ -23,6 +23,9 @@
     "offer": {
       "id": 1
     },
+    "sportFacility": {
+      "id": 1
+    },
     "isDeleted": true
   },
   {
@@ -47,6 +50,9 @@
       "id": 1
     },
     "offer": {
+      "id": 1
+    },
+    "sportFacility": {
       "id": 1
     },
     "isDeleted": true
@@ -75,6 +81,9 @@
     "offer": {
       "id": 1
     },
+    "sportFacility": {
+      "id": 1
+    },
     "isDeleted": true
   },
   {
@@ -101,6 +110,9 @@
     "offer": {
       "id": 0
     },
+    "sportFacility": {
+      "id": 1
+    },
     "isDeleted": false
   },
   {
@@ -126,6 +138,212 @@
     },
     "offer": {
       "id": 1
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 5,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 12
+      },
+      "time": {
+        "hour": 11,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 0
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 6,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 12
+      },
+      "time": {
+        "hour": 11,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 0
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 7,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 13
+      },
+      "time": {
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 0
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 8,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 18
+      },
+      "time": {
+        "hour": 11,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 1
+    },
+    "offer": {
+      "id": 1
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 9,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 13
+      },
+      "time": {
+        "hour": 13,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 2
+    },
+    "sportFacility": {
+      "id": 2
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 10,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 19
+      },
+      "time": {
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": -1
+    },
+    "offer": {
+      "id": 0
+    },
+    "sportFacility": {
+      "id": 1
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 11,
+    "checkIn": {
+      "date": {
+        "year": 2022,
+        "month": 7,
+        "day": 19
+      },
+      "time": {
+        "hour": 13,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "customer": {
+      "id": 5
+    },
+    "trainer": {
+      "id": 2
+    },
+    "offer": {
+      "id": 5
+    },
+    "sportFacility": {
+      "id": 4
     },
     "isDeleted": false
   }

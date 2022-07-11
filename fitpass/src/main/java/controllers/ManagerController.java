@@ -39,7 +39,11 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         String payload = req.body();
         MakeOfferDto makeOfferDto = gson.fromJson(payload, MakeOfferDto.class);
-        return gson.toJson(managerService.makeOffer(makeOfferDto, username));
+        boolean returnValue = managerService.makeOffer(makeOfferDto, username);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return gson.toJson(returnValue);
     }
 
     public static String getTrainersFromFacility(Request req, Response res) {
@@ -63,7 +67,11 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         String payload = req.body();
         OfferDto offerDto = gson.fromJson(payload, OfferDto.class);
-        return gson.toJson(managerService.editOffer(offerDto, username));
+        boolean returnValue = managerService.editOffer(offerDto, username);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return gson.toJson(returnValue);
     }
 
     public static String getTrainingsFromFacility(Request req, Response res) {
@@ -72,4 +80,32 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         return gson.toJson(managerService.getTrainingsFromFacility(username));
     }
+
+    public static String searchTrainings(Request req, Response res) {
+        res.type("application/json");
+        String price = req.queryParams("price");
+        String trainingType = req.queryParams("trainingType");
+        String sortType = req.queryParams("sortType");
+        String sortDir = req.queryParams("sortDir");
+        String fromDate = req.queryParams("fromDate");
+        String toDate = req.queryParams("toDate");
+        String username = req.queryParams("username");
+        return gson.toJson(managerService.searchTrainings(price, trainingType, sortType, sortDir, fromDate, toDate, username));
+
+    }
+    public static String getCustomersFromFacility(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(managerService.getCustomersFromFacility(username));
+    }
+
+    public static String getFacilityComments(Request req, Response res) {
+        res.type("application/json");
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        System.out.println(username);
+        return gson.toJson(managerService.getComments(username));
+    }
 }
+

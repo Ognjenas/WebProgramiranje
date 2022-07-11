@@ -8,14 +8,15 @@ Vue.component("open-facility", {
                 }
 
             },
-            currentFacility: {location: {},
+            currentFacility: {
+                location: {},
                 openTime: {
-                    startWorkingDays : {},
-                    endWorkingDays : {},
-                    startSaturday : {},
-                    endSaturday : {},
+                    startWorkingDays: {},
+                    endWorkingDays: {},
+                    startSaturday: {},
+                    endSaturday: {},
                     startSunday: {},
-                    endSunday : {}
+                    endSunday: {}
                 }
             },
             id: "",
@@ -23,7 +24,8 @@ Vue.component("open-facility", {
                 username: "",
                 role: ""
             },
-            offers: {}
+            offers: {},
+            loadedComments:"",
         }
     },
     template: ` 
@@ -35,8 +37,10 @@ Vue.component("open-facility", {
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
-    <h1>SHOW FACILITY</h1>
+    <h1>My facility</h1>
     <table>
+    <input type="hidden" id="geoLen2" v-model="currentFacility.location.geoLength">
+    <input type="hidden" id="geoWidth2" v-model="currentFacility.location.geoWidth">
         <tr>
         <td><label>Name</label></td>
         <td><label>{{currentFacility.name}}</label></td>
@@ -55,7 +59,7 @@ Vue.component("open-facility", {
         <tr>
         <td><label>Location</label></td>
         <td> 
-            <p>Geo.Length:{{currentFacility.location.geoLength}} / Geo.Width:{{currentFacility.location.geoWidth}}</p>
+            <div id="map3" class="map"></div>
 		    <p>City:{{currentFacility.location.city}}-Street:{{currentFacility.location.street}}-Nr:{{currentFacility.location.strNumber}}-Postal:{{currentFacility.location.postalCode}}</p></td>
         </tr>
         
@@ -80,6 +84,7 @@ Vue.component("open-facility", {
     <button v-on:click="createOffer">Create offer</button>
     <button v-on:click="getTrainers">Trainers</button>
     <button v-on:click="getTrainings">Trainings</button>
+    <button v-on:click="getCustomers">Customers</button>
     <div>
     <h2>Offers</h2>
     <table>
@@ -97,6 +102,27 @@ Vue.component("open-facility", {
 	</tr>
 </table>
 </div>
+COMMENTS:
+    <div v-if="loadedComments!== '' " >
+    <table>
+    <tr>
+        <th>Username</th>
+        <th>Comment</th>
+        <th>Grade</th>
+        <th>Id</th>
+        <th>Status</th>
+    </tr>
+    <tr v-for="c in loadedComments">
+        <td>{{c.customerUsername}}</td>
+        <td>{{c.text}}</td>
+        <td>{{c.grade}}</td>
+        <td>{{c.id}}</td>
+        <td>{{c.status}}</td>
+    </tr>
+    </table>
+    </div>
+    <p v-if="loadedComments==='' "> No available comments!</p>
+
 </div>		  
 `
     ,
@@ -115,10 +141,13 @@ Vue.component("open-facility", {
                 router.push("/open-facility/trainers")
             },
             editOffer(id) {
-                router.push("/open-facility/offers/"+id)
+                router.push("/open-facility/offers/" + id)
             },
             getTrainings() {
                 router.push("/open-facility/trainings")
+            },
+            getCustomers() {
+                router.push("/open-facility/customers")
             }
 
         },
@@ -136,11 +165,29 @@ Vue.component("open-facility", {
             .get('/manager/get-facility', this.configHeaders)
             .then(response => {
                 this.currentFacility = response.data;
-            });
+                new ol.Map({
+                    target: 'map3',
+                    layers: [
+                        new ol.layer.Tile({
+                            source: new ol.source.OSM()
+                        })
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([this.currentFacility.location.geoLength, this.currentFacility.location.geoWidth]),
+                        zoom: 15
+                    })
 
+                });
+            });
+        axios.get('/manager/get-facility-comments',this.configHeaders)
+            .then(response=>{
+                this.loadedComments=response.data.allComments;
+            })
         axios.get('/manager/get-facility-offers', this.configHeaders)
             .then(response => {
-            this.offers = response.data.offers;
-        });
+                this.offers = response.data.offers;
+            });
+
+
     },
 });
