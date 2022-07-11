@@ -23,24 +23,36 @@ Vue.component("facility-list", {
         }
     },
     template: ` 
-<div>
-    <div v-if="$cookies.get('token') != null">
+<div> 
+<div class="subNav">
+ <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
-        <button v-on:click="editProfile">Profile</button>
+        <button class="login-button" v-on:click="editProfile">Profile</button>
+        <button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
     </div>
+    <div class="nav-buttons">
     <div v-if="userInfo.role == 'MANAGER'">
-        <button v-on:click="myFacility">My facility</button>
+        <button class="login-button" v-on:click="myFacility">My facility</button>
     </div>
     <div v-if="userInfo.role == 'TRAINER'">
-        <button v-on:click="trainerTrainings">Trainings</button>
+        <button class="login-button" v-on:click="trainerTrainings">Trainings</button>
     </div>
     <div v-if="userInfo.role == 'CUSTOMER'">
-        <button v-on:click="customerTrainings">Trainings</button>
+        <button class="login-button" v-on:click="customerTrainings">Trainings</button>
     </div>
     <div v-if="$cookies.get('token') == null">
-        <button v-on:click="login">Login</button>
+        <button class="login-button" v-on:click="login">Login</button>
     </div>
+    <button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
+	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription" class="login-button">Subscription</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode" class="login-button">Promo Codes</button>
+	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="comments" class="login-button">COMMENTS</button>
     
+    </div>
+    </div>
+<div class="facility-list-container">
+    
+	<div class="first-row-list-facility">
     <p>
     Search:</p>
     
@@ -70,8 +82,10 @@ Vue.component("facility-list", {
     </select>
     <p>search-form:  |{{form.name}}|,|{{form.type}}|,|{{form.city}}|,|{{form.grade}}| </p>
     </p>
-	Available Facilities:
-	<table>
+    </div>
+    <div>
+	<h2>Available Facilities:</h2>
+	<table class="show-facilities-table" cellspacing="0">
 	<tr>
 		<th v-on:click="sortList(0)">Name</th>
 		<th>Type</th>
@@ -101,13 +115,9 @@ Vue.component("facility-list", {
         </td>
 	</tr>
 </table>
-	<button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
-	<button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
-	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription">Subscription</button>
-	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode">Promo Codes</button>
-	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="comments">COMMENTS</button>
-
-</div>		  
+</div>
+</div>	
+</div>	  
 `
     ,
     methods:

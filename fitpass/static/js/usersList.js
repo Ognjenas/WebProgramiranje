@@ -23,8 +23,20 @@ Vue.component("users-list", {
     },
     template: ` 
 <div>
-    <label>Username: {{userInfo.username}}</label>
+<div class="subNav">
+<label>Username: {{userInfo.username}}</label>
+        <button class="login-button" v-on:click="editProfile">Profile</button>
+
+<button class="login-button" v-on:click="logout">Odjavi se</button>
+<div class="nav-buttons">
+<button class="login-button" v-on:click="createTrainer">Create trainer</button>
+	<button class="login-button" v-on:click="createManager">Creater manager</button>
+</div>
+</div>
+
     
+    <div class="facility-list-container">
+    <div class="first-row-list-facility">
     <input type="text" placeholder="Search registered Users"  v-model="form.searchInput" v-on:input="searchUsers()" > 
      <select name="type" v-model="form.userRole" v-on:change="searchUsers()">
       <option value="">Select Role</option>
@@ -39,9 +51,11 @@ Vue.component("users-list", {
       <option value="SILVER">SILVER</option>
       <option value="GOLD">GOLD</option>
     </select>
-	<table>
+    </div>
+    
+	
+	<table class="show-facilities-table" cellspacing="0">
 	<tr>
-	    <th></th>
 		<th v-on:click="sortList(0)">Name</th>
 		<th v-on:click="sortList(1)">Surname</th>
 		<th v-on:click="sortList(2)">Username</th>
@@ -51,7 +65,6 @@ Vue.component("users-list", {
 	</tr>
 		
 	<tr v-for="u in usersDto.users" >
-		<td></td>
 		<td>{{u.name}}</td>
 		<td>{{u.surname}}</td>
 		<td>
@@ -66,9 +79,7 @@ Vue.component("users-list", {
         </td>
 	</tr>
 </table>
-	<button class="login-button" v-on:click="logout">Odjavi se</button>
-	<button class="login-button" v-on:click="createTrainer">Create trainer</button>
-	<button class="login-button" v-on:click="createManager">Creater manager</button>
+</div>
 </div>		  
 `
     ,
@@ -118,6 +129,9 @@ Vue.component("users-list", {
                         this.usersDto = response.data;
                     })
             },
+            editProfile() {
+                router.push("/edit-profile")
+            }
         },
 
     mounted() {
