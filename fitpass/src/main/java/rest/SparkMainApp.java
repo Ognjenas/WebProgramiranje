@@ -74,6 +74,7 @@ public class SparkMainApp {
             get("/get-trainings", CustomerController::getTrainings);
             get("/search-trainings",CustomerController::searchTrainings);
             post("/create-comment",CustomerController::createComment);
+            get("/get-customer-type",CustomerController::getType);
         });
 
         path("/trainer", () -> {

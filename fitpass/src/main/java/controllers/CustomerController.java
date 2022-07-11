@@ -69,4 +69,10 @@ public class CustomerController {
         CreateCommentDto commentDto = gson.fromJson(payload, CreateCommentDto.class);
         return gson.toJson(customerService.createComment(commentDto));
     }
+
+    public static String getType(Request req, Response res) {
+        String token = gson.fromJson(req.headers("token"), String.class);
+        String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
+        return gson.toJson(customerService.getCustomerType(username));
+    }
 }

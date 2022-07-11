@@ -5,6 +5,7 @@ import beans.sportfacility.Comment;
 import beans.sportfacility.CommentStatus;
 import beans.sportfacility.SportFacility;
 import beans.users.Customer;
+import beans.users.CustomerType;
 import beans.users.Subscription;
 import beans.users.Trainer;
 import dto.offer.AvailableTimesDto;
@@ -205,5 +206,10 @@ public class CustomerService {
         Comment comment=new Comment(-1, CommentStatus.SUBMITTED,sportFacility,customer,commentDto.getText(),commentDto.getGrade());
         commentStorage.add(comment);
         return true;
+    }
+
+    public CustomerType getCustomerType(String username) {
+        Customer customer=customerStorage.getCustomerByUsername(username);
+        return customer.getType();
     }
 }

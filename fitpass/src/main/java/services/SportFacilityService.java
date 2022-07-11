@@ -252,14 +252,15 @@ public class SportFacilityService {
         List<ChooseOfferDto> chooseOfferDtos = new ArrayList<>();
         for(var offer : sportFacility.getOffers()) {
             offer = offerStorage.getById(offer.getId());
-            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation()));
+            chooseOfferDtos.add(new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation(),
+                    offer.getPrice()));
         }
         return new OffersToChooseDto(chooseOfferDtos);
     }
 
     public ChooseOfferDto getOffer(int offerId) {
         Offer offer = offerStorage.getById(offerId);
-        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation());
+        return new ChooseOfferDto(offer.getId(), offer.getName(), offer.getType().toString(), offer.getDuration().toString(), offer.getImageLocation(),offer.getPrice());
     }
 
     private void addUserToDtoList(User user, List<UserDto> users) {

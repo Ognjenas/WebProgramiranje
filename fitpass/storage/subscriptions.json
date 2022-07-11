@@ -64,5 +64,137 @@
     "dailyEnteringNumber": 10,
     "isDeleted": false,
     "orderedAppointments": 1
+  },
+  {
+    "id": "M72DdlZji8",
+    "type": "MONTHLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2022,
+      "month": 8,
+      "day": 12
+    },
+    "price": 3000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": false,
+    "dailyEnteringNumber": 3,
+    "isDeleted": true,
+    "orderedAppointments": 0
+  },
+  {
+    "id": "NpKYU0cHY#",
+    "type": "MONTHLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2022,
+      "month": 8,
+      "day": 12
+    },
+    "price": 3000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": false,
+    "dailyEnteringNumber": 3,
+    "isDeleted": true,
+    "orderedAppointments": 40
+  },
+  {
+    "id": "goxWsWRshc",
+    "type": "MONTHLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2022,
+      "month": 8,
+      "day": 12
+    },
+    "price": 3000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": false,
+    "dailyEnteringNumber": 3,
+    "isDeleted": true,
+    "orderedAppointments": 0
+  },
+  {
+    "id": "WAoNDHtsfy",
+    "type": "MONTHLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2022,
+      "month": 8,
+      "day": 12
+    },
+    "price": 3000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": false,
+    "dailyEnteringNumber": 3,
+    "isDeleted": true,
+    "orderedAppointments": 0
+  },
+  {
+    "id": "8l#@g!K#Ba",
+    "type": "YEARLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2023,
+      "month": 7,
+      "day": 12
+    },
+    "price": 30000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": false,
+    "dailyEnteringNumber": 10,
+    "isDeleted": true,
+    "orderedAppointments": 0
+  },
+  {
+    "id": "G3AJq9Z3zH",
+    "type": "YEARLY",
+    "payDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 12
+    },
+    "validUntil": {
+      "year": 2023,
+      "month": 7,
+      "day": 12
+    },
+    "price": 20000.0,
+    "customer": {
+      "id": 6
+    },
+    "status": true,
+    "dailyEnteringNumber": 3,
+    "isDeleted": false,
+    "orderedAppointments": 0
   }
 ]
