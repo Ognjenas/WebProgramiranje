@@ -14,8 +14,11 @@ public class CreateSportFacilityDto {
     private double geoLength;
     private String imgSource;
     private int managerId;
+    private String workdayHours;
+    private String saturdayHours;
+    private String sundayHours;
 
-    public CreateSportFacilityDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String imgSource,int managerId) {
+    public CreateSportFacilityDto(String name, SportFacilityType type, String city, String street, int strNum, int postCode, double geoWidth, double geoLength, String imgSource, int managerId, String workdayHours, String saturdayHours, String sundayHours) {
         this.name = name;
         this.type = type;
         this.city = city;
@@ -26,6 +29,9 @@ public class CreateSportFacilityDto {
         this.geoLength = geoLength;
         this.imgSource = imgSource;
         this.managerId = managerId;
+        this.workdayHours = workdayHours;
+        this.saturdayHours = saturdayHours;
+        this.sundayHours = sundayHours;
     }
 
     public String getName() {
@@ -106,5 +112,29 @@ public class CreateSportFacilityDto {
 
     public void setManagerId(int managerId) {
         this.managerId = managerId;
+    }
+
+    public String getWorkdayHours() {
+        return workdayHours;
+    }
+
+    public void setWorkdayHours(String workdayHours) {
+        this.workdayHours = workdayHours;
+    }
+
+    public String getSaturdayHours() {
+        return saturdayHours;
+    }
+
+    public void setSaturdayHours(String saturdayHours) {
+        this.saturdayHours = saturdayHours;
+    }
+
+    public String getSundayHours() {
+        return sundayHours;
+    }
+
+    public void setSundayHours(String sundayHours) {
+        this.sundayHours = sundayHours;
     }
 }

@@ -40,7 +40,7 @@ public class SportFacility {
         this.isDeleted = deleted;
     }
 
-    public SportFacility(int id, String name, SportFacilityType facType, Location loc) {
+    public SportFacility(int id, String name, SportFacilityType facType, Location loc,WorkingHours hours) {
         this.id = id;
         this.name = name;
         this.type = facType;
@@ -50,8 +50,7 @@ public class SportFacility {
         this.offers = new ArrayList<>();
         this.isOpen = false;
         this.averageGrade = 0.0;
-        LocalTime zeroTime = LocalTime.of(0, 0, 0, 0);
-        this.openTime = new WorkingHours(zeroTime, zeroTime, zeroTime, zeroTime, zeroTime, zeroTime);
+        this.openTime = hours;
         this.isDeleted = false;
     }
 

@@ -18,10 +18,7 @@ import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -112,6 +109,7 @@ public class CustomerService {
 
     public AvailableTimesDto getAvailableTimesForOfferAndDate(int offerId, LocalDate date, String username) {
         Offer offer = offerStorage.getById(offerId);
+        SportFacility facility= sportFacilityStorage.getById(offer.getSportFacility().getId());
         List<String> times = new ArrayList<>();
         List<OfferHistory> offerHistories = offerHistoryStorage.getByDateAndOfferId(date, offerId);
         Customer customer = customerStorage.getCustomerByUsername(username);
@@ -122,8 +120,20 @@ public class CustomerService {
                 offerHistories.addAll(offerHistoryStorage.getByDateAndTrainerId(date, training.getBelongingTrainer().getId()));
             }
         }
+        LocalTime iter;
+        LocalTime to;
+        if(date.getDayOfWeek()== DayOfWeek.SATURDAY){
+            iter=facility.getOpenTime().getStartSaturday();
+            to=facility.getOpenTime().getEndSaturday();
+        }else if(date.getDayOfWeek()==DayOfWeek.SUNDAY){
+            iter=facility.getOpenTime().getStartSunday();
+            to=facility.getOpenTime().getEndSunday();
+        }else{
+            iter=facility.getOpenTime().getStartWorkingDays();
+            to=facility.getOpenTime().getEndWorkingDays();
+        }
 
-        for(LocalTime iter = LocalTime.parse("07:00:00"); iter.isBefore(LocalTime.parse("21:00:00"));iter = iter.plus(Duration.ofMinutes(30))) {
+        for( ; iter.isBefore(to);iter = iter.plus(Duration.ofMinutes(30))) {
             if(checkIfAvailableTime(iter, offerHistories, offer.getDuration())) {
                 times.add(iter.format(DateTimeFormatter.ISO_LOCAL_TIME));
             }
