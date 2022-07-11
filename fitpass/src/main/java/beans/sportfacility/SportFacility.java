@@ -139,7 +139,7 @@ public class SportFacility {
         double maxGrade;
         if(grade.equals("")) {
             minGrade=0;
-            maxGrade=5;
+            maxGrade=10;
         }else{
             String[] grades = grade.split("-");
             minGrade = Double.parseDouble(grades[0]);
