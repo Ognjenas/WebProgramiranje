@@ -62,9 +62,6 @@ nav li{
     display: flex;
 }
 
-.createFacilityTable td{
-
-}
 .show-facilities-table tr td {
     border: 1px solid black;
     padding: 5px;
@@ -81,12 +78,17 @@ nav li{
     padding: 25px;
     display: inline-block;
     border-radius: 50px;
-    min-width: 80%;
+    text-align: center;
+    margin: auto;
 }
 .facility-list-container {
     margin: auto;
     width: 80%;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .nav-buttons{
     float: right;
