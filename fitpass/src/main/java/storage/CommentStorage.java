@@ -120,7 +120,7 @@ public class CommentStorage {
         double numberFacilities=0;
 
         for (Comment comment : getAll()) {
-            if(comment.getFacility().getId()==id){
+            if(comment.getFacility().getId()==id && comment.getStatus()==CommentStatus.CONFIRMED){
                 averageGrade+=comment.getGrade();
                 numberFacilities++;
             }

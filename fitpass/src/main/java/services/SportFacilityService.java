@@ -18,8 +18,11 @@ import storage.*;
 import storage.offer.OfferStorage;
 import storage.offer.TrainingStorage;
 import utilities.ComparatorFactory;
+import utilities.WorkingHours;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,9 +56,17 @@ public class SportFacilityService {
 
     public static AllFacilitiesDto getAllFacilitiesDto() {
         List<SportFacilityDto> list = new ArrayList<>();
+        LocalDateTime now=LocalDateTime.now();
         for (SportFacility facility : getAllFacilities()) {
+            if(facility.hasOpen(now)) {
+                facility.setOpen(true);
+            }else{
+                facility.setOpen(false);
+            }
             list.add(makeFacilityDto(facility));
         }
+        Collections.sort(list,new ComparatorFactory.FacilityCompareOpen());
+        Collections.reverse(list);
         return new AllFacilitiesDto(list);
     }
     
@@ -73,13 +84,33 @@ public class SportFacilityService {
     public boolean createFacility(CreateSportFacilityDto facilityDto) {
         Address adr=new Address(facilityDto.getCity(),facilityDto.getStreet(),facilityDto.getStrNum(),facilityDto.getPostCode());
         Location loc= new Location(facilityDto.getGeoLength(),facilityDto.getGeoWidth(),adr);
-        SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc);
+        WorkingHours hours = createFacilityWorkingHours(facilityDto.getWorkdayHours(),facilityDto.getSaturdayHours(),facilityDto.getSundayHours());
+        SportFacility facility=new SportFacility(0,facilityDto.getName(),facilityDto.getType(),loc,hours);
         facility.setImgSource(facilityDto.getImgSource());
         Manager manager= ManagerStorage.getInstance().getById(facilityDto.getManagerId());
         manager.setSportFacility(SportFacilityStorage.getInstance().create(facility));
         ManagerStorage.getInstance().update(manager);
 
         return true;
+    }
+
+    private WorkingHours createFacilityWorkingHours(String workdayHours, String saturdayHours, String sundayHours) {
+        String[] work=workdayHours.split("-");
+        String[] fromWork=work[0].split(":");
+        String[] toWork=work[1].split(":");
+        LocalTime workdayFrom= LocalTime.of(Integer.parseInt(fromWork[0]),Integer.parseInt(fromWork[1]),0);
+        LocalTime workdayTo= LocalTime.of(Integer.parseInt(toWork[0]),Integer.parseInt(toWork[1]),0);
+        String[] saturday=saturdayHours.split("-");
+        String[] fromSaturday=saturday[0].split(":");
+        String[] toSaturday=saturday[1].split(":");
+        LocalTime saturdayFrom= LocalTime.of(Integer.parseInt(fromSaturday[0]),Integer.parseInt(fromSaturday[1]),0);
+        LocalTime saturdayTo= LocalTime.of(Integer.parseInt(toSaturday[0]),Integer.parseInt(toSaturday[1]),0);
+        String[] sunday=sundayHours.split("-");
+        String[] fromSunday=sunday[0].split(":");
+        String[] toSunday=sunday[1].split(":");
+        LocalTime sundayFrom= LocalTime.of(Integer.parseInt(fromSunday[0]),Integer.parseInt(fromSunday[1]),0);
+        LocalTime sundayTo= LocalTime.of(Integer.parseInt(toSunday[0]),Integer.parseInt(toSunday[1]),0);
+        return new WorkingHours(workdayFrom,workdayTo,saturdayFrom,saturdayTo,sundayFrom,sundayTo);
     }
 
     private static SportFacilityDto makeFacilityDto(SportFacility facility){
@@ -120,7 +151,9 @@ public class SportFacilityService {
                 Role.MANAGER));
         ManagerStorage.getInstance().add(new Manager(user, null));
 
-        return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId()));
+        return createFacility(new CreateSportFacilityDto(dto.getName(),dto.getType(),dto.getCity(),dto.getStreet(),dto.getStrNum(),
+                dto.getPostCode(),dto.getGeoWidth(),dto.getGeoLength(),"",user.getId(),dto.getWorkdayHours(),dto.getSaturdayHours(),
+                dto.getSundayHours()));
     }
 
     public SportFacilityDto getFacilityToShow(int facilityId){

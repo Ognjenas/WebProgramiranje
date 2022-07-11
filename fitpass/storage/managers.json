@@ -52,5 +52,23 @@
     },
     "role": "MANAGER",
     "isDeleted": false
+  },
+  {
+    "sportFacility": {
+      "id": 5
+    },
+    "id": 9,
+    "username": "alooo123",
+    "password": "aloooo123",
+    "name": "bibi",
+    "surname": "sadasd",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 14
+    },
+    "role": "MANAGER",
+    "isDeleted": false
   }
 ]

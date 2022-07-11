@@ -30,6 +30,12 @@ public class ComparatorFactory{
         }
     }
 
+    public static class FacilityCompareOpen implements Comparator<SportFacilityDto>{
+        @Override
+        public int compare(SportFacilityDto o1, SportFacilityDto o2) {
+            return Boolean.compare(o1.isOpen(),o2.isOpen());
+        }
+    }
 
     public static class UserCompareName implements Comparator<UserDto>{
         @Override

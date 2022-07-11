@@ -32,40 +32,40 @@
         "postalCode": 12312
       }
     },
-    "averageGrade": 0.0,
+    "averageGrade": 5.5,
     "openTime": {
       "startWorkingDays": {
-        "hour": 0,
+        "hour": 10,
         "minute": 0,
         "second": 0,
         "nano": 0
       },
       "endWorkingDays": {
-        "hour": 0,
+        "hour": 20,
         "minute": 0,
         "second": 0,
         "nano": 0
       },
       "startSaturday": {
-        "hour": 0,
+        "hour": 12,
         "minute": 0,
         "second": 0,
         "nano": 0
       },
       "endSaturday": {
-        "hour": 0,
+        "hour": 18,
         "minute": 0,
         "second": 0,
         "nano": 0
       },
       "startSunday": {
-        "hour": 0,
+        "hour": 12,
         "minute": 0,
         "second": 0,
         "nano": 0
       },
       "endSunday": {
-        "hour": 0,
+        "hour": 15,
         "minute": 0,
         "second": 0,
         "nano": 0
@@ -244,6 +244,64 @@
       },
       "endSunday": {
         "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "isDeleted": false
+  },
+  {
+    "id": 5,
+    "name": "Glavonja",
+    "type": "SPORTS_CENTER",
+    "offers": [],
+    "isOpen": false,
+    "imgSource": "",
+    "location": {
+      "geoLength": 13123.0,
+      "geoWidth": 123123.0,
+      "address": {
+        "city": "Novi Sad",
+        "street": "Bomba",
+        "strNumber": 123,
+        "postalCode": 12312
+      }
+    },
+    "averageGrade": 0.0,
+    "openTime": {
+      "startWorkingDays": {
+        "hour": 10,
+        "minute": 10,
+        "second": 0,
+        "nano": 0
+      },
+      "endWorkingDays": {
+        "hour": 18,
+        "minute": 20,
+        "second": 0,
+        "nano": 0
+      },
+      "startSaturday": {
+        "hour": 12,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      "endSaturday": {
+        "hour": 22,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      },
+      "startSunday": {
+        "hour": 16,
+        "minute": 30,
+        "second": 0,
+        "nano": 0
+      },
+      "endSunday": {
+        "hour": 21,
         "minute": 0,
         "second": 0,
         "nano": 0

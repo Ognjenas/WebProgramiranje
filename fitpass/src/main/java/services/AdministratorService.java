@@ -106,8 +106,11 @@ public class AdministratorService {
 
     public void confirmComment(int id) {
         Comment comment=CommentStorage.getInstance().getById(id);
+        SportFacility facility=SportFacilityStorage.getInstance().getById(comment.getFacility().getId());
         comment.setStatus(CommentStatus.CONFIRMED);
         CommentStorage.getInstance().edit(comment);
+        facility.setAverageGrade(CommentStorage.getInstance().getAverageGradeForFacility(facility.getId()));
+        SportFacilityStorage.getInstance().update(facility);
     }
 
     public void rejectComment(int id) {

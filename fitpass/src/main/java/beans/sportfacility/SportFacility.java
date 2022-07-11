@@ -5,6 +5,9 @@ import beans.offer.OfferType;
 import beans.offer.Training;
 import utilities.WorkingHours;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ public class SportFacility {
         this.isDeleted = deleted;
     }
 
-    public SportFacility(int id, String name, SportFacilityType facType, Location loc) {
+    public SportFacility(int id, String name, SportFacilityType facType, Location loc,WorkingHours hours) {
         this.id = id;
         this.name = name;
         this.type = facType;
@@ -50,8 +53,7 @@ public class SportFacility {
         this.offers = new ArrayList<>();
         this.isOpen = false;
         this.averageGrade = 0.0;
-        LocalTime zeroTime = LocalTime.of(0, 0, 0, 0);
-        this.openTime = new WorkingHours(zeroTime, zeroTime, zeroTime, zeroTime, zeroTime, zeroTime);
+        this.openTime = hours;
         this.isDeleted = false;
     }
 
@@ -158,4 +160,19 @@ public class SportFacility {
     }
 
 
+    public boolean hasOpen(LocalDateTime now) {
+        if(now.getDayOfWeek()== DayOfWeek.SATURDAY){
+            if(openTime.getStartSaturday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSaturday())) return true;
+            return false;
+        }else if(now.getDayOfWeek()==DayOfWeek.SUNDAY){
+            if(openTime.getStartSunday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSunday())) return true;
+            return false;
+        }else{
+            if(openTime.getStartWorkingDays().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndWorkingDays())) return true;
+            return false;
+        }
+    }
 }
