@@ -16,7 +16,9 @@ Vue.component("reserve-offer", {
             offer : "",
             reserveOffer: {date: {}, time: "", offerId: ""},
             dateValue: "",
-            times : ""
+            times : "",
+            actualPrice:"",
+            customerType:"",
 
         }
     },
@@ -40,6 +42,7 @@ Vue.component("reserve-offer", {
         <p>Name: {{offer.name}}</p>
         <p>Type: {{offer.type}}</p>
         <p>Duration: {{offer.duration}}</p>
+        <p>Price: {{actualPrice}}</p>
         <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton()">Reserve</button>
     </div>
 </div>		  
@@ -95,6 +98,11 @@ Vue.component("reserve-offer", {
             .get('/show-facility/get-offer?id=' + this.$route.params.id)
             .then(response => {
                 this.offer = response.data;
+                axios.get('customer/get-customer-type',this.configHeaders)
+                    .then(response=>{
+                        this.customerType = response.data;
+                        this.actualPrice=this.offer.price-this.offer.price*this.customerType.discount/100;
+                    })
             })
     },
 });
