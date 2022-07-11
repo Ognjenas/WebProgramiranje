@@ -174,7 +174,7 @@ COMMENTS:
                     ],
                     view: new ol.View({
                         center: ol.proj.fromLonLat([this.currentFacility.location.geoLength, this.currentFacility.location.geoWidth]),
-                        zoom: 10
+                        zoom: 15
                     })
 
                 });

@@ -60,6 +60,8 @@ Vue.component("create-trainer", {
                 } else {
                     router.push(`/users-list`)
                 }
+            }).catch(function (error) {
+                alert('Vec postoji sa tim imenom')
             })
         },
         validateName : function () {
