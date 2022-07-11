@@ -39,7 +39,11 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         String payload = req.body();
         MakeOfferDto makeOfferDto = gson.fromJson(payload, MakeOfferDto.class);
-        return gson.toJson(managerService.makeOffer(makeOfferDto, username));
+        boolean returnValue = managerService.makeOffer(makeOfferDto, username);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return gson.toJson(returnValue);
     }
 
     public static String getTrainersFromFacility(Request req, Response res) {
@@ -63,7 +67,11 @@ public class ManagerController {
         String username = Jwts.parserBuilder().setSigningKey(SecretKeyGetter.get()).build().parseClaimsJws(token).getBody().getSubject();
         String payload = req.body();
         OfferDto offerDto = gson.fromJson(payload, OfferDto.class);
-        return gson.toJson(managerService.editOffer(offerDto, username));
+        boolean returnValue = managerService.editOffer(offerDto, username);
+        if(!returnValue) {
+            res.status(403);
+        }
+        return gson.toJson(returnValue);
     }
 
     public static String getTrainingsFromFacility(Request req, Response res) {

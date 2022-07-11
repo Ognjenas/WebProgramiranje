@@ -187,7 +187,7 @@ Vue.component("facility-show", {
             .get('/show-facility?id=' + this.$route.params.id)
             .then(response => {
                 this.currentFacility = response.data;
-                new ol.Map({
+                const map = new ol.Map({
                     target: 'map2',
                     layers: [
                         new ol.layer.Tile({
@@ -196,9 +196,34 @@ Vue.component("facility-show", {
                     ],
                     view: new ol.View({
                         center: ol.proj.fromLonLat([this.currentFacility.location.geoLength, this.currentFacility.location.geoWidth]),
-                        zoom: 10
+                        zoom: 15
                     })
                 });
+                var markers = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    style: new ol.style.Style({
+                        image: new ol.style.Icon({
+                            anchor: [0.5, 1],
+                            src: 'https://www.clipartmax.com/png/small/103-1033671_store-locator-shoprite-google-location-icon-png.png'
+                        })
+                    })
+                });
+                var iconStyle = new ol.style.Style({
+                    image: new ol.style.Icon(({
+                        scale: 10,
+                        offset: [-20, -20],
+                        //anchor: [0.5, 1],
+                        src: "https://www.clipartmax.com/png/small/103-1033671_store-locator-shoprite-google-location-icon-png.png",
+                        opacity: 1,
+                        id: num + "_" + x
+                    }))
+                });
+                markers.setStyle(iconStyle);
+
+                map.addLayer(markers);
+
+                var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([this.currentFacility.location.geoLength, this.currentFacility.location.geoWidth])));
+                markers.getSource().addFeature(marker);
             });
 
         if ($cookies.get("token") != null) {

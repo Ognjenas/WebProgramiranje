@@ -47,6 +47,8 @@ Vue.component("edit-profile", {
                     $cookies.set('token', response.data, 10000)
                     router.push(`/`)
                 }
+            }).catch(function (error) {
+                alert('Vec postoji sa tim imenom')
             })
         },
         validateName : function () {

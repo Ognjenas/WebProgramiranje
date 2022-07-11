@@ -136,7 +136,9 @@ Vue.component("edit-offer", {
                         } else {
                             router.push("/open-facility")
                         }
-                    })
+                    }).catch(function (error) {
+                    alert('Vec postoji sa tim imenom')
+                })
             }
         },
         changeTrainer() {

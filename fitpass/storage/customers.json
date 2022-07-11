@@ -76,5 +76,27 @@
     },
     "role": "CUSTOMER",
     "isDeleted": false
+  },
+  {
+    "subscription": null,
+    "visitedFacilities": null,
+    "type": {
+      "rankType": "NONE",
+      "discount": 0.0,
+      "points": 0.0
+    },
+    "id": 10,
+    "username": "korisnik2",
+    "password": "korisnik",
+    "name": "korisnik",
+    "surname": "koris",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 4
+    },
+    "role": "CUSTOMER",
+    "isDeleted": false
   }
 ]
