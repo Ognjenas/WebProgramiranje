@@ -56,9 +56,17 @@ public class SportFacilityService {
 
     public static AllFacilitiesDto getAllFacilitiesDto() {
         List<SportFacilityDto> list = new ArrayList<>();
+        LocalDateTime now=LocalDateTime.now();
         for (SportFacility facility : getAllFacilities()) {
+            if(facility.hasOpen(now)) {
+                facility.setOpen(true);
+            }else{
+                facility.setOpen(false);
+            }
             list.add(makeFacilityDto(facility));
         }
+        Collections.sort(list,new ComparatorFactory.FacilityCompareOpen());
+        Collections.reverse(list);
         return new AllFacilitiesDto(list);
     }
     

@@ -58,5 +58,17 @@
     },
     "text": "asdasd",
     "grade": 8
+  },
+  {
+    "id": 6,
+    "status": "CONFIRMED",
+    "facility": {
+      "id": 1
+    },
+    "customer": {
+      "id": 5
+    },
+    "text": "Ocajna je teretana",
+    "grade": 2
   }
 ]

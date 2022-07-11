@@ -5,6 +5,9 @@ import beans.offer.OfferType;
 import beans.offer.Training;
 import utilities.WorkingHours;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -157,4 +160,19 @@ public class SportFacility {
     }
 
 
+    public boolean hasOpen(LocalDateTime now) {
+        if(now.getDayOfWeek()== DayOfWeek.SATURDAY){
+            if(openTime.getStartSaturday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSaturday())) return true;
+            return false;
+        }else if(now.getDayOfWeek()==DayOfWeek.SUNDAY){
+            if(openTime.getStartSunday().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndSunday())) return true;
+            return false;
+        }else{
+            if(openTime.getStartWorkingDays().isBefore(now.toLocalTime()) &&
+                    now.toLocalTime().isBefore(openTime.getEndWorkingDays())) return true;
+            return false;
+        }
+    }
 }
