@@ -17,8 +17,10 @@ Vue.component("comment-panel", {
     },
     template: ` 
 <div>
-SUBMITTED COMMENTS WAITING CHECK
-<table>
+<div class="facility-list-container" >
+<p>SUBMITTED COMMENTS WAITING CHECK</p>
+
+<table class="show-facilities-table">
     <tr>
     <th>Id</th>
     <th>Username</th>
@@ -35,12 +37,12 @@ SUBMITTED COMMENTS WAITING CHECK
     <td>{{com.text}}</td>
     <td>{{com.status}}</td>
     <td>{{com.grade}}</td>
-    <td><button v-on:click="confirm(com.id)">APPROVE</button></td>
-    <td><button v-on:click="reject(com.id)">REJECT</button></td>
+    <td><button class="login-button"  v-on:click="confirm(com.id)">APPROVE</button></td>
+    <td><button class="login-button"  v-on:click="reject(com.id)">REJECT</button></td>
 </tr>
 </table>
-<table>
-CHECKED COMMENTS
+<p>CHECKED COMMENTS</p>
+<table class="show-facilities-table">
 <tr>
     <th>Id</th>
     <th>Username</th>
@@ -58,8 +60,8 @@ CHECKED COMMENTS
     <td>{{com.status}}</td>
     <td>{{com.grade}}</td>
     </tr>
-
 </table>
+</div>
 </div>		  
 `
     ,

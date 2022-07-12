@@ -32,11 +32,10 @@ Vue.component("manager-trainings", {
 <div>
     <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
-        <button v-on:click="editProfile">Profile</button>
     </div>
-    
+    <div class="facility-list-container">
     <h1>Trainings</h1>   
-    <table>
+    <table class="first-row-list-facility">
     <tr>
     SEARCH AND FILTER:
     <td>
@@ -78,14 +77,13 @@ Vue.component("manager-trainings", {
       </td>
     </tr>
     </table>   
-    <div v-for="order in orders" style="display: inline-block; border: 1px solid black; margin: 10px; padding: 10px">
+    <div class="show-facilities-table " v-for="order in orders">
         <p>Name: {{order.name}}</p>
         <p>Type: {{order.type}}</p>
         <p>Facility: {{order.facilityName}}</p>
-        <p>Time: {{order.time}}</p>
+        <p>Time: {{order.time.date.day}}.{{order.time.date.month}}.{{order.time.date.year}}. - {{order.time.time.hour}}:{{order.time.time.minute}}</p>
     </div>
-    <button v-if="validSubmit" type="button" v-on:click="consLog">LOG</button>
-	
+	</div>
 </div>		  
 `
     ,

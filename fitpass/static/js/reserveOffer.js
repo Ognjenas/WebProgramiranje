@@ -26,11 +26,12 @@ Vue.component("reserve-offer", {
 <div>
 <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
-        <button v-on:click="editProfile">Profile</button>
     </div>
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
+   <div class="facility-list-container">
+   <div class="show-facilities-table">
    <h1>Reserve</h1>
     <div v-if="userInfo.role == 'CUSTOMER'">
         <input v-model="dateValue" type="date" v-on:change="getAvailableTimes">
@@ -43,7 +44,9 @@ Vue.component("reserve-offer", {
         <p>Type: {{offer.type}}</p>
         <p>Duration: {{offer.duration}}</p>
         <p>Price: {{actualPrice}}</p>
-        <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton()">Reserve</button>
+        <button class="login-button" v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton()">Reserve</button>
+    </div>
+    </div>
     </div>
 </div>		  
 `

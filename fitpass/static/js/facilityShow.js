@@ -43,17 +43,16 @@ Vue.component("facility-show", {
 <div>
     <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
-        <button v-on:click="editProfile">Profile</button>
+        <button class="login-button" v-on:click="editProfile">Profile</button>
     </div>
-    
     <div v-if="$cookies.get('token') == null">
-        <button v-on:click="login">Login</button>
+        <button class="login-button" v-on:click="login">Login</button>
     </div>
-    
-    <h1>SHOW FACILITY</h1>
+        <div class="facility-list-container">
+    <h1>Facility Show</h1>
     <input type="hidden" id="geoLen" v-model="currentFacility.location.geoLength" onload="makeMap()">
     <input type="hidden" id="geoWidth" v-model="currentFacility.location.geoWidth">
-    <table>
+    <table  class="show-facilities-table" >
         <tr>
         <td><label>Name</label></td>
         <td><label>{{currentFacility.name}}</label></td>
@@ -99,18 +98,18 @@ Vue.component("facility-show", {
     
     <h1>Offers</h1>
    
-    <div v-for="offer in offers">
+    <div  class="show-facilities-table"  v-for="offer in offers">
         <p>Name: {{offer.name}}</p>
         <p>Type: {{offer.type}}</p>
         <p>Duration: {{offer.duration}}</p>
         <p>Image: <img :src="offer.imgSource" width="100" height="100"></p>
         <p>Price: {{offer.price}}</p>
-        <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton(offer.id)">Reserve</button>
+        <button class="login-button" v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton(offer.id)">Reserve</button>
     </div>
     
     COMMENTS:
     <div v-if="loadedComments!== '' " >
-    <table>
+    <table class="show-facilities-table" >
     <tr>
         <th>Username</th>
         <th>Comment</th>
@@ -126,7 +125,7 @@ Vue.component("facility-show", {
     <p v-if="loadedComments==='' "> No available comments!</p>
 
     
-    <div v-if="canWriteComment">
+    <div class="show-facilities-table"  v-if="canWriteComment">
     Write Comment:
     (Please Input both fields to submit comment)
     <input type="text" v-model="comment.text" v-on:input="checkComment">
@@ -144,10 +143,10 @@ Vue.component("facility-show", {
       <option value="9">9</option>
       <option value="10">10</option>
       </select>
-      <button :disabled="checkCommentValid"  v-on:click="createComment">Submit Comment</button>
+      <button class="login-button" :disabled="checkCommentValid"  v-on:click="createComment">Submit Comment</button>
     </div>
     <p v-if="CommentSubmitted"><b>Comment sent for review by admin!</b></p>
-    <button v-on:click="log">LOG</button>
+    </div>
 </div>		  
 `
     ,
