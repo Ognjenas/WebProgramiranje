@@ -5,7 +5,7 @@ Vue.component("contact", {
     },
     template: ` 
 <div>
-    <h1>KURCINA</h1>
+    <h1>GOSPODINE MITRE VRATITE SE NA POCETNU!</h1>
 	<p>
 		<a href="#/">Home Page</a>
 	</p>

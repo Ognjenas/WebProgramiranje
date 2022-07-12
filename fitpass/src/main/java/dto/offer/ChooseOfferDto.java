@@ -6,16 +6,18 @@ public class ChooseOfferDto {
     private String type;
     private String duration;
     private String imgSource;
+    private double price;
 
     public ChooseOfferDto() {
     }
 
-    public ChooseOfferDto(int id, String name, String type, String duration, String imgSource) {
+    public ChooseOfferDto(int id, String name, String type, String duration, String imgSource,double price) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.duration = duration;
         this.imgSource = imgSource;
+        this.price=price;
     }
 
     public String getImgSource() {
@@ -56,5 +58,13 @@ public class ChooseOfferDto {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

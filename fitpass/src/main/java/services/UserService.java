@@ -198,12 +198,16 @@ public class UserService {
 
         if(customer.getType().getPoints()<2000){
             customer.getType().setRankType(CustomerRankType.NONE);
+            customer.getType().setDiscount(0);
         } else if (customer.getType().getPoints()>=2000 && customer.getType().getPoints()<3000) {
             customer.getType().setRankType(CustomerRankType.BRONZE);
+            customer.getType().setDiscount(3);
         }else if (customer.getType().getPoints()>=3000 && customer.getType().getPoints()<4000) {
             customer.getType().setRankType(CustomerRankType.SILVER);
+            customer.getType().setDiscount(5);
         }else if (customer.getType().getPoints()>=4000) {
             customer.getType().setRankType(CustomerRankType.GOLD);
+            customer.getType().setDiscount(10);
         }
 
         return customer;

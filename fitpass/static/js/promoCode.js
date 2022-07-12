@@ -24,13 +24,13 @@ Vue.component("promo-code", {
 <div>
 
 <form>
-
+<div class="facility-list-container">
 <div v-if="validPromoCodes == null">
 <h3>Currently no available PromoCodes</h3>
 </div>
 <div v-else>
 <h3>Available PromoCodes:</h3>
-<table>
+<table class="show-facilities-table">
     <tr>
         <th>CODE</th>
         <th>DISCOUNT</th>
@@ -48,16 +48,16 @@ Vue.component("promo-code", {
     </tr>
 </table>
 </div>
-
-<table>
+<h3>Make new PromoCode:</h3>
+<table class="show-facilities-table">
     <tr><td><b>PROMO CODE</b></td><td><input v-model="promoCode.code"></td></tr>
-    <tr><td><b>PERCENT DISCOUNT</b></td><input v-model="promoCode.discount">%<td></td></tr>
+    <tr><td><b>PERCENT DISCOUNT</b></td><td><input v-model="promoCode.discount">%</td></tr>
     <tr><td><b>USAGE TIMES</b></td><td><input v-model="promoCode.usageTimes"></td></tr>
     <tr><td><b>VALID UNTIL</b></td><td><input type="date" v-model="date" name="birthdate"></td></tr>
-    <tr><td><button type="reset" v-on:click="reset">RESET</button></td><td><button type="submit" v-on:click="create">CREATE</button></td></tr>
+    <tr><td><button class="login-button" type="reset" v-on:click="reset">RESET</button></td><td><button class="login-button" type="submit" v-on:click="create">CREATE</button></td></tr>
 </table>
 </form>
-<button type="button" v-on:click="log">LOG</button>
+</div>
 </div>  
 `
     ,

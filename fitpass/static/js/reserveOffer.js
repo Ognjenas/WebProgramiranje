@@ -16,7 +16,9 @@ Vue.component("reserve-offer", {
             offer : "",
             reserveOffer: {date: {}, time: "", offerId: ""},
             dateValue: "",
-            times : ""
+            times : "",
+            actualPrice:"",
+            customerType:"",
 
         }
     },
@@ -24,11 +26,12 @@ Vue.component("reserve-offer", {
 <div>
 <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
-        <button v-on:click="editProfile">Profile</button>
     </div>
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
+   <div class="facility-list-container">
+   <div class="show-facilities-table">
    <h1>Reserve</h1>
     <div v-if="userInfo.role == 'CUSTOMER'">
         <input v-model="dateValue" type="date" v-on:change="getAvailableTimes">
@@ -40,7 +43,10 @@ Vue.component("reserve-offer", {
         <p>Name: {{offer.name}}</p>
         <p>Type: {{offer.type}}</p>
         <p>Duration: {{offer.duration}}</p>
-        <button v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton()">Reserve</button>
+        <p>Price: {{actualPrice}}</p>
+        <button class="login-button" v-if="userInfo.role == 'CUSTOMER'" v-on:click="reserveButton()">Reserve</button>
+    </div>
+    </div>
     </div>
 </div>		  
 `
@@ -95,6 +101,11 @@ Vue.component("reserve-offer", {
             .get('/show-facility/get-offer?id=' + this.$route.params.id)
             .then(response => {
                 this.offer = response.data;
+                axios.get('customer/get-customer-type',this.configHeaders)
+                    .then(response=>{
+                        this.customerType = response.data;
+                        this.actualPrice=this.offer.price-this.offer.price*this.customerType.discount/100;
+                    })
             })
     },
 });

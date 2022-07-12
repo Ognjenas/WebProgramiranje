@@ -12,7 +12,6 @@ Vue.component("edit-profile", {
     },
     template: ` 
 <div>
-    <h1>Registracija</h1>
     <div class="login-container">
     <div class="login-box">
     <table class="registration-table">

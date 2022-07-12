@@ -20,8 +20,9 @@ Vue.component("create-offer", {
     },
     template: ` 
 <div>
+<div class="facility-list-container">
     <h1>Create offer</h1>
-    <table>
+    <table  class="show-facilities-table" >
     <tr>
     <td>Name: </td>
     <td><input type="text" v-model = "offer.name"> <div id="spanName" style="visibility: hidden">Cannot be empty</div></td></td>
@@ -64,13 +65,19 @@ Vue.component("create-offer", {
 <tr>
     <td>Price: </td>
     <td><input type="text" v-model = "offer.price"></td>
+    </tr>
+    <tr>
     <td>Image: </td>
     <td><input id="fileOffer" type="file" onchange="encodeImageFileAsURLOffer()" accept="image/*">
        
         <input type="hidden" id="pictureOffer"></td>
 </tr>
+<tr>
+    <td colspan="2"> <button v-on:click="create" class="login-button">Create</button></td>
+</tr>
 </table>
-    <button v-on:click="create">Create</button>
+</div>
+   
 </div>		  
 `
     ,

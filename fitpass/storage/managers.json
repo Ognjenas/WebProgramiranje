@@ -70,5 +70,23 @@
     },
     "role": "MANAGER",
     "isDeleted": false
+  },
+  {
+    "sportFacility": {
+      "id": 4
+    },
+    "id": 11,
+    "username": "novimen",
+    "password": "novimen",
+    "name": "novimen",
+    "surname": "novimen",
+    "gender": true,
+    "birthDate": {
+      "year": 2022,
+      "month": 7,
+      "day": 3
+    },
+    "role": "MANAGER",
+    "isDeleted": false
   }
 ]

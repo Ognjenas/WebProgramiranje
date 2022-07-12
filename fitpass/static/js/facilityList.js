@@ -25,33 +25,29 @@ Vue.component("facility-list", {
     template: ` 
 <div> 
 <div class="subNav">
- <div v-if="$cookies.get('token') != null">
+     <div v-if="$cookies.get('token') != null">
         <label>Username: {{userInfo.username}}</label>
         <button class="login-button" v-on:click="editProfile">Profile</button>
-        <button  v-if="$cookies.get('token') != null" class="login-button" v-on:click="logout">Odjavi se</button>
+        <button v-if="userInfo.role == 'MANAGER'" class="login-button" v-on:click="myFacility">My facility</button>
+        <button v-if="userInfo.role == 'TRAINER'" class="login-button" v-on:click="trainerTrainings">Trainings</button>
+        <button  v-if="userInfo.role == 'CUSTOMER'" class="login-button" v-on:click="customerTrainings">Trainings</button>
+        <button v-if="userInfo.role == 'ADMINISTRATOR'" v-on:click="listUsers" class="login-button" >All Users</button>
+        <button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription" class="login-button">Subscription</button>
+        <button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode" class="login-button">Promo Codes</button>
+        <button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="comments" class="login-button">Validate Comments</button>
+        <button class="login-button" v-on:click="logout">LogOut</button>
     </div>
-    <div class="nav-buttons">
-    <div v-if="userInfo.role == 'MANAGER'">
-        <button class="login-button" v-on:click="myFacility">My facility</button>
-    </div>
-    <div v-if="userInfo.role == 'TRAINER'">
-        <button class="login-button" v-on:click="trainerTrainings">Trainings</button>
-    </div>
-    <div v-if="userInfo.role == 'CUSTOMER'">
-        <button class="login-button" v-on:click="customerTrainings">Trainings</button>
-    </div>
-    <div v-if="$cookies.get('token') == null">
-        <button class="login-button" v-on:click="login">Login</button>
-    </div>
-    <button v-if="userInfo.role == 'ADMINISTRATOR'" class="login-button" v-on:click="listUsers">Svi korisnici</button>
-	<button v-if="userInfo.role == 'CUSTOMER' " v-on:click="subscription" class="login-button">Subscription</button>
-	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="promoCode" class="login-button">Promo Codes</button>
-	<button v-if="userInfo.role == 'ADMINISTRATOR' " v-on:click="comments" class="login-button">COMMENTS</button>
+        <button  v-if="$cookies.get('token') == null" class="login-button" v-on:click="login">LogIn</button>
+    
+    
+      
     
     </div>
-    </div>
+    
 <div class="facility-list-container">
-    
+    <p><b>Available Facilities:</b></p>
+	<button v-if="userInfo.role === 'ADMINISTRATOR' " v-on:click="createFac" class="login-button">Create Facility</button>
+	
 	<div class="first-row-list-facility">
     <p>
     Search:</p>
@@ -80,11 +76,9 @@ Vue.component("facility-list", {
       <option value="3-4">3-4</option>
       <option value="4-5">>4</option>
     </select>
-    <p>search-form:  |{{form.name}}|,|{{form.type}}|,|{{form.city}}|,|{{form.grade}}| </p>
-    </p>
     </div>
+
     <div>
-	<h2>Available Facilities:</h2>
 	<table class="show-facilities-table" cellspacing="0">
 	<tr>
 		<th v-on:click="sortList(0)">Name</th>
@@ -124,6 +118,9 @@ Vue.component("facility-list", {
         {
             comments(){
                 router.push('/comment-panel');
+            },
+            createFac(){
+                router.push('/facility-create');
             },
 
             selectedFacility(f){
