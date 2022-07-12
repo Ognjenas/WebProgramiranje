@@ -24,9 +24,9 @@ Vue.component("trainers-list", {
     template: ` 
 <div>
     <label>Username: {{userInfo.username}}</label>
-	<table>
+    <div class="facility-list-container">
+	<table class="show-facilities-table">
 	<tr>
-	    <th></th>
 		<th>Name</th>
 		<th>Surname</th>
 		<th>Username</th>
@@ -35,7 +35,6 @@ Vue.component("trainers-list", {
 	</tr>
 		
 	<tr v-for="u in usersDto.users" >
-		<td></td>
 		<td>{{u.name}}</td>
 		<td>{{u.surname}}</td>
 		<td>
@@ -49,7 +48,7 @@ Vue.component("trainers-list", {
         </td>
 	</tr>
 </table>
-	<button class="login-button" v-on:click="logout">Odjavi se</button>
+</div>
 </div>		  
 `
     ,

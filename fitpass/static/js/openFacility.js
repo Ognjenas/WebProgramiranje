@@ -37,8 +37,9 @@ Vue.component("open-facility", {
     <div v-if="$cookies.get('token') == null">
         <button v-on:click="login">Login</button>
     </div>
+    <div class="facility-list-container">
     <h1>My facility</h1>
-    <table>
+    <table class="show-facilities-table">
     <input type="hidden" id="geoLen2" v-model="currentFacility.location.geoLength">
     <input type="hidden" id="geoWidth2" v-model="currentFacility.location.geoWidth">
         <tr>
@@ -80,31 +81,33 @@ Vue.component("open-facility", {
 		    <p>Saturday: From {{currentFacility.openTime.startSaturday.hour}}:{{currentFacility.openTime.startSaturday.minute}} to {{currentFacility.openTime.endSaturday.hour}}:{{currentFacility.openTime.endSaturday.minute}}</p>
 		    <p>Sunday: From {{currentFacility.openTime.startSunday.hour}}:{{currentFacility.openTime.startSunday.minute}} to {{currentFacility.openTime.endSunday.hour}}:{{currentFacility.openTime.endSunday.minute}}</p></td>
         </tr>
+        <tr><td>    
+        <button class="login-button" v-on:click="createOffer">Create offer</button>
+        <button class="login-button" v-on:click="getTrainers">Trainers</button></td>
+        <td>
+        <button class="login-button" v-on:click="getTrainings">Trainings</button>
+        <button class="login-button" v-on:click="getCustomers">Customers</button>
+        </td>
+        </tr>
     </table>
-    <button v-on:click="createOffer">Create offer</button>
-    <button v-on:click="getTrainers">Trainers</button>
-    <button v-on:click="getTrainings">Trainings</button>
-    <button v-on:click="getCustomers">Customers</button>
     <div>
     <h2>Offers</h2>
-    <table>
+    <table class="show-facilities-table">
 	<tr>
-	    <th></th>
 		<th>Name</th>
 		<th>Type</th>
 	</tr>
 		
 	<tr v-for="offer in offers" >
-		<td></td>
 		<td>{{offer.name}}</td>
 		<td>{{offer.type}}</td>
-		<td><button v-on:click="editOffer(offer.id)">Edit</button></td>
+		<td><button class="login-button" v-on:click="editOffer(offer.id)">Edit</button></td>
 	</tr>
 </table>
 </div>
 COMMENTS:
     <div v-if="loadedComments!== '' " >
-    <table>
+    <table class="show-facilities-table"> 
     <tr>
         <th>Username</th>
         <th>Comment</th>
@@ -122,7 +125,7 @@ COMMENTS:
     </table>
     </div>
     <p v-if="loadedComments==='' "> No available comments!</p>
-
+</div>
 </div>		  
 `
     ,

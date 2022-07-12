@@ -28,10 +28,10 @@ Vue.component("subscription", {
     },
     template: ` 
 <div>
-
+<div class="facility-list-container">
 <div v-if="currentSubscription != null" name="showCurrentSubscription">
     <h3>Current subscription:</h3>
-    <table>
+    <table class="show-facilities-table">
     <tr><th>ID</th><th>TYPE</th><th>START DATE</th><th>END DATE</th><th>DAILY TRAININGS AVAILABLE</th></tr>
     <tr><td>{{currentSubscription.id}}</td><td>{{currentSubscription.type}}</td>
     <td>{{currentSubscription.payDate.year}} - {{currentSubscription.payDate.month}} - {{currentSubscription.payDate.day}}</td>
@@ -42,9 +42,9 @@ Vue.component("subscription", {
 <div v-else name="noCurrentSubscription">
 <h3>User has no current subscription</h3>
 </div>
-
+<p><b>AVAILABLE SUBSCRIPTIONS</b></p>
 <div v-if="showSubs" name="Subs">
-    <table>
+    <table class="show-facilities-table">
     <tr>
     <th>Type</th>
     <th>Price</th>
@@ -56,45 +56,45 @@ Vue.component("subscription", {
     <td>MONTHLY</td>
     <td>2000</td>
     <td>1</td>
-    <td><button v-on:click="order(0)">order this</button></td>
+    <td><button class="login-button" v-on:click="order(0)">order this</button></td>
     </tr>
     
     <tr>
     <td>MONTHLY</td>
     <td>3000</td>
     <td>3</td>
-    <td><button v-on:click="order(1)">order this</button></td>
+    <td><button class="login-button" v-on:click="order(1)">order this</button></td>
     </tr>
     
     <tr>
     <td>YEARLY</td>
     <td>20000</td>
     <td>3</td>
-    <td><button v-on:click="order(2)">order this</button></td>
+    <td><button class="login-button" v-on:click="order(2)">order this</button></td>
     </tr>
     
     <tr>
     <td>YEARLY</td>
     <td>30000</td>
     <td>10</td>
-    <td><button v-on:click="order(3)">order this</button></td>
+    <td><button class="login-button" v-on:click="order(3)">order this</button></td>
     </tr>
     </table>
 </div>
 
 <div v-else name="checkout">
-<table>
+
+<table class="show-facilities-table">
     <tr><td><b>Type:</b></td><td>{{this.subOffer.type}}</td></tr>
     <tr><td><b>Price:</b></td><td>{{this.subOffer.price}}</td></tr>
     <tr><td><b>Daily Trainings:</b></td><td>{{this.subOffer.dailyTrainings}}</td></tr>
     <tr><td><b>Promo Code</b></td><td><input v-model="searchedPromoCode" v-on:input="checkPromoCode"></td><p v-if="validPromoCode"></p></tr>
     <tr><td><b>Final Price</b></td><td>{{this.discountedPrice}}</td></tr>
-    <tr><td><button v-on:click="reset">Cancel</button></td><td><button v-on:click="orderFinish">FINISH ORDER</button></td></tr>
+    <tr><td><button class="login-button" v-on:click="reset">Cancel</button></td><td><button class="login-button" v-on:click="orderFinish">FINISH ORDER</button></td></tr>
 
 </table>
 </div>
-<button v-on:click="conslog">LOG</button>
-
+</div>
 </div>		  
 `
     ,

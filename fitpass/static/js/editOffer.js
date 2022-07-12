@@ -21,8 +21,9 @@ Vue.component("edit-offer", {
     },
     template: ` 
 <div>
-    <h1>Create offer</h1>
-    <table>
+<div class="facility-list-container">
+    <h1>Edit offer</h1>
+    <table class="show-facilities-table">
     <tr>
     <td>Name: </td>
     <td><input type="text" v-model = "offer.name"> <div id="spanName" style="visibility: hidden">Cannot be empty</div></td>
@@ -73,14 +74,18 @@ Vue.component("edit-offer", {
 <tr>
     <td>Price: </td>
     <td><input type="text" v-model = "offer.price"></td>
+    </tr>
+    <tr>
     <td>Image: </td>
     <td><img :src="offer.imgSource" width="100" height="100"><input id="fileOfferEdit" type="file" onchange="encodeImageFileAsURLOfferEdit()" accept="image/*">
        
         <input type="hidden" id="pictureOfferEdit"></td>
 </tr>
+<tr><td colspan="2"><button class="login-button" v-on:click="edit">Edit</button></td></tr>
 </table>
-    <button v-on:click="edit">Edit</button>
+    
 </div>		  
+</div>
 `
     ,
     methods: {

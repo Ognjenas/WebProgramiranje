@@ -56,10 +56,11 @@ Vue.component("facility-create", {
     },
     template: ` 
 <div>
-    <h1>OVO JE FACILITY CREATE</h1>
+<div class="facility-list-container">
+    <h1>Facility Create</h1>
     <form method="post">
     
-    <table class="createFacilityTable">
+    <table class="show-facilities-table">
     <td>
         <table>
         <tr>
@@ -152,7 +153,7 @@ Vue.component("facility-create", {
             
         <tr>
         <td><label>Manager</label></td>
-        <td><button type="button" v-if="isListEmpty()" :disabled="managerCreationSection" v-on:click="createManager()" >Create Manager</button>
+        <td><button class="login-button" type="button" v-if="isListEmpty()" :disabled="managerCreationSection" v-on:click="createManager()" >Create Manager</button>
         <select v-else id="managerCombo" name="managerCombo" v-model="form.managerId" v-on:change="validate()">
           <option value="">Select Manager</option>
           <option v-for="manager in managerList" :value="manager.id">{{manager.name}} {{manager.surname}} | ID:{{manager.id}}</option>
@@ -160,9 +161,9 @@ Vue.component("facility-create", {
         </tr>
         
         <tr>
-        <td><button type="button" name="createFacilityButton" v-on:click="createFacility()" :disabled="isDisabled" >CreateFacility</button></td>
+        <td><button class="login-button" type="button" name="createFacilityButton" v-on:click="createFacility()" :disabled="isDisabled" >CreateFacility</button></td>
         <td></td>
-        <td><button type="reset" name="resetFormButton" v-on:click="resetForm()">Reset</button></td>
+        <td><button class="login-button" type="reset" name="resetFormButton" v-on:click="resetForm()">Reset</button></td>
         </tr>
         </table>
        
@@ -209,9 +210,7 @@ Vue.component("facility-create", {
     </td>
     </table>
     </form>
-    <p>create-form:  |{{form.workdayHours}}|,|{{form.saturdayHours}}|,|{{form.sundayHours}}|,|{{form.street}}| , | {{form.managerId}}| </p>
-    <button v-on:click="consoleWrite()">WRITE CONSOLE</button>
-    
+    </div>
  </div>	   
     
     
